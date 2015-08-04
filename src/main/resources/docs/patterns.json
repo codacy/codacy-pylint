@@ -1,0 +1,1954 @@
+{
+  "name": "pmdJava",
+  "patterns": [
+    {
+      "patternId": "rulesets_java_unusedcode.xml_UnusedPrivateField",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unusedcode.xml_UnusedLocalVariable",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unusedcode.xml_UnusedPrivateMethod",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unusedcode.xml_UnusedFormalParameter",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "checkAll",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unusedcode.xml_UnusedModifier",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_JumbledIncrementer",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_ForLoopShouldBeWhileLoop",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_OverrideBothEqualsAndHashcode",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_DoubleCheckedLocking",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_ReturnFromFinallyBlock",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_AvoidDecimalLiteralsInBigDecimalConstructor",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_BrokenNullCheck",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_AvoidUsingOctalValues",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "strict",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_CheckResultSet",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_AvoidMultipleUnaryOperators",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_CheckSkipResult",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_AvoidBranchingStatementAsLastInLoop",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "checkReturnLoopTypes",
+          "default": "for"
+        },
+        {
+          "name": "checkContinueLoopTypes",
+          "default": "for"
+        },
+        {
+          "name": "checkBreakLoopTypes",
+          "default": "for"
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_DontCallThreadRun",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_DontUseFloatTypeForLoopIndices",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_braces.xml_IfStmtsMustUseBraces",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_braces.xml_WhileLoopsMustUseBraces",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_braces.xml_IfElseStmtsMustUseBraces",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_braces.xml_ForLoopsMustUseBraces",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_ShortVariable",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_LongVariable",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "minimum",
+          "default": 17
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_ShortMethodName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_MethodNamingConventions",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_ClassNamingConventions",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_AbstractNaming",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_AvoidDollarSigns",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_MethodWithSameNameAsEnclosingClass",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_SuspiciousHashcodeMethodName",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_SuspiciousConstantFieldName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_SuspiciousEqualsMethodName",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_AvoidFieldNameMatchingTypeName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_AvoidFieldNameMatchingMethodName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_NoPackage",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_PackageCase",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_MisleadingVariableName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_BooleanGetMethodName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "checkParameterizedMethods",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_ShortClassName",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "minimum",
+          "default": 5
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_naming.xml_GenericsNaming",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_LocalVariableCouldBeFinal",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_MethodArgumentCouldBeFinal",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_AvoidInstantiatingObjectsInLoops",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_sunsecure.xml_MethodReturnsInternalArray",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_sunsecure.xml_ArrayIsStoredDirectly",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_coupling.xml_ExcessiveImports",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 30
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_coupling.xml_LooseCoupling",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_coupling.xml_LawOfDemeter",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_UseArrayListInsteadOfVector",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_SimplifyStartsWith",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_UseStringBufferForStringAppends",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_UseArraysAsList",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_AvoidArrayLoops",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_UnnecessaryWrapperObjectCreation",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_AddEmptyString",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_RedundantFieldInitializer",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_optimizations.xml_PrematureDeclaration",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_UnnecessaryConstructor",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_NullAssignment",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_OnlyOneReturn",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AssignmentInOperand",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "allowIncrementDecrement",
+          "default": false
+        },
+        {
+          "name": "allowWhile",
+          "default": false
+        },
+        {
+          "name": "allowFor",
+          "default": false
+        },
+        {
+          "name": "allowIf",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AtLeastOneConstructor",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_DontImportSun",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UseUtilityClass",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_SimplifyBooleanReturns",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_SimplifyBooleanExpressions",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_SwitchStmtsShouldHaveDefault",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidDeeplyNestedIfStmts",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "problemDepth",
+          "default": 3
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidReassigningParameters",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_ConstructorCallsOverridableMethod",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_SuspiciousOctalEscape",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_CallSuperInConstructor",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_FinalFieldCouldBeStatic",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_CloseResource",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_NonStaticInitializer",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_DefaultLabelNotLastInSwitchStmt",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_NonCaseLabelInSwitchStatement",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_OptimizableToArrayCall",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_BadComparison",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_EqualsNull",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_ConfusingTernary",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "ignoreElseIf",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_InstantiationToGetClass",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_IdempotentOperations",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_SimpleDateFormatNeedsLocale",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_ImmutableField",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UseLocaleWithCaseConversions",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidProtectedFieldInFinalClass",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_UnnecessaryParentheses",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_DataflowAnomalyAnalysis",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "maxViolations",
+          "default": 100
+        },
+        {
+          "name": "maxPaths",
+          "default": 1000
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidFinalLocalVariable",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidUsingShortType",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidUsingVolatile",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_DoNotCallGarbageCollectionExplicitly",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_OneDeclarationPerLine",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "strictMode",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidPrefixingMethodParameters",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidLiteralsInIfCondition",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "ignoreMagicNumbers",
+          "default": "-1,0"
+        },
+        {
+          "name": "version",
+          "default": "2.0"
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_UseObjectForClearerAPI",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_DefaultPackage",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidUsingNativeCode",
+      "level": "Warning",
+      "category": "Compatibility",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_controversial.xml_AvoidAccessibilityAlteration",
+      "level": "Error",
+      "category": "Security",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_typeresolution.xml_CloneMethodMustImplementCloneable",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_typeresolution.xml_UnusedImports",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_typeresolution.xml_SignatureDeclareThrowsException",
+      "level": "Info",
+      "category": "Documentation",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "IgnoreJUnitCompletely",
+          "default": false
+        },
+        {
+          "name": "IgnoreJUnitCompletely",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyCatchBlock",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "allowCommentedBlocks",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyIfStmt",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyWhileStmt",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AssignmentToNonFinalStatic",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_MissingStaticMethodInNonInstantiatableClass",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidSynchronizedAtMethodLevel",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_MissingBreakInSwitch",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UseNotifyAllInsteadOfNotify",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidInstanceofChecksInCatchClause",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AbstractClassWithoutAbstractMethod",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_SimplifyConditional",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_CompareObjectsWithEquals",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_PositionLiteralsFirstInComparisons",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_NonThreadSafeSingleton",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "checkNonStaticFields",
+          "default": false
+        },
+        {
+          "name": "checkNonStaticMethods",
+          "default": true
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UncommentedEmptyMethodBody",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UncommentedEmptyConstructor",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "ignoreExplicitConstructorInvocation",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidConstantsInterface",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UnsynchronizedStaticDateFormatter",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_PreserveStackTrace",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UseCollectionIsEmpty",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_ClassWithOnlyPrivateConstructorsShouldBeFinal",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_EmptyMethodInAbstractClassShouldBeAbstract",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_SingularField",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "disallowNotAssignment",
+          "default": false
+        },
+        {
+          "name": "checkInnerClasses",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_ReturnEmptyArrayRatherThanNull",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AbstractClassWithoutAnyMethod",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_TooFewBranchesForASwitchStatement",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "minimumNumberCaseForASwitch",
+          "default": 3
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_LogicInversion",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_UseVarargs",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_design.xml_FieldDeclarationsShouldBeAtStartOfClass",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "ignoreAnonymousClassDeclarations",
+          "default": true
+        },
+        {
+          "name": "ignoreEnumDeclarations",
+          "default": true
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_design.xml_AvoidProtectedMethodInFinalClassNotExtending",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyTryBlock",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyFinallyBlock",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptySwitchStatements",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptySynchronizedBlock",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyStatementNotInLoop",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyInitializer",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyStatementBlock",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_empty.xml_EmptyStaticInitializer",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UnnecessaryConversionTemporary",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UnnecessaryReturn",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UnnecessaryFinalModifier",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UselessOverridingMethod",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "ignoreAnnotations",
+          "default": false
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UselessOperationOnImmutable",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UnusedNullCheckInEquals",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_unnecessary.xml_UselessParentheses",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_clone.xml_ProperCloneImplementation",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_clone.xml_CloneThrowsCloneNotSupportedException",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_finalizers.xml_EmptyFinalizer",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_finalizers.xml_FinalizeOnlyCallsSuperFinalize",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_finalizers.xml_FinalizeOverloaded",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_finalizers.xml_FinalizeDoesNotCallSuperFinalize",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_finalizers.xml_FinalizeShouldBeProtected",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_finalizers.xml_AvoidCallingFinalize",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_NPathComplexity",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 15.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_ExcessiveMethodLength",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 75
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_ExcessiveParameterList",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 5.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_ExcessiveClassLength",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 1500.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_CyclomaticComplexity",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "showMethodsComplexity",
+          "default": true
+        },
+        {
+          "name": "showClassesComplexity",
+          "default": true
+        },
+        {
+          "name": "reportLevel",
+          "default": 8
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_ExcessivePublicCount",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 5.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_TooManyFields",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "maxfields",
+          "default": 15
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_NcssMethodCount",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 100.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_NcssTypeCount",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 50.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_NcssConstructorCount",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "minimum",
+          "default": 100.0
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_codesize.xml_TooManyMethods",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        },
+        {
+          "name": "maxmethods",
+          "default": 15
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_UnconditionalIfStatement",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_BooleanInstantiation",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_CollapsibleIfStatements",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_ClassCastExceptionWithToArray",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_MisplacedNullCheck",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_AvoidThreadGroup",
+      "level": "Error",
+      "category": "ErrorProne",
+      "parameters": []
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_BigIntegerInstantiation",
+      "level": "Warning",
+      "category": "Performance",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_AvoidUsingHardCodedIP",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "violationSuppressRegex",
+          "default": ""
+        },
+        {
+          "name": "violationSuppressXPath",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "patternId": "rulesets_java_basic.xml_ExtendsObject",
+      "level": "Warning",
+      "category": "UnusedCode",
+      "parameters": []
+    }
+  ]
+}
