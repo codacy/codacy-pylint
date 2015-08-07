@@ -1,0 +1,374 @@
+[
+  {
+    "patternId": "C0111",
+    "title": "Enforce docstring definition",
+    "description": "Enforces modules, functions, classes and methods to have a docstring.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0112",
+    "title": "Prohibit empty docstring",
+    "description": "Prohibits modules, functions, classes or methods from having an empty docstring.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0204",
+    "title": "Enforce 'mcs' as first argument",
+    "description": "Enforces the name of the as first argument of a metaclass class method to be 'mcs'.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0301",
+    "title": "Enforce line max length",
+    "description": "Enforces the maximum characters length of each line.",
+    "timeToFix": 5,
+    "parameters": [
+      {
+        "name": "max-line-length",
+        "description": "Indicate the threshold of characters in a code line"
+      }
+    ]
+  },
+  {
+    "patternId": "C0303",
+    "title": "Prohibit trailing whitespace",
+    "description": "Prohibits whitespace on any line directly before the line end character(s).",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0304",
+    "title": "Enforce newline at end of file",
+    "description": "Enforces the line end character(s) on the last line of a file.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0321",
+    "title": "Enforce one statement per line",
+    "description": "Enforces the definition of a single statement per line.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0325",
+    "title": "Prohibit unnecessary parenthesis",
+    "description": "Prohibits use of unnecessary parenthesis to enforce Python conventions.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0326",
+    "title": "Enforce PEP8 whitespace conventions",
+    "description": "Enforces the number of spaces used around an operator, bracket, or comma, or before a block opener colon.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C1001",
+    "title": "Prohibit old-style class",
+    "description": "Prohibits old-style class definition.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0100",
+    "title": "Prohibit __init__() method as a generator",
+    "description": "Prohibits special class method __init__() from being turned into a generator by a yield statement in its body.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0101",
+    "title": "Enforce __init__() method return as None",
+    "description": "Prevents the special class method __init__() from having an explicit return value.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0102",
+    "title": "Prohibit redefinition",
+    "description": "Prohibits the redefinition of functions, classes and methods.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0103",
+    "title": "Prohibit break or continue outside loops",
+    "description": "Prohibits the usage of the break or continue keywords outside of a loop.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "E0104",
+    "title": "Prohibit return outside functions",
+    "description": "Prohibits the usage of the return statement outside functions and methods.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "E0105",
+    "title": "Prohibit yield outside functions",
+    "description": "Prohibits the usage of the yield statement outside functions and methods.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "E0106",
+    "title": "Prohibit return with argument inside generator",
+    "description": "Prohibits the usage of the return statement with an argument in a generator function or method.",
+    "timeToFix": 10
+  },
+  {
+    "patternId": "E0107",
+    "title": "Missing operator",
+    "description": "Prohibits the usage of operators that do not exist in Python.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0108",
+    "title": "Prohibit duplicate argument name",
+    "description": "Prohibits the usage of an argument name in more than one function or method definition.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0202",
+    "title": "Prohibit shadowing attributes",
+    "description": "Prohibits a class from defining a method which shadows an instance attribute with the same name.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0203",
+    "title": "Prohibit access to unassigned members",
+    "description": "Prohibits an instance member from being accessed before it's actually assigned.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0211",
+    "title": "Prohibit methods without arguments",
+    "description": "Prohibits a class from defining a method without having at least an argument with the instance object.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0213",
+    "title": "Enforce 'self' as first argument",
+    "description": "Enforces the name of the as first argument of a method to be 'self'.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0235",
+    "title": "Enforce '__exit__' with 3 arguments",
+    "description": "Enforces that the __exit__ method of a context manager class has exactly three arguments.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0601",
+    "title": "Prohibit access to unassigned variables",
+    "description": "Prohibits a local variable from being accessed before it's actually assigned.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0604",
+    "title": "Enforce string literals in __all__",
+    "description": "Enforces string literals in the module variable __all__.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0701",
+    "title": "Enforce correct except clause order",
+    "description": "Enforces that except clauses are defined from the more specific to the more generic.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0702",
+    "title": "Enforce raise argument type",
+    "description": "Enforces that when raising an error only classes, instances or string are used.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0710",
+    "title": "Enforce raised exceptions inherit from BaseException",
+    "description": "Enforces that raised new-style classes inherit from the BaseException class.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0711",
+    "title": "Prohibit raising NotImplemented",
+    "description": "Prohibits raising NotImplemented, NotImplementedError should be raised instead.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0712",
+    "title": "Enforce caught exceptions inherit from BaseException",
+    "description": "Enforces caught new-style classes inherit from the BaseException class.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1003",
+    "title": "Enforce super() first argument",
+    "description": "Enforces the super() first argument to be the type of the current class.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1004",
+    "title": "Enforce super() arguments",
+    "description": "Enforces super() to have the required number of arguments.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1102",
+    "title": "Prohibit invocation of non-callable",
+    "description": "Prohibits invocation of an object that has been inferred to a non-callable object.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1111",
+    "title": "Prohibit assignment of void function",
+    "description": "Prohibits assignment of function calls that don't return any value.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1120",
+    "title": "Prohibit missing arguments",
+    "description": "Prohibits function calls that have less arguments than those declared.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1121",
+    "title": "Prohibit excessive arguments",
+    "description": "Prohibits function calls that have more arguments than those declared.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1123",
+    "title": "Prohibit undefined keyword arguments",
+    "description": "Prohibits function calls using undefined keyword arguments.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1124",
+    "title": "Prohibit argument as both positional and keyword",
+    "description": "Prohibits function calls from being passed an argument as both positional and keyword.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1200",
+    "title": "Prohibit unsupported logging format",
+    "description": "Prohibits unsupported format characters from being used in logging operations.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1201",
+    "title": "Prohibit partial logging format",
+    "description": "Prohibits partial format string from being used on logging operations.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1205",
+    "title": "Prohibit excessive logging format arguments",
+    "description": "Prohibits logging operations that have more arguments than those declared in the format string.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1206",
+    "title": "Prohibit missing logging format arguments",
+    "description": "Prohibits logging operations that have less arguments than those declared in the format string.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1300",
+    "title": "Prohibit unsupported string format",
+    "description": "Prohibits unsupported conversion specifiers from being used in string format operations.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1301",
+    "title": "Prohibit partial string format",
+    "description": "Prohibits partial conversion specifiers from being used in string format operations.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1302",
+    "title": "Prohibit mixed string format",
+    "description": "Prohibits mixed named and unnamed conversion specifiers in string format operations.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1303",
+    "title": "Enforce string format mapping",
+    "description": "Enforces use of mapping for format string operations that use named conversion specifiers.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1304",
+    "title": "Prohibit undefined string format mapping",
+    "description": "Prohibits mapping for format string operations of having undefined conversion specifiers.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1305",
+    "title": "Prohibit excessive string format arguments",
+    "description": "Prohibits string format operations that have more arguments than conversion specifiers declared.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1306",
+    "title": "Prohibit missing string format arguments",
+    "description": "Prohibits string format operations that have less arguments than conversion specifiers declared.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0101",
+    "title": "Prohibit unreachable code",
+    "description": "Prohibits code after a return or raise statement, which will never be accessed.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0104",
+    "title": "Prohibit useless statements",
+    "description": "Prohibits statements that don't have any effect.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0106",
+    "title": "Prohibit assignments to nothing",
+    "description": "Prohibits assigning expressions to nothing.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0107",
+    "title": "Prohibit unnecessary pass",
+    "description": "Prohibits useless uses of pass expressions.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0108",
+    "title": "Prohibit unnecessary lambda",
+    "description": "Prohibits useless uses of lambda expressions.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0109",
+    "title": "Prohibit duplicate key in dictionary",
+    "description": "Prohibits definition of duplicate keys in dictionaries.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0110",
+    "title": "Enforce list comprehensions",
+    "description": "Enforce list comprehensions for map/filter on lambda.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0120",
+    "title": "Prohibit else on loop without a break",
+    "description": "Prohibits definition of else clause on loop without a break statement.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0122",
+    "title": "Prohibit usage of exec",
+    "description": "Prohibits usage of the exec statement",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0150",
+    "title": "Prohibit return in finally block",
+    "description": "Prohibits statements in finally block that may swallow exception.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0199",
+    "title": "Prohibit assert of a 2-uple",
+    "description": "Prohibits calling assert on a 2-uple",
+    "timeToFix": 5
+  }
+]

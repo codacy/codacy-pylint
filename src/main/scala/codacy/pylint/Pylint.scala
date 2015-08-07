@@ -2,13 +2,12 @@ package codacy.pylint
 
 import java.io
 import java.io.{FileWriter, File}
-import java.nio.file.{Files, Path, Paths, StandardOpenOption}
+import java.nio.file.{Files, Path}
 
 import codacy.dockerApi._
-import play.api.libs.json.{JsString, Json}
 
 import scala.sys.process._
-import scala.util.{Properties, Success, Try}
+import scala.util.{Properties, Try}
 
 object Pylint extends Tool {
 
