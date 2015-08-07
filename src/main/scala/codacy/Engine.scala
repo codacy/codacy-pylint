@@ -1,6 +1,6 @@
 package codacy
 
 import codacy.dockerApi.DockerEngine
-import codacy.pmdjava.PmdJava
+import codacy.pylint.Pylint
 
-object Engine extends DockerEngine(PmdJava)
+object Engine extends DockerEngine(Pylint)

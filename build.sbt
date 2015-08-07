@@ -21,6 +21,7 @@ enablePlugins(DockerPlugin)
 
 version in Docker := "1.0"
 
+//TODO: mudar de java para pylint (slack)
 val installAll =
   s"""apk update && apk add bash curl &&
     |cd /tmp &&
