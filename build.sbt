@@ -22,7 +22,13 @@ enablePlugins(DockerPlugin)
 version in Docker := "1.0"
 
 val installAll =
-  s"""apk update && apk add bash curl && pip install pylint==1.4.1 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
+  s"""apk update && apk add bash curl &&
+     |apk add --update python &&
+     |apk add wget ca-certificates &&
+     |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python &&
+     |apk del wget ca-certificates &&
+     |rm /var/cache/apk/* &&
+     |pip install pylint==1.4.1 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
 mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: File) =>
   val src = resourceDir / "docs"
@@ -36,7 +42,7 @@ mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: Fi
 
 daemonUser in Docker := "docker"
 
-dockerBaseImage := "frolvlad/alpine-python2"
+dockerBaseImage := "frolvlad/alpine-oraclejdk8"
 
 dockerCommands := dockerCommands.value.take(3) ++
   List(Cmd("RUN", installAll), Cmd("RUN", "mv /opt/docker/docs /docs")) ++

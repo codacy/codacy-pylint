@@ -40,7 +40,9 @@ object Pylint extends Tool {
 
   private[this] def getCommandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]], spec: Spec): Try[Seq[String]] = {
 
-    val rulesToApply = spec.patterns.map(_.patternId).mkString(",")
+    lazy val rulesFromSpec = spec.patterns.map(_.patternId).toSeq
+
+    val rulesToApply = conf.fold(rulesFromSpec)(patterns => patterns.map(_.patternId))
     val configurationCmd = writeConfigFile(conf).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
     val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
 
@@ -49,7 +51,7 @@ object Pylint extends Tool {
       Seq("--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}'",
         "--reports=no",
         "--disable=all",
-        "-e", rulesToApply
+        "-e", rulesToApply.mkString(",")
       ) ++
       filesCmd)
   }
@@ -69,11 +71,11 @@ object Pylint extends Tool {
       case (header, params) =>
         s"[$header]\n" + params.map {
           case (_, pvalue) =>
-            s"${pvalue.name.value}=${pvalue.value}}"
+            s"${pvalue.name.value}=${pvalue.value}"
         }.mkString(Properties.lineSeparator)
     }.mkString(Properties.lineSeparator)
 
-    write(paramsToPrint)
+     write(paramsToPrint)
   }
 
   private object ParameterHeader {
