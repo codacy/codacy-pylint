@@ -22,7 +22,7 @@ enablePlugins(DockerPlugin)
 version in Docker := "1.0"
 
 val installAll =
-  s"""pip install pylint==1.4.1 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
+  s"""apk update && apk add bash curl && pip install pylint==1.4.1 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
 mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: File) =>
   val src = resourceDir / "docs"
