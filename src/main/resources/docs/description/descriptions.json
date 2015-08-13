@@ -370,5 +370,17 @@
     "title": "Prohibit assert of a 2-uple",
     "description": "Prohibits calling assert on a 2-uple",
     "timeToFix": 5
+  },
+  {
+    "patternId": "C0102",
+    "title": "Prohibits names on blacklist",
+    "description": "Prohibits the usage of the names in the \"bad-names\" black list.",
+    "timeToFix": 15,
+    "parameters": [
+      {
+        "name": "bad-names",
+        "description": "Bad variable names which should always be refused, separated by a comma"
+      }
+    ]
   }
 ]

@@ -311,6 +311,17 @@
       "patternId": "W0199",
       "level": "Warning",
       "category": "ErrorProne"
+    },
+    {
+      "patternId": "C0102",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "bad-names",
+          "default": "foo,bar,baz,toto,tutu,tata"
+        }
+      ]
     }
   ]
 }
