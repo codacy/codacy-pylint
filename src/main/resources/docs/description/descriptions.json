@@ -382,5 +382,49 @@
         "description": "Bad variable names which should always be refused, separated by a comma"
       }
     ]
+  },
+  {
+    "patternId": "C0103",
+    "title": "Enforces naming conventions",
+    "description": "Enforces the naming convention associated to its type (constant, variable, class…).",
+    "timeToFix": 15,
+    "parameters": [
+      {
+        "name": "argument-rgx",
+        "description": "Regular expression to match Argument type"
+      },
+      {
+        "name": "attr-rgx",
+        "description": "Regular expression to match Attribute type"
+      },
+      {
+        "name": "class-rgx",
+        "description": "Regular expression to match Class type"
+      },
+      {
+        "name": "const-rgx",
+        "description": "Regular expression to match Constant type"
+      },
+      {
+        "name": "function-rgx",
+        "description": "Regular expression to match Function type"
+      },
+      {
+        "name": "method-rgx",
+        "description": "Regular expression to match Method type"
+      },
+      {
+        "name": "module-rgx",
+        "description": "Regular expression to match Module type"
+      },
+      {
+        "name": "variable-rgx",
+        "description": "Regular expression to match Varialbe type"
+      },
+      {
+        "name": "inlinevar-rgx",
+        "description": "Regular expression to match Varialbe type, used as part of list comprehensions and generators"
+      }
+    ]
   }
 ]

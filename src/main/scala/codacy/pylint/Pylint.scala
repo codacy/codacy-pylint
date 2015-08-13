@@ -44,7 +44,7 @@ object Pylint extends Tool {
     lazy val rulesFromSpec = spec.patterns.map(_.patternId).toSeq
 
     val rulesToApply = conf.fold(rulesFromSpec)(patterns => patterns.map(_.patternId))
-    val configurationCmd = writeConfigFile(conf).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
+    val configurationCmd = writeConfigFile(conf, rulesToApply, spec).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
     val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
 
     Try(Seq("pylint") ++
@@ -57,16 +57,26 @@ object Pylint extends Tool {
       filesCmd)
   }
 
-  private def writeConfigFile(configuration: Option[Seq[PatternDef]]): Option[io.File] = {
+  private def writeConfigFile(configuration: Option[Seq[PatternDef]], patternIds:Seq[PatternId], spec: Spec): Option[io.File] = {
 
-    val parameters = (for {
+    lazy val parametersFromSpec = (for {
+      pattern <- spec.patterns.filter(patt => patternIds.contains(patt.patternId))
+      params <- pattern.parameters.toSeq
+      parameter <- params.map(param => ParameterDef(param.name, param.default))
+    } yield {
+        (ParameterHeader.get(parameter.name.value), parameter)
+      }).groupBy { case (header, _) => header }
+
+    val parametersFromConf = (for {
       patterns <- configuration.toSeq
-      pattern <- patterns
+      pattern <- patterns.filter(patt => patternIds.contains(patt.patternId))
       params <- pattern.parameters.toSeq
       parameter <- params
     } yield {
         (ParameterHeader.get(parameter.name.value), parameter)
       }).groupBy { case (header, _) => header }
+
+    val parameters = if(parametersFromConf.nonEmpty) parametersFromConf else parametersFromSpec
 
     val paramsToPrint = parameters.map {
       case (header, params) =>

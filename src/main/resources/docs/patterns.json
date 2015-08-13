@@ -322,6 +322,49 @@
           "default": "foo,bar,baz,toto,tutu,tata"
         }
       ]
+    },
+    {
+      "patternId": "C0103",
+      "level": "Info",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "argument-rgx",
+          "default": "[a-z_][a-z0-9_]{2,30}$"
+        },
+        {
+          "name": "attr-rgx",
+          "default": "[a-z_][a-z0-9_]{2,30}$"
+        },
+        {
+          "name": "class-rgx",
+          "default": "[A-Z_][a-zA-Z0-9]+$"
+        },
+        {
+          "name": "const-rgx",
+          "default": "(([A-Z_][A-Z0-9_]*)|(__.*__))$"
+        },
+        {
+          "name": "function-rgx",
+          "default": "[a-z_][a-z0-9_]{2,30}$"
+        },
+        {
+          "name": "method-rgx",
+          "default": "[a-z_][a-z0-9_]{2,30}$"
+        },
+        {
+          "name": "module-rgx",
+          "default": "(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$"
+        },
+        {
+          "name": "variable-rgx",
+          "default": "[a-z_][a-z0-9_]{2,30}$"
+        },
+        {
+          "name": "inlinevar-rgx",
+          "default": "[A-Za-z_][A-Za-z0-9_]*$"
+        }
+      ]
     }
   ]
 }
