@@ -5,6 +5,7 @@ import java.io.{FileWriter, File}
 import java.nio.file.{Files, Path}
 
 import codacy.dockerApi._
+import play.api.libs.json.{Json, JsString, JsValue}
 
 import scala.sys.process._
 import scala.util.{Properties, Try}
@@ -71,11 +72,19 @@ object Pylint extends Tool {
       case (header, params) =>
         s"[$header]\n" + params.map {
           case (_, pvalue) =>
-            s"${pvalue.name.value}=${pvalue.value}"
+            generateParameter(pvalue)
         }.mkString(Properties.lineSeparator)
     }.mkString(Properties.lineSeparator)
 
      write(paramsToPrint)
+  }
+
+  private[this] def generateParameter(parameter: ParameterDef): String = {
+    val parameterValue = parameter.value match {
+      case JsString(value) => value
+      case other => Json.stringify(other)
+    }
+    s"${parameter.name.value}=$parameterValue"
   }
 
   private object ParameterHeader {
