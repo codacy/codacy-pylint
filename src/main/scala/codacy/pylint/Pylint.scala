@@ -12,7 +12,6 @@ import scala.util.{Properties, Try}
 
 object Pylint extends Tool {
 
-
   override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
     getCommandFor(path, conf, files, spec).flatMap { case cmd =>
       Try(parseResult(path.toString, cmd.lineStream_!(discardingLogger)))
@@ -39,12 +38,23 @@ object Pylint extends Tool {
   //we are using an output file we don't care for stdout or err...
   private[this] lazy val discardingLogger = ProcessLogger((_: String) => ())
 
+  private def getParametersDefFromSpec(parametersSpec: Option[Set[ParameterSpec]]): Option[Set[ParameterDef]] = {
+    parametersSpec.map(params => params.map(param => ParameterDef(param.name, param.default)))
+  }
+
+  private def getDefaultConfFromSpec(spec: Spec): Seq[PatternDef] = {
+    spec.patterns.toSeq.map(pattern => PatternDef(pattern.patternId, getParametersDefFromSpec(pattern.parameters)))
+  }
+
   private[this] def getCommandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]], spec: Spec): Try[Seq[String]] = {
 
     lazy val rulesFromSpec = spec.patterns.map(_.patternId).toSeq
+    lazy val defaultConf : Seq[PatternDef] = getDefaultConfFromSpec(spec)
+
+    val configuration: Seq[PatternDef] = conf.getOrElse(defaultConf)
 
     val rulesToApply = conf.fold(rulesFromSpec)(patterns => patterns.map(_.patternId))
-    val configurationCmd = writeConfigFile(conf, rulesToApply, spec).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
+    val configurationCmd = writeConfigFile(configuration, rulesToApply).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
     val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
 
     Try(Seq("pylint") ++
@@ -57,26 +67,15 @@ object Pylint extends Tool {
       filesCmd)
   }
 
-  private def writeConfigFile(configuration: Option[Seq[PatternDef]], patternIds:Seq[PatternId], spec: Spec): Option[io.File] = {
+  private def writeConfigFile(configuration: Seq[PatternDef], patternIds:Seq[PatternId]): Option[io.File] = {
 
-    lazy val parametersFromSpec = (for {
-      pattern <- spec.patterns.filter(patt => patternIds.contains(patt.patternId))
-      params <- pattern.parameters.toSeq
-      parameter <- params.map(param => ParameterDef(param.name, param.default))
-    } yield {
-        (ParameterHeader.get(parameter.name.value), parameter)
-      }).groupBy { case (header, _) => header }
-
-    val parametersFromConf = (for {
-      patterns <- configuration.toSeq
-      pattern <- patterns.filter(patt => patternIds.contains(patt.patternId))
+    val parameters = (for {
+      pattern <- configuration.filter(patt => patternIds.contains(patt.patternId))
       params <- pattern.parameters.toSeq
       parameter <- params
     } yield {
         (ParameterHeader.get(parameter.name.value), parameter)
       }).groupBy { case (header, _) => header }
-
-    val parameters = if(parametersFromConf.nonEmpty) parametersFromConf else parametersFromSpec
 
     val paramsToPrint = parameters.map {
       case (header, params) =>
