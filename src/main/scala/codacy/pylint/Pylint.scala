@@ -48,12 +48,10 @@ object Pylint extends Tool {
 
   private[this] def getCommandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]], spec: Spec): Try[Seq[String]] = {
 
-    lazy val rulesFromSpec = spec.patterns.map(_.patternId).toSeq
     lazy val defaultConf : Seq[PatternDef] = getDefaultConfFromSpec(spec)
-
     val configuration: Seq[PatternDef] = conf.getOrElse(defaultConf)
 
-    val rulesToApply = conf.fold(rulesFromSpec)(patterns => patterns.map(_.patternId))
+    val rulesToApply = configuration.map(_.patternId)
     val configurationCmd = writeConfigFile(configuration, rulesToApply).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
     val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
 
