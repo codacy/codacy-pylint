@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - sbt "set name := \"$CIRCLE_PROJECT_REPONAME\"" docker:publishLocal
+    - sbt "set version in Docker := \"latest\"" "set name := \"$CIRCLE_PROJECT_REPONAME\"" docker:publishLocal
 
 test:
   pre:
