@@ -1,9 +1,11 @@
+sudo: true
 language: scala
 install:
+  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
   - git clone https://github.com/codacy/codacy-plugins-test.git
 script:
-  - sbt "set name := \"$TRAVIS_REPO_SLUG\"" docker:publishLocal
+  - ./run 'sbt "set name := \"$TRAVIS_REPO_SLUG\"" docker:publishLocal'
   - cd codacy-plugins-test
-  - sbt "run-main codacy.plugins.DockerTest all cc:latest"
+  - ./run 'sbt "run-main codacy.plugins.DockerTest all cc:latest"'
 jdk:
   - oraclejdk8
