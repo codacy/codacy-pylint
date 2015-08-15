@@ -5,7 +5,6 @@ install:
   - git clone https://github.com/codacy/codacy-plugins-test.git
 script:
   - ./run 'sbt "set name := \"$TRAVIS_REPO_SLUG\"" docker:publishLocal'
-  - cd codacy-plugins-test
-  - ./run 'sbt "run-main codacy.plugins.DockerTest all cc:latest"'
+  - ./run '(cd codacy-plugins-test; sbt "run-main codacy.plugins.DockerTest all cc:latest")'
 jdk:
   - oraclejdk8
