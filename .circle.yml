@@ -1,9 +1,12 @@
 machine:
+  java:
+    version: oraclejdk8
   services:
     - docker
 
 test:
-  override:
+  pre:
     - git clone https://github.com/codacy/codacy-plugins-test.git
+  override:
     - sbt "set name := \"$CIRCLE_PROJECT_REPONAME\"" docker:publishLocal
     - (cd codacy-plugins-test; sbt "run-main codacy.plugins.DockerTest all $CIRCLE_PROJECT_REPONAME:latest")
