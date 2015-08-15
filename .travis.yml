@@ -1,6 +1,9 @@
 language: scala
+install:
+  - git clone https://github.com/codacy/codacy-plugins-test.git
 script:
-  - sbt +compile
-  - sbt +test
+  - sbt "set name := \"$TRAVIS_REPO_SLUG\"" docker:publishLocal
+  - cd codacy-plugins-test
+  - sbt "run-main codacy.plugins.DockerTest all cc:latest"
 jdk:
   - oraclejdk8
