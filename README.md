@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/codacy/codacy-pylint.svg?branch=master)](https://travis-ci.org/codacy/codacy-pylint)
+[![Build Status](https://circleci.com/gh/codacy/codacy-pylint.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/codacy/codacy-pylint)
 
 create the docker: sbt docker:publishLocal
 
