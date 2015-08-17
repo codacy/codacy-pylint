@@ -456,5 +456,107 @@
         "description": "Maximum number of locals for function / method body"
       }
     ]
+  },
+  {
+    "patternId": "W0102",
+    "title": "Prohibits dangerous default parameters",
+    "description": "Prohibits the usage of a mutable value (like list or dictionary) in a default value for an argument.",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "W0141",
+    "title": "Prohibits functions on blacklist",
+    "description": "Prohibits the usage of functions in the \"bad-function\" black list.",
+    "timeToFix": 40,
+    "parameters": [
+      {
+        "name": "bad-functions",
+        "description": "List of builtins function names that should not be used, separated by a comma"
+      }
+    ]
+  },
+  {
+    "patternId": "W0201",
+    "title": "Prohibits instance attributes outside __init__",
+    "description": "Used when an instance attribute is defined outside the __init__ method.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "W0211",
+    "title": "Prohibits self or cls in static method",
+    "description": "Prohibits the usage of self or cls as first argument of a static method",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "W0212",
+    "title": "Prohibits a protected member access outside scope",
+    "description": "Prohibits a protected member is access outside the class or a descendant of the class where it's defined.",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "W0221",
+    "title": "Prohibits different number of arguments in override",
+    "description": "Prohibits a different number of arguments than the implemented interface or in an overridden method.",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "W0222",
+    "title": "Prohibits different signature in override",
+    "description": "Prohibits a different method signature than the implemented interface or in an overridden method.",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "W0223",
+    "title": "Prohibits an abstract method not overridden",
+    "description": "Prohibits abstract methods (i.e. ones that raise NotImplementedError ) that is not overridden in a concrete class.",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "W0231",
+    "title": "Prohibits __init__ method not called",
+    "description": "Prohibits an ancestor class method having __init__ method which is not called by a derived class.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "W0233",
+    "title": "Prohibits calling __init__ on not direct ancestor",
+    "description": "Prohibits __init__ method call on a class which is not in the direct ancestors for the analysed class.",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "W0301",
+    "title": "Prohibits semi-colon (\";\") ending statements",
+    "description": "Prohibits a statement ended in a semi-colon (\";\"), which isn't necessary",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0311",
+    "title": "Prohibits an unexpected number of indentation's spaces",
+    "description": "Prohibits an unexpected number of indentation's tabulations or spaces.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0312",
+    "title": "Prohibits a mix of spaces and tabs",
+    "description": "Prohibits the mix of tabs and spaces in a module.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "W0613",
+    "title": "Prohibits not used arguments",
+    "description": "Prohibits received arguments not being used, they should not be received instead",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "W0702",
+    "title": "Prohibits catching exceptions without type",
+    "description": "Prohibits an except clause that doesn't specify exceptions type to catch",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "W1111",
+    "title": "Prohibits assignment to function return None",
+    "description": "Prohibits assignment done on a function call but the inferred function returns nothing but None.",
+    "timeToFix": 20
   }
 ]
