@@ -426,5 +426,35 @@
         "description": "Regular expression to match Varialbe type, used as part of list comprehensions and generators"
       }
     ]
+  },
+  {
+    "patternId": "E0001",
+    "title": "Prohibits syntax errors",
+    "description": "The code has syntax erros",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "R0201",
+    "title": "Prohibits classes without referencing",
+    "description": "Prohibits the usage of classes when there are no references for it, suggesting that the method could be used as a static function instead",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "R0903",
+    "title": "Prohibits classes just to store data",
+    "description": "Prohibits classes that only store data, the class itself should have methods to manipulate its data",
+    "timeToFix": 30
+  },
+  {
+    "patternId": "R0914",
+    "title": "Prohibits more than \"max-locals\" in the namespace",
+    "description": "Prohibits more than \"max-locals\" variables in a method or function.",
+    "timeToFix": 40,
+    "parameters": [
+      {
+        "name": "max-locals",
+        "description": "Maximum number of locals for function / method body"
+      }
+    ]
   }
 ]

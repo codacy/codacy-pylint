@@ -365,6 +365,32 @@
           "default": "[A-Za-z_][A-Za-z0-9_]*$"
         }
       ]
+    },
+    {
+      "patternId": "E0001",
+      "level": "Error",
+      "category": "ErrorProne"
+    },
+    {
+      "patternId": "R0201",
+      "level": "Warning",
+      "category": "CodeStyle"
+    },
+    {
+      "patternId": "R0903",
+      "level": "Info",
+      "category": "CodeStyle"
+    },
+    {
+      "patternId": "R0914",
+      "level": "Warning",
+      "category": "CodeStyle",
+      "parameters": [
+        {
+          "name": "max-locals",
+          "default": 15
+        }
+      ]
     }
   ]
 }
