@@ -19,5 +19,5 @@ deployment:
     branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag codacy-pylint codacy/codacy-pylint
-      - docker push codacy/codacy-pylint
+      - docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME
+      - docker push codacy/$CIRCLE_PROJECT_REPONAME
