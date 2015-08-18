@@ -1,89 +1,95 @@
 package codacy.pylint
 
-import java.io
-import java.io.{FileWriter, File}
-import java.nio.file.{Files, Path}
-
+import java.nio.file.{Paths, Files, Path}
 import codacy.dockerApi._
 import play.api.libs.json.{Json, JsString, JsValue}
-
 import scala.sys.process._
 import scala.util.{Properties, Try}
 
 object Pylint extends Tool {
 
   override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
-    getCommandFor(path, conf, files, spec).flatMap { case cmd =>
-      Try(parseResult(path.toString, cmd.lineStream_!(discardingLogger)))
+    commandFor(path, conf, files).flatMap{ case cmd =>
+      Try(cmd.lineStream_!(discardingLogger)).map{ case lines =>
+        lines.flatMap{ case line =>
+          parseLine(path,line)
+        }
+      }
     }
   }
 
-  def parseResult(rootDirPath: String, lines: Seq[String]): Iterable[Result] = {
+  private[this] def parseLine(rootDir: Path, line: String): Iterable[Result] = {
     val RegMatch = """(.+):([0-9]+): \[(.+)\((.+)\), .*?\] (.*)""".r
     val ErrorMatch = """^Traceback.*""".r
 
-    lines.collect {
+    Seq(line).flatMap{
       case RegMatch(file, line, id, verboseId, message) =>
-        val filename = toRelativePath(rootDirPath, Seq(file)).head
-        Result(SourcePath(filename), ResultMessage(message), PatternId(id), ResultLine(line.toInt))
-
-      case ErrorMatch() =>
-        throw PyLintParserException("PyLint crashed: " + lines.mkString("\n"))
+        toRelativePath(rootDir, file).map{ case filename =>
+          Result(filename, ResultMessage(message), PatternId(id), ResultLine(line.toInt))
+        }
+      case _ => Seq.empty
     }
   }
 
-  protected def toRelativePath(rootDirectory: String, paths: Seq[String]): Seq[String] =
-    paths.map(_.stripPrefix(rootDirectory).stripPrefix("/"))
+  private[this] def toRelativePath(rootDirectory: Path, path: String): Option[SourcePath] = {
+    val absolutePath = Paths.get(path)
+    Try(rootDirectory.relativize(absolutePath)).map{ case relativePaths => SourcePath(relativePaths.toString )}.toOption
+  }
 
-  //we are using an output file we don't care for stdout or err...
   private[this] lazy val discardingLogger = ProcessLogger((_: String) => ())
 
-  private def getParametersDefFromSpec(parametersSpec: Option[Set[ParameterSpec]]): Option[Set[ParameterDef]] = {
-    parametersSpec.map(params => params.map(param => ParameterDef(param.name, param.default)))
+  //TODO: the default should be all?? i really don't think so
+  private[this] def defaultConf(implicit spec: Spec) = {
+    spec.patterns.map{ case patternSpec =>
+      val params = patternSpec.parameters.map{ case paramSpecs =>
+        paramSpecs.map{ case paramSpec =>
+          ParameterDef(paramSpec.name, paramSpec.default)
+        }
+      }
+      PatternDef(patternSpec.patternId, params)
+    }.toSeq
   }
 
-  private def getDefaultConfFromSpec(spec: Spec): Seq[PatternDef] = {
-    spec.patterns.toSeq.map(pattern => PatternDef(pattern.patternId, getParametersDefFromSpec(pattern.parameters)))
-  }
+  private[this] def commandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Seq[String]] = {
 
-  private[this] def getCommandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]], spec: Spec): Try[Seq[String]] = {
-
-    lazy val defaultConf : Seq[PatternDef] = getDefaultConfFromSpec(spec)
     val configuration: Seq[PatternDef] = conf.getOrElse(defaultConf)
+    lazy val rulesString = configuration.map(_.patternId.toString).mkString(",")
+    lazy val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
 
-    val rulesToApply = configuration.map(_.patternId)
-    val configurationCmd = writeConfigFile(configuration, rulesToApply).map(f => Seq("--rcfile=" + f.getAbsolutePath)).getOrElse(Seq.empty)
-    val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
-
-    Try(Seq("pylint") ++
-      configurationCmd ++
-      Seq("--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}'",
+    writeConfigFile(configuration).map{ case confPath =>
+      Seq(
+        "pylint",
+        s"--rcfile=$confPath",
+        "--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}'",
         "--reports=no",
         "--disable=all",
-        "-e", rulesToApply.mkString(",")
-      ) ++
-      filesCmd)
+        "-e",
+        rulesString
+      ) ++ filesCmd
+    }
   }
 
-  private def writeConfigFile(configuration: Seq[PatternDef], patternIds:Seq[PatternId]): Option[io.File] = {
+  private[this] def writeConfigFile(configuration: Seq[PatternDef]): Try[Path] = {
 
-    val parameters = (for {
-      pattern <- configuration.filter(patt => patternIds.contains(patt.patternId))
-      params <- pattern.parameters.toSeq
-      parameter <- params
-    } yield {
-        (ParameterHeader.get(parameter.name.value), parameter)
-      }).groupBy { case (header, _) => header }
+    val parameters = configuration.flatMap{ case pattern =>
+      pattern.parameters.getOrElse(Set.empty).map{ case param =>
+        ParameterHeader.get(param.name)->param
+      }
+    }.groupBy{ case (header,_) => header }
 
-    val paramsToPrint = parameters.map {
-      case (header, params) =>
-        s"[$header]\n" + params.map {
-          case (_, pvalue) =>
-            generateParameter(pvalue)
-        }.mkString(Properties.lineSeparator)
+    val paramsToPrint = parameters.map{ case (header, params) =>
+
+      lazy val paramString: String = params.map { case (_, pvalue) =>
+        generateParameter(pvalue)
+      }.mkString( Properties.lineSeparator )
+
+      s"""[$header]
+         |$paramString
+       """.stripMargin
+
     }.mkString(Properties.lineSeparator)
 
-     write(paramsToPrint)
+    write(paramsToPrint)
   }
 
   private[this] def generateParameter(parameter: ParameterDef): String = {
@@ -91,106 +97,20 @@ object Pylint extends Tool {
       case JsString(value) => value
       case other => Json.stringify(other)
     }
-    s"${parameter.name.value}=$parameterValue"
+    s"${parameter.name}=$parameterValue"
   }
 
-  private object ParameterHeader {
-    val values = Map(
-      "required-attributes" -> "BASIC",
-      "bad-functions" -> "BASIC",
-      "good-names" -> "BASIC",
-      "bad-names" -> "BASIC",
-      "name-group" -> "BASIC",
-      "include-naming-hint" -> "BASIC",
-      "function-rgx" -> "BASIC",
-      "function-name-hint" -> "BASIC",
-      "variable-rgx" -> "BASIC",
-      "variable-name-hint" -> "BASIC",
-      "const-rgx" -> "BASIC",
-      "const-name-hint" -> "BASIC",
-      "attr-rgx" -> "BASIC",
-      "attr-name-hint" -> "BASIC",
-      "argument-rgx" -> "BASIC",
-      "argument-name-hint" -> "BASIC",
-      "class-attribute-rgx" -> "BASIC",
-      "class-attribute-name-hint" -> "BASIC",
-      "inlinevar-rgx" -> "BASIC",
-      "inlinevar-name-hint" -> "BASIC",
-      "class-rgx" -> "BASIC",
-      "class-name-hint" -> "BASIC",
-      "module-rgx" -> "BASIC",
-      "module-name-hint" -> "BASIC",
-      "method-rgx" -> "BASIC",
-      "method-name-hint" -> "BASIC",
-      "no-docstring-rgx" -> "BASIC",
-      "docstring-min-length" -> "BASIC",
-      "spelling-dict" -> "SPELLING",
-      "spelling-ignore-words" -> "SPELLING",
-      "spelling-private-dict-file" -> "SPELLING",
-      "spelling-store-unknown-words" -> "SPELLING",
-      "min-similarity-lines" -> "SIMILARITIES",
-      "ignore-comments" -> "SIMILARITIES",
-      "ignore-docstrings" -> "SIMILARITIES",
-      "ignore-imports" -> "SIMILARITIES",
-      "logging-modules" -> "LOGGING",
-      "max-line-length" -> "FORMAT",
-      "ignore-long-lines" -> "FORMAT",
-      "single-line-if-stmt" -> "FORMAT",
-      "no-space-check" -> "FORMAT",
-      "max-module-lines" -> "FORMAT",
-      "indent-string" -> "FORMAT",
-      "indent-after-paren" -> "FORMAT",
-      "expected-line-ending-format" -> "FORMAT",
-      "notes" -> "MISCELLANEOUS",
-      "ignore-mixin-members" -> "TYPECHECK",
-      "ignored-modules" -> "TYPECHECK",
-      "ignored-classes" -> "TYPECHECK",
-      "zope" -> "TYPECHECK",
-      "generated-members" -> "TYPECHECK",
-      "ignore-iface-methods" -> "CLASSES",
-      "defining-attr-methods" -> "CLASSES",
-      "valid-classmethod-first-arg" -> "CLASSES",
-      "valid-metaclass-classmethod-first-arg" -> "CLASSES",
-      "exclude-protected" -> "CLASSES",
-      "max-args" -> "DESIGN",
-      "ignored-argument-names" -> "DESIGN",
-      "max-locals" -> "DESIGN",
-      "max-returns" -> "DESIGN",
-      "max-branches" -> "DESIGN",
-      "max-statements" -> "DESIGN",
-      "max-parents" -> "DESIGN",
-      "max-attributes" -> "DESIGN",
-      "min-public-methods" -> "DESIGN",
-      "max-public-methods" -> "DESIGN",
-      "deprecated-modules" -> "IMPORTS",
-      "import-graph" -> "IMPORTS",
-      "ext-import-graph" -> "IMPORTS",
-      "int-import-graph" -> "IMPORTS",
-      "overgeneral-exceptions" -> "EXCEPTIONS"
-    )
+  private[this] def randomFile(extension: String = "conf") = Try(
+    Files.createTempFile("codacy-", s".$extension")
+  )
 
-    def get(value: String): String = values.getOrElse(value, "MASTER")
-  }
-
-
-  private def randomFile(extension: String = "conf"): File = {
-    Files.createTempFile("codacy-", s".$extension").toFile
-  }
-
-  def write(content: String, extension: String = "conf"): Option[File] = {
-    Try {
-      val file = randomFile(extension)
-      val writer = new FileWriter(file)
-      writer.write(content)
-      writer.flush()
-      writer.close()
-
-      file.setReadable(true, false)
-      file.setWritable(true, false)
-
-      file
-    }.toOption
+  private[this] def write(content: String): Try[Path] = {
+    randomFile().map{ case confFile =>
+      Files.write(confFile,content.getBytes())
+    }
   }
 }
 
 case class PyLintParserException(message: String) extends Exception(message)
+
+
