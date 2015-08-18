@@ -13,3 +13,10 @@ test:
     - git clone https://github.com/codacy/codacy-plugins-test.git
   override:
     - (cd codacy-plugins-test; sbt "run-main codacy.plugins.DockerTest all $CIRCLE_PROJECT_REPONAME:latest")
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push codacy/codacy-pylint
