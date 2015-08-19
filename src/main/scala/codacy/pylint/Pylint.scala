@@ -4,7 +4,7 @@ import java.nio.file.{Paths, Files, Path}
 import codacy.dockerApi._
 import play.api.libs.json._
 import scala.sys.process._
-import scala.util.{Failure, Success, Properties, Try}
+import scala.util.{ Success, Properties, Try}
 
 object Pylint extends Tool {
 
