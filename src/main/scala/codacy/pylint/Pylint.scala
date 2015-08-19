@@ -2,50 +2,38 @@ package codacy.pylint
 
 import java.nio.file.{Paths, Files, Path}
 import codacy.dockerApi._
-import play.api.libs.json.{JsError, JsSuccess, Json, JsString}
+import play.api.libs.json._
 import scala.sys.process._
 import scala.util.{Failure, Success, Properties, Try}
 
 object Pylint extends Tool {
 
   override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
-    lazy val enabledPatterns = conf.map(_.map(_.patternId)).getOrElse(spec.patterns.map(_.patternId)).toSet[PatternId]
+    def isEnabled(result: Result) = conf.map(_.exists(_.patternId == result.patternId)).getOrElse(true)
 
     commandFor(path, conf, files).flatMap{ case cmd =>
       val wrappedCmd = Seq("bash","-c", cmd.mkString(" "))
 
-      Try(wrappedCmd.lineStream_!(ProcessLogger(_ => ()))).flatMap{ case lines =>
-        val output = lines.mkString(Properties.lineSeparator)
-        Try(Json.parse(output)).flatMap{ case json =>
-          json.validate[Seq[PylintResult]] match{
-            case JsSuccess(results,_) =>
-              Success(results.flatMap(asResult(_,path,enabledPatterns)))
-            case JsError(err) =>
-              Failure(new Throwable(Json.stringify(JsError.toFlatJson(err))))
+      Try(wrappedCmd.lineStream_!(ProcessLogger(_ => ()))).map{ case lines =>
+        lines.flatMap(parseLine).filter( isEnabled ).flatMap{ case result =>
+          toRelativePath(path, result.filename).map{ case fileName =>
+            result.copy(filename = fileName)
           }
         }
       }
     }
   }
 
-  private[this] def asResult(pylintResult: PylintResult, rootPath:Path, enabledPatterns:Set[PatternId]):Option[Result] = {
-    import pylintResult._
-    enabledPatterns.find(_ == PatternId(module) ).flatMap{ case patternId =>
-      toRelativePath(rootPath,path).map{ case fileName =>
-        Result(
-          filename = fileName,
-          message = ResultMessage(message),
-          patternId = patternId,
-          line = ResultLine(line)
-        )
-      }
-    }
-  }
+  private[this]implicit lazy val writer = Json.reads[Result]
+
+  private[this] def parseLine(line:String) = Try(Json.parse(line)).toOption.flatMap( _.asOpt[Result] )
 
   private[this] def toRelativePath(rootDirectory: Path, path: String): Option[SourcePath] = {
     val absolutePath = Paths.get(path)
     Try(rootDirectory.relativize(absolutePath)).map{ case relativePaths => SourcePath(relativePaths.toString )}.toOption
   }
+
+  private[this] val msgTemplate = """'{{"filename":"{path}","line":{line},"message":"{msg}","patternId":"{msg_id}"}}'"""
 
   private[this] def commandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Seq[String]] = {
 
@@ -74,9 +62,7 @@ object Pylint extends Tool {
     }.getOrElse(Success(Seq.empty[String]))
 
     configPart.map{ case configPart =>
-      Seq("pylint") ++ configPart ++ Seq(
-        "-f json"
-      ) ++ rulesPart ++ filesPart
+      Seq("pylint") ++ configPart ++ Seq(s"--msg-template=$msgTemplate") ++ rulesPart ++ filesPart
     }
   }
 
