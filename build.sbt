@@ -11,8 +11,7 @@ val languageVersion = "2.11.7"
 scalaVersion := languageVersion
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.3.8" withSources(),
-  "org.scala-lang.modules" %% "scala-xml" % "1.0.4" withSources()
+  "com.typesafe.play" %% "play-json" % "2.3.8"
 )
 
 enablePlugins(JavaAppPackaging)
@@ -20,6 +19,8 @@ enablePlugins(JavaAppPackaging)
 enablePlugins(DockerPlugin)
 
 version in Docker := "1.0"
+
+organization := "com.codacy"
 
 val installAll =
   s"""apk update && apk add bash curl &&
@@ -44,7 +45,13 @@ daemonUser in Docker := "docker"
 
 dockerBaseImage := "frolvlad/alpine-oraclejdk8"
 
-dockerCommands := dockerCommands.value.take(3) ++
-  List(Cmd("RUN", installAll), Cmd("RUN", "mv /opt/docker/docs /docs")) ++
-  List(Cmd("RUN", "adduser -u 2004 -D docker")) ++
-  dockerCommands.value.drop(3)
+dockerCommands := dockerCommands.value.flatMap{
+  case cmd@Cmd("WORKDIR",_) => List(cmd,
+    Cmd("RUN", installAll)
+  )
+  case cmd@(Cmd("ADD","opt /opt")) => List(cmd,
+    Cmd("RUN", "mv /opt/docker/docs /docs"),
+    Cmd("RUN", "adduser -u 2004 -D docker")
+  )
+  case other => List(other)
+}

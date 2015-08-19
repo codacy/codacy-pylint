@@ -2,32 +2,43 @@ package codacy.pylint
 
 import java.nio.file.{Paths, Files, Path}
 import codacy.dockerApi._
-import play.api.libs.json.{Json, JsString, JsValue}
+import play.api.libs.json.{JsError, JsSuccess, Json, JsString}
 import scala.sys.process._
-import scala.util.{Properties, Try}
+import scala.util.{Failure, Success, Properties, Try}
 
 object Pylint extends Tool {
 
   override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
+    lazy val enabledPatterns = conf.map(_.map(_.patternId)).getOrElse(spec.patterns.map(_.patternId)).toSet[PatternId]
+
     commandFor(path, conf, files).flatMap{ case cmd =>
-      Try(cmd.lineStream_!(discardingLogger)).map{ case lines =>
-        lines.flatMap{ case line =>
-          parseLine(path,line)
+      val wrappedCmd = Seq("bash","-c", cmd.mkString(" "))
+
+      Try(wrappedCmd.lineStream_!(ProcessLogger(_ => ()))).flatMap{ case lines =>
+        val output = lines.mkString(Properties.lineSeparator)
+        Try(Json.parse(output)).flatMap{ case json =>
+          json.validate[Seq[PylintResult]] match{
+            case JsSuccess(results,_) =>
+              Success(results.flatMap(asResult(_,path,enabledPatterns)))
+            case JsError(err) =>
+              Failure(new Throwable(Json.stringify(JsError.toFlatJson(err))))
+          }
         }
       }
     }
   }
 
-  private[this] def parseLine(rootDir: Path, line: String): Iterable[Result] = {
-    val RegMatch = """(.+):([0-9]+): \[(.+)\((.+)\), .*?\] (.*)""".r
-    val ErrorMatch = """^Traceback.*""".r
-
-    Seq(line).flatMap{
-      case RegMatch(file, line, id, verboseId, message) =>
-        toRelativePath(rootDir, file).map{ case filename =>
-          Result(filename, ResultMessage(message), PatternId(id), ResultLine(line.toInt))
-        }
-      case _ => Seq.empty
+  private[this] def asResult(pylintResult: PylintResult, rootPath:Path, enabledPatterns:Set[PatternId]):Option[Result] = {
+    import pylintResult._
+    enabledPatterns.find(_ == PatternId(module) ).flatMap{ case patternId =>
+      toRelativePath(rootPath,path).map{ case fileName =>
+        Result(
+          filename = fileName,
+          message = ResultMessage(message),
+          patternId = patternId,
+          line = ResultLine(line)
+        )
+      }
     }
   }
 
@@ -36,36 +47,36 @@ object Pylint extends Tool {
     Try(rootDirectory.relativize(absolutePath)).map{ case relativePaths => SourcePath(relativePaths.toString )}.toOption
   }
 
-  private[this] lazy val discardingLogger = ProcessLogger((_: String) => ())
-
-  //TODO: the default should be all?? i really don't think so
-  private[this] def defaultConf(implicit spec: Spec) = {
-    spec.patterns.map{ case patternSpec =>
-      val params = patternSpec.parameters.map{ case paramSpecs =>
-        paramSpecs.map{ case paramSpec =>
-          ParameterDef(paramSpec.name, paramSpec.default)
-        }
-      }
-      PatternDef(patternSpec.patternId, params)
-    }.toSeq
-  }
-
   private[this] def commandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Seq[String]] = {
 
-    val configuration: Seq[PatternDef] = conf.getOrElse(defaultConf)
-    lazy val rulesString = configuration.map(_.patternId.toString).mkString(",")
-    lazy val filesCmd = files.getOrElse(Set(path.toAbsolutePath)).map(_.toString).toSeq
+    val rulesPart = conf.toList.flatMap{ case conf =>
+      val rules = conf.map(_.patternId.toString).mkString(",")
+      Seq("--disable=all","-e",rules)
+    }
+    //get the list of files workaround
+    val filesPart: Iterable[String] = files.collect{ case files if files.nonEmpty => files.map(_.toString) }.getOrElse{
+      //if files is empty check if we have a __init__.py if not we do a find...
+      //do we have a file called __init__.py ?
+      val isPackage = Files.exists(path.resolve(Paths.get("__init__.py")))
+      if(isPackage){
+        Seq(path.toString)
+      }
+      else {
+        Seq(s"`find $path -type f -name *.py`")
+      }
+    }
 
-    writeConfigFile(configuration).map{ case confPath =>
-      Seq(
-        "pylint",
-        s"--rcfile=$confPath",
-        "--msg-template='{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}'",
-        "--reports=no",
-        "--disable=all",
-        "-e",
-        rulesString
-      ) ++ filesCmd
+    val configPart = conf.map{ case configuration =>
+      val confFile = writeConfigFile(configuration)
+      confFile.map{ case confPath =>
+        Seq(s"--rcfile=$confPath")
+      }
+    }.getOrElse(Success(Seq.empty[String]))
+
+    configPart.map{ case configPart =>
+      Seq("pylint") ++ configPart ++ Seq(
+        "-f json"
+      ) ++ rulesPart ++ filesPart
     }
   }
 
@@ -88,7 +99,6 @@ object Pylint extends Tool {
        """.stripMargin
 
     }.mkString(Properties.lineSeparator)
-
     write(paramsToPrint)
   }
 

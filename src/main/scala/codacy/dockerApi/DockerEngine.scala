@@ -23,9 +23,9 @@ abstract class DockerEngine(Tool: Tool) extends DockerEnvironment {
       }
     } match {
       case Success(results) =>
-        results.foreach { result =>
+        results.map{ case result =>
           println(Json.stringify(Json.toJson(result)))
-        }
+        }.toList
 
       case Failure(error) =>
         error.printStackTrace(Console.err)
