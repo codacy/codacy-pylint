@@ -11,7 +11,8 @@ val languageVersion = "2.11.7"
 scalaVersion := languageVersion
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.3.8"
+  "com.typesafe.play" %% "play-json" % "2.3.8",
+  "com.codacy" %% "codacy-engine-scala-seed" % "1.0-SNAPSHOT"
 )
 
 enablePlugins(JavaAppPackaging)
