@@ -48,11 +48,6 @@
       "category": "CodeStyle"
     },
     {
-      "patternId": "C0326",
-      "level": "Info",
-      "category": "CodeStyle"
-    },
-    {
       "patternId": "C1001",
       "level": "Info",
       "category": "CodeStyle"
@@ -123,7 +118,7 @@
       "category": "ErrorProne"
     },
     {
-      "patternId": "E0235",
+      "patternId": "E0302",
       "level": "Error",
       "category": "ErrorProne"
     },
@@ -398,17 +393,6 @@
       "category": "ErrorProne"
     },
     {
-      "patternId": "W0141",
-      "level": "Warning",
-      "category": "CodeStyle",
-      "parameters": [
-        {
-          "name": "bad-functions",
-          "default": ""
-        }
-      ]
-    },
-    {
       "patternId": "W0201",
       "level": "Warning",
       "category": "ErrorProne"
@@ -474,7 +458,7 @@
       "category": "ErrorProne"
     },
     {
-      "patternId": "W1111",
+      "patternId": "E1128",
       "level": "Error",
       "category": "ErrorProne"
     }
