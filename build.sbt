@@ -33,7 +33,7 @@ val installAll =
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python &&
      |apk del wget ca-certificates &&
      |rm /var/cache/apk/* &&
-     |pip install pylint==1.4.1 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
+     |pip install pylint==1.5.2 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
 mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: File) =>
   val src = resourceDir / "docs"

@@ -54,12 +54,6 @@
     "timeToFix": 5
   },
   {
-    "patternId": "C0326",
-    "title": "Enforce PEP8 whitespace conventions",
-    "description": "Enforces the number of spaces used around an operator, bracket, or comma, or before a block opener colon.",
-    "timeToFix": 5
-  },
-  {
     "patternId": "C1001",
     "title": "Prohibit old-style class",
     "description": "Prohibits old-style class definition.",
@@ -144,9 +138,9 @@
     "timeToFix": 5
   },
   {
-    "patternId": "E0235",
-    "title": "Enforce '__exit__' with 3 arguments",
-    "description": "Enforces that the __exit__ method of a context manager class has exactly three arguments.",
+    "patternId": "E0302",
+    "title": "Enforce correct signature of special methods",
+    "description": "Enforces that special methods have the expected signature.",
     "timeToFix": 5
   },
   {
@@ -464,18 +458,6 @@
     "timeToFix": 30
   },
   {
-    "patternId": "W0141",
-    "title": "Prohibits functions on blacklist",
-    "description": "Prohibits the usage of functions in the \"bad-function\" black list.",
-    "timeToFix": 40,
-    "parameters": [
-      {
-        "name": "bad-functions",
-        "description": "List of builtins function names that should not be used, separated by a comma"
-      }
-    ]
-  },
-  {
     "patternId": "W0201",
     "title": "Prohibits instance attributes outside __init__",
     "description": "Used when an instance attribute is defined outside the __init__ method.",
@@ -554,8 +536,8 @@
     "timeToFix": 30
   },
   {
-    "patternId": "W1111",
-    "title": "Prohibits assignment to function return None",
+    "patternId": "E1128",
+    "title": "Prohibits assignment to function which returns None",
     "description": "Prohibits assignment done on a function call but the inferred function returns nothing but None.",
     "timeToFix": 20
   }

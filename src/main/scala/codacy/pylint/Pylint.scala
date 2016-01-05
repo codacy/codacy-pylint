@@ -25,9 +25,16 @@ object Pylint extends Tool {
 
   private implicit lazy val writer = Json.reads[Issue]
 
-  private def parseLine(line: String) = Try(Json.parse(line)).toOption.flatMap(_.asOpt[Issue])
+  private def parseLine(line: String) = {
+     val elements = line.split("###")
+     Try(Issue(SourcePath(elements(0)),
+               ResultMessage(elements(2)),
+               PatternId(elements(3)),
+               ResultLine(elements(1).toInt))).toOption
 
-  private val msgTemplate = """'{{"filename":"{path}","line":{line},"message":"{msg}","patternId":"{msg_id}"}}'"""
+  }
+
+  private val msgTemplate = "{path}###{line}###{msg}###{msg_id}"
 
   private def commandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Seq[String]] = {
 
