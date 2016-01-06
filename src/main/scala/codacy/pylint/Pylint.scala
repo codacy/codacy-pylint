@@ -3,6 +3,7 @@ package codacy.pylint
 import java.nio.file.{Files, Path, Paths}
 
 import codacy.dockerApi._
+import codacy.dockerApi.utils.{FileHelper, CommandRunner}
 import play.api.libs.json._
 
 import scala.sys.process._
@@ -10,49 +11,141 @@ import scala.util.{Properties, Success, Try}
 
 object Pylint extends Tool {
 
-  override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
-    def isEnabled(issue: Issue) =
-      conf.map(_.exists(_.patternId == issue.patternId)).getOrElse(true)
+   override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
+    def isEnabled(issue: Result) = {
+       issue match {
+          case Issue(_, _, patternId, _) => conf.map(item => item.exists(_.patternId == patternId)).getOrElse(true)
+          case _ => true
+       }
+    }
 
-    commandFor(path, conf, files).flatMap { case cmd =>
-      val wrappedCmd = Seq("bash", "-c", cmd.mkString(" "))
+    def buildFileCommands(files: Map[String, Array[String]]) = {
+      files.map { case (key, values) => commandFor(key, path, conf, values)}
+           .flatMap( item => item.toOption)
+    }
 
-      Try(wrappedCmd.lineStream_!(ProcessLogger(_ => ()))).map { lines =>
-        lines.flatMap(parseLine).filter(isEnabled)
+    def getStdout(command: Seq[String]): Try[Seq[String]] = {
+      Try {
+          CommandRunner.exec(command) match {
+            case Right(resultFromTool) =>
+              resultFromTool.stdout
+            case Left(failure) => {
+              throw failure}
+          }
       }
     }
+
+    val collectedFiles = collectFiles(files, path)
+    val classified = classifyFiles(collectedFiles)
+    val commands = classified.map { case item => buildFileCommands(item) }
+    val lines_iterable = commands.map { item => item.map(getStdout) }
+    val lines = lines_iterable.map {
+      case iterable => iterable.flatMap {
+          case item => item.toOption
+      }.flatten
+    }
+    lines.map { case line => line.flatMap(parseLine).flatten.filter(isEnabled)}
   }
 
+
   private implicit lazy val writer = Json.reads[Issue]
-
+  
   private def parseLine(line: String) = {
-     val elements = line.split("###")
-     Try(Issue(SourcePath(elements(0)),
-               ResultMessage(elements(2)),
-               PatternId(elements(3)),
-               ResultLine(elements(1).toInt))).toOption
-
+     val LineRegex = """(.*?)###(.*?)###(.*?)###(.*?)""".r
+     line match {
+         case LineRegex(filename, lineNumber, message, patternId) if message.contains("invalid syntax") =>
+           val fileError = FileError(SourcePath(filename),
+                                     Option(ErrorMessage(message)))
+           val issue = Issue(SourcePath(filename),
+                              ResultMessage(message),
+                              PatternId(patternId),
+                              ResultLine(lineNumber.toInt))
+           Option(Seq(fileError, issue))
+         case LineRegex(filename, lineNumber, message, patternId) =>
+           Option(Seq(Issue(SourcePath(filename),
+                              ResultMessage(message),
+                              PatternId(patternId),
+                              ResultLine(lineNumber.toInt))))
+         case _ =>
+            Option.empty
+     }
   }
 
   private val msgTemplate = "{path}###{line}###{msg}###{msg_id}"
+  private val classifyScript = s"""
+         |import os
+         |import sys
+         |import ast
+         |current = sys.version_info[0]
+         |other = 2 if current == 3 else 3
+         |def _classify_file(path):
+         |    try:
+         |        with open(path, 'r') as stream:
+         |            try:
+         |                ast.parse(stream.read())
+         |            except (ValueError, TypeError, UnicodeError):
+         |                # Assume it's the current interpreter.
+         |                return current
+         |            except SyntaxError:
+         |                # the other version or an actual syntax error on current interpreter
+         |                return other
+         |            else:
+         |                return current
+         |    except Exception:
+         |        # Shouldn't happen, but if it does, just assume there's
+         |        # something inherently wrong with the file.
+         |        return current
+         |def classify_file(path):
+         |    interpreter = _classify_file(path)
+         |    return path + "###" + str(interpreter)
+         |def flatten_files(folder):
+         |    for path, _, files in os.walk(folder):
+         |        for file in files:
+         |            if file.endswith(".py"):
+         |                yield os.path.join(path, file)
+         |def walk_items(items):
+         |    for item in items:
+         |        if os.path.isfile(item): yield item
+         |        elif os.path.isdir(item):
+         |            for file in flatten_files(item): yield file
+         |def classify(items):
+         |    for file in walk_items(items):
+         |        print(classify_file(file))
+         |items = filter(None, sys.argv[1].split("###"))
+         |classify(items)    
+       """.stripMargin
 
-  private def commandFor(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Seq[String]] = {
+  private def collectFiles(files: Option[Set[Path]], path: Path) = {
+    files.collect { case files if files.nonEmpty => files.map(_.toString) }.getOrElse {
+      //if files is empty, let the classification script to find them.
+      Seq(path.toString)
+    }
+  }
+
+  def generateClassification(files: Iterable[String]) = {
+    val scriptArgs = files.mkString("###")
+    val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
+    Seq("python", tmp.toAbsolutePath.toString, scriptArgs).!!
+  }
+
+  private def classifyFiles(files: Iterable[String]) = {
+      Try {
+        val output = generateClassification(files)
+        val lines = output.split(System.lineSeparator())
+        val parsed  = lines.map { case line =>
+             val splitted = line.split("###")
+             (splitted(0), splitted(1))
+        }
+        parsed.groupBy { case (path, version) => version}
+              .map { case (key, pairs) => (key, pairs map { case (file, version) => file})}
+      }
+  }
+
+  private def commandFor(interpreter: String, path: Path, conf: Option[Seq[PatternDef]], files: Iterable[String])(implicit spec: Spec): Try[Seq[String]] = {
 
     val rulesPart = conf.toList.flatMap { conf =>
       val rules = conf.map(_.patternId.toString()).mkString(",")
       Seq("--disable=all", "-e", rules)
-    }
-    //get the list of files workaround
-    val filesPart: Iterable[String] = files.collect { case files if files.nonEmpty => files.map(_.toString) }.getOrElse {
-      //if files is empty check if we have a __init__.py if not we do a find...
-      //do we have a file called __init__.py ?
-      val isPackage = Files.exists(path.resolve(Paths.get("__init__.py")))
-      if (isPackage) {
-        Seq(path.toString)
-      }
-      else {
-        Seq(s"`find $path -type f -name *.py`")
-      }
     }
 
     val configPart = conf.map { case configuration =>
@@ -63,7 +156,9 @@ object Pylint extends Tool {
     }.getOrElse(Success(Seq.empty[String]))
 
     configPart.map { configPart =>
-      Seq("pylint") ++ configPart ++ Seq(s"--msg-template=$msgTemplate") ++ rulesPart ++ filesPart
+      Seq("python" + interpreter, "-m", "pylint") ++
+          configPart ++ Seq(s"--msg-template=$msgTemplate") ++
+          rulesPart ++ files
     }
   }
 

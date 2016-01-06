@@ -29,11 +29,14 @@ organization := "com.codacy"
 val installAll =
   s"""apk update && apk add bash curl &&
      |apk add --update python &&
+     |apk add --update python3 &&
      |apk add wget ca-certificates &&
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python &&
+     |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3 &&
      |apk del wget ca-certificates &&
      |rm /var/cache/apk/* &&
-     |pip install pylint==1.5.2 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
+     |python -m pip install pylint==1.5.2 --upgrade --ignore-installed --no-cache-dir &&
+     |python3 -m pip install pylint==1.5.2 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
 mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: File) =>
   val src = resourceDir / "docs"
