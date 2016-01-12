@@ -540,5 +540,299 @@
     "title": "Prohibits assignment to function which returns None",
     "description": "Prohibits assignment done on a function call but the inferred function returns nothing but None.",
     "timeToFix": 20
+  },
+  {
+    "patternId": "W0705",
+    "title": "Prohibits except clauses with already caught exceptions",
+    "description": "Prohibits an except clause which handles an exception that was previously caught in another except clause.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0711",
+    "title": "Prohibits catching results of binary operations as exceptions",
+    "description": "Prohibits an except clause which handles an exception that is the result of a binary operation",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0612",
+    "title": "Prohibits unused variables",
+    "description": "Prohibits variables which are not used, which can be considered dead code.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0110",
+    "title": "Prohibits instantiating abstract classes",
+    "description": "Prohibits instantiating classes which have unimplemented abstract methods.",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "R0102",
+    "title": "Simplify if statement",
+    "description": "Suggest simplification of an if statement, which can be easier to understand after refactoring.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0240",
+    "title": "Prohibit definition of classes with inconsistent method resolution order.",
+    "description": "Prohibits defining a class for which a method resolution order could not be determined.",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "E0241",
+    "title": "Prohibit definition of classes with duplicates bases.",
+    "description": "Prohibits defining a class which has more than one of the same bases at the same inheritance level.",
+    "timeToFix": 20
+  },
+  {
+    "patternId": "C0200",
+    "title": "Simplify iteration by using the enumerate builtin.",
+    "description": "Suggest a simplification of an iteration which uses range and len callables.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0236",
+    "title": "Prohibit using non-empty strings inside __slots__.",
+    "description": "Prohibit using objects which shouldn't appear in __slots__ definition.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0238",
+    "title": "Prohibit using invalid objects for defining __slots__.",
+    "description": "Prohibit using objects which are not suitable for defining __slots__ (only strings, iterables or sequences are permitted).",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0603",
+    "title": "Prohibit using __all__ members which can't be found.",
+    "description": "Prohibit using undefined variables in the __all__ variable",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0623",
+    "title": "Prohibit binding to already existing names in except clauses.",
+    "description": "Prohibit binding in an except clause to a name which already exists in the code.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0703",
+    "title": "Prohibit chaining non-exceptions.",
+    "description": "Prohibit using the raise-from syntax with objects which aren't exceptions.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1301",
+    "title": "Avoid having extra keys into a dictionary passed into string formatting.",
+    "description": "Don't pass extra keys when doing string formatting with a dictionary.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1303",
+    "title": "Prohibit not passing enough keyword arguments to string formatting.",
+    "description": "Pass all defined keyword arguments into a string formatting operation.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1304",
+    "title": "Prohibit passing unused arguments when formatting strings.",
+    "description": "Prohibit formatting extra arguments, which are not used by the string format.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1305",
+    "title": "Prohibit combining automatic field numbering and manual field specification.",
+    "description": "Prohibit combining automatic field numbering ({}) with manual field specification ({i}).",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1306",
+    "title": "Prohibit missing attribute access in string formatting.",
+    "description": "Prohibit accessing a missing attribute in a string formatting field.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1307",
+    "title": "Prohibit invalid indexes for string formatting",
+    "description": "Don't index objects which don't support the index protocol when doing string formatting.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1126",
+    "title": "Prohibit indexing with object which don't support the indexing protocol.",
+    "description": "Always index a sequence with an integer, a slice or an instance providing an __index__ method.",
+    "timeToFix": 15
+  },    
+  {
+    "patternId": "E1132",
+    "title": "Prohibit repeating keyword arguments.",
+    "description": "Don't call a function with a repeated keyword argument.",
+    "timeToFix": 5
+  },    
+  {
+    "patternId": "E0117",
+    "title": "Prohibit defining nonlocals without a binding.",
+    "description": "Make sure that all nonlocals have a binding variable in the enclosing scopes.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0105",
+    "title": "Prohibit useless string statements.",
+    "description": "String statements which don't form a docstring can be transformed into comments.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "C0123",
+    "title": "Prohibit checking types.",
+    "description": "Do not check explicitly the type of an object, use isinstance or feature checking instead.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0401",
+    "title": "Prohibit star imports.",
+    "description": "Do not import everything from a module using star imports.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0611",
+    "title": "Prohibit unused imports.",
+    "description": "Do not leave unused imports lying around, they are dead code.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1125",
+    "title": "Prohibit not passing required keyword arguments in function calls",
+    "description": "Always pass required positional keyword arguments into function calls.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0113",
+    "title": "Prohibit invalid starred assignment targets.",
+    "description": "Don't unpack multiple values using a sole starred assignment target.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0604",
+    "title": "Prohibit using the global statement at module level.",
+    "description": "The global statement at module level is superfluous, since all the variables defined there are already globals.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "R0202",
+    "title": "Prohibit defining classmethods by calling classmethod explicitly",
+    "description": "Use the decorator syntax (@) for creating a classmethod, do not call it explicitly.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1300",
+    "title": "Prohibit formatting non-strings when formatting with a dictionary.",
+    "description": "Do not pass dictionaries with non-string keys when doing old style formatting.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E1310",
+    "title": "Prohibit calling string.strip with duplicate characters",
+    "description": "Stripping with multiple chars doesn't strip those chars as a string, but it removes all the occurences of each of them.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0404",
+    "title": "Prohibit reimports.",
+    "description": "Don't import modules more than once.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0704",
+    "title": "Prohibit bare raise in other places than an except clause.",
+    "description": "Do not place raise in other places than an except clause.",
+    "timeToFix": 10
+  },
+  {
+    "patternId": "E0112",
+    "title": "Prohibit too many starred expressions",
+    "description": "Do not use more than one starred variable when unpacking.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0601",
+    "title": "Prohibit declaring globals for undefined variables.",
+    "description": "Do not use a global statement with a variable name that can't be found.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0602",
+    "title": "Prohibit declaring globals without affecting them.",
+    "description": "Do not use global statements with variables names which are not affected in the current scope.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0115",
+    "title": "Prohibit declaring a variable as both nonlocal and global.",
+    "description": "Do not declare a variable as both nonlocal and global, only one can be picked.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0114",
+    "title": "Prohibit using starred expressions outside of assignments.",
+    "description": "Do not use a starred variable expression in other places than an assignment.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0301",
+    "title": "Prohibit returning non-iterator from __iter__.",
+    "description": "__iter__ should always return an iterator, otherwise an error will occur.",
+    "timeToFix": 15
+  },
+  {
+    "patternId": "E0116",
+    "title": "Prohibit using continue in finally.",
+    "description": "Using continue in a finally statement is a SyntaxError.",
+    "timeToFix": 10
+  },
+  {
+    "patternId": "W0410",
+    "title": "Prohibit using __future__ imports in other places than the first statement.",
+    "description": "__future__ imports need to be the first non docstring statement in a module in order to work.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0124",
+    "title": "Prohibit declaring confusing with statement.",
+    "description": "Do not use context managers which returns multiple values and uses name binding with `as` only for a part of those values.",
+    "timeToFix": 10
+  },
+  {
+    "patternId": "E1127",
+    "title": "Prohibit using invalid slice indexes.",
+    "description": "A slice index for builtin containers needs to be an integer, None or an instance with __index__ method.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "R0203",
+    "title": "Prohibit declaring a static method without using the decorator syntax.",
+    "description": "A static method can easily be written by using the decorator syntax, which is cleaner and more obvious than calling static method directly.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1302",
+    "title": "Prohibit invalid format strings.",
+    "description": "Make sure that the format strings are syntactically correct.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W0622",
+    "title": "Prohibit redefining builtins.",
+    "description": "Do not define objects with the same name as a builtin, this will trip those reading the code and it will be harder to understand.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "W1501",
+    "title": "Prohibit invalid mode for open builtin.",
+    "description": "Make sure that the open builtin receives a correct mode.",
+    "timeToFix": 5
+  },
+  {
+    "patternId": "E0239",
+    "title": "Prohibit inheriting non classes.",
+    "description": "Do not inherit from something which is not a class.",
+    "timeToFix": 5
   }
 ]
