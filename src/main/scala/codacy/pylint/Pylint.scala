@@ -3,7 +3,7 @@ package codacy.pylint
 import java.nio.file.{Files, Path, Paths}
 
 import codacy.dockerApi._
-import codacy.dockerApi.utils.{FileHelper, CommandRunner}
+import codacy.dockerApi.utils.{FileHelper, CommandRunner, ToolHelper}
 import play.api.libs.json._
 
 import scala.sys.process._
@@ -12,15 +12,17 @@ import scala.util.{Properties, Success, Try}
 object Pylint extends Tool {
 
    override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
+    val completeConf = ToolHelper.getPatternsToLint(conf)
+
     def isEnabled(issue: Result) = {
        issue match {
-          case Issue(_, _, patternId, _) => conf.map(item => item.exists(_.patternId == patternId)).getOrElse(true)
+          case Issue(_, _, patternId, _) => completeConf.map(item => item.exists(_.patternId == patternId)).getOrElse(true)
           case _ => true
        }
     }
 
     def buildFileCommands(files: Map[String, Array[String]]) = {
-      files.map { case (key, values) => commandFor(key, path, conf, values)}
+      files.map { case (key, values) => commandFor(key, path, completeConf, values)}
            .flatMap( item => item.toOption)
     }
 
