@@ -6,12 +6,13 @@ import codacy.dockerApi._
 import codacy.dockerApi.utils.{FileHelper, CommandRunner, ToolHelper}
 import play.api.libs.json._
 
+import scala.collection.immutable.Iterable
 import scala.sys.process._
 import scala.util.{Properties, Success, Try}
 
 object Pylint extends Tool {
 
-   override def apply(path: Path, conf: Option[Seq[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[Iterable[Result]] = {
+   override def apply(path: Path, conf: Option[List[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[List[Result]] = {
     val completeConf = ToolHelper.getPatternsToLint(conf)
 
     def isEnabled(issue: Result) = {
@@ -23,10 +24,10 @@ object Pylint extends Tool {
 
     def buildFileCommands(files: Map[String, Array[String]]) = {
       files.map { case (key, values) => commandFor(key, path, completeConf, values)}
-           .flatMap( item => item.toOption)
+           .flatMap( item => item.toOption).toList
     }
 
-    def getStdout(command: Seq[String]): Try[Seq[String]] = {
+    def getStdout(command: List[String]): Try[List[String]] = {
       Try {
           CommandRunner.exec(command) match {
             case Right(resultFromTool) =>
@@ -62,9 +63,9 @@ object Pylint extends Tool {
                               ResultMessage(message),
                               PatternId(patternId),
                               ResultLine(lineNumber.toInt))
-           Option(Seq(fileError, issue))
+           Option(List(fileError, issue))
          case LineRegex(filename, lineNumber, message, patternId) =>
-           Option(Seq(Issue(SourcePath(filename),
+           Option(List(Issue(SourcePath(filename),
                               ResultMessage(message),
                               PatternId(patternId),
                               ResultLine(lineNumber.toInt))))
@@ -120,17 +121,17 @@ object Pylint extends Tool {
   private def collectFiles(files: Option[Set[Path]], path: Path) = {
     files.collect { case files if files.nonEmpty => files.map(_.toString) }.getOrElse {
       //if files is empty, let the classification script to find them.
-      Seq(path.toString)
-    }
+      List(path.toString)
+    }.toList
   }
 
-  def generateClassification(files: Iterable[String]) = {
+  def generateClassification(files: List[String]) = {
     val scriptArgs = files.mkString("###")
     val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
-    Seq("python", tmp.toAbsolutePath.toString, scriptArgs).!!
+    List("python", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
-  private def classifyFiles(files: Iterable[String]) = {
+  private def classifyFiles(files: List[String]) = {
       Try {
         val output = generateClassification(files)
         val lines = output.split(System.lineSeparator())
@@ -143,28 +144,28 @@ object Pylint extends Tool {
       }
   }
 
-  private def commandFor(interpreter: String, path: Path, conf: Option[Seq[PatternDef]], files: Iterable[String])(implicit spec: Spec): Try[Seq[String]] = {
+  private def commandFor(interpreter: String, path: Path, conf: Option[List[PatternDef]], files: Array[String])(implicit spec: Spec): Try[List[String]] = {
 
     val rulesPart = conf.toList.flatMap { conf =>
       val rules = conf.map(_.patternId.toString()).mkString(",")
-      Seq("--disable=all", "-e", rules)
+      List("--disable=all", "-e", rules)
     }
 
     val configPart = conf.map { case configuration =>
       val confFile = writeConfigFile(configuration)
       confFile.map { case confPath =>
-        Seq(s"--rcfile=$confPath")
+        List(s"--rcfile=$confPath")
       }
-    }.getOrElse(Success(Seq.empty[String]))
+    }.getOrElse(Success(List.empty[String]))
 
     configPart.map { configPart =>
-      Seq("python" + interpreter, "-m", "pylint") ++
-          configPart ++ Seq(s"--msg-template=$msgTemplate") ++
+      List("python" + interpreter, "-m", "pylint") ++
+          configPart ++ List(s"--msg-template=$msgTemplate") ++
           rulesPart ++ files
     }
   }
 
-  private def writeConfigFile(configuration: Seq[PatternDef]): Try[Path] = {
+  private def writeConfigFile(configuration: List[PatternDef]): Try[Path] = {
 
     val parameters = configuration.flatMap { case pattern =>
       pattern.parameters.getOrElse(Set.empty).map { case param =>
