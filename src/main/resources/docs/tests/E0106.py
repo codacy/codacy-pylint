@@ -5,3 +5,5 @@ def test():
         yield letter
         ##Err: E0106
         return 1
+    # Marking this file as Python 2
+    raise Exception, "a"

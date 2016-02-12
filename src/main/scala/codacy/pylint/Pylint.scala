@@ -128,7 +128,7 @@ object Pylint extends Tool {
   def generateClassification(files: List[String]) = {
     val scriptArgs = files.mkString("###")
     val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
-    List("python", tmp.toAbsolutePath.toString, scriptArgs).!!
+    List("python3", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
   private def classifyFiles(files: List[String]) = {
