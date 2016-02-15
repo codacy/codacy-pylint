@@ -7,4 +7,5 @@ class OldStyleClass():
 
 class NewStyleClass(object):
     def __init__(self):
-        return
+        # Marking the file as Python 2.
+        raise Exception, "lala"
