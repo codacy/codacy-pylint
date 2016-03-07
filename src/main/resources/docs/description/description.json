@@ -413,11 +413,11 @@
       },
       {
         "name": "variable-rgx",
-        "description": "Regular expression to match Varialbe type"
+        "description": "Regular expression to match Variable type"
       },
       {
         "name": "inlinevar-rgx",
-        "description": "Regular expression to match Varialbe type, used as part of list comprehensions and generators"
+        "description": "Regular expression to match Variable type, used as part of list comprehensions and generators"
       }
     ]
   },
