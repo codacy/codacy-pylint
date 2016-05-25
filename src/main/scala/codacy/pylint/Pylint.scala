@@ -161,11 +161,13 @@ object Pylint extends Tool {
     //Additional plugins
     val django = Seq("--load-plugins=pylint_django",
                      "--disable=django-installed-checker,django-model-checker")
+    val flask = Seq("--load-plugins=pylint_flask")
+    val additionalPlugins = django ++ flask
 
     configPart.map { configPart =>
       List("python" + interpreter, "-m", "pylint") ++
           configPart ++ List(s"--msg-template=$msgTemplate") ++
-          rulesPart ++ django ++ files
+          rulesPart ++ additionalPlugins ++ files
     }
   }
 
