@@ -36,10 +36,10 @@ val installAll =
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3 &&
      |apk del wget ca-certificates &&
      |rm /var/cache/apk/* &&
-     |python -m pip install django flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 &&
-     |python3 -m pip install django flask==0.10.1  pylint-flask==0.1 flask-wtf==0.12 &&
-     |python -m pip install git+https://github.com/landscapeio/pylint-django &&
-     |python3 -m pip install git+https://github.com/landscapeio/pylint-django &&
+     |python -m pip install django==1.9.2 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 &&
+     |python3 -m pip install django==1.9.2 flask==0.10.1  pylint-flask==0.1 flask-wtf==0.12 &&
+     |python -m pip install git+https://github.com/landscapeio/pylint-django@93fd04120d0690189c35b7b2eaace23117f388c5 &&
+     |python3 -m pip install git+https://github.com/landscapeio/pylint-django@93fd04120d0690189c35b7b2eaace23117f388c5 &&
      |python -m pip install pylint==1.5.4 --upgrade --ignore-installed --no-cache-dir &&
      |python3 -m pip install pylint==1.5.4 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
