@@ -52,7 +52,7 @@ object Pylint extends Tool {
 
 
   private implicit lazy val writer = Json.reads[Issue]
-  
+
   private def parseLine(line: String) = {
      val LineRegex = """(.*?)###(.*?)###(.*?)###(.*?)""".r
      line match {
@@ -115,7 +115,7 @@ object Pylint extends Tool {
          |    for file in walk_items(items):
          |        print(classify_file(file))
          |items = filter(None, sys.argv[1].split("###"))
-         |classify(items)    
+         |classify(items)
        """.stripMargin
 
   private def collectFiles(files: Option[Set[Path]], path: Path) = {
@@ -158,10 +158,16 @@ object Pylint extends Tool {
       }
     }.getOrElse(Success(List.empty[String]))
 
+    //Additional plugins
+    val django = Seq("--load-plugins=pylint_django",
+                     "--disable=django-installed-checker,django-model-checker")
+    val flask = Seq("--load-plugins=pylint_flask")
+    val additionalPlugins = django ++ flask
+
     configPart.map { configPart =>
       List("python" + interpreter, "-m", "pylint") ++
           configPart ++ List(s"--msg-template=$msgTemplate") ++
-          rulesPart ++ files
+          rulesPart ++ additionalPlugins ++ files
     }
   }
 
