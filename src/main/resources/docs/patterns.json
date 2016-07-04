@@ -4,12 +4,12 @@
     {
       "patternId": "C0111",
       "level": "Info",
-      "category": "Documentation"
+      "category": "CodeStyle"
     },
     {
       "patternId": "C0112",
       "level": "Info",
-      "category": "Documentation"
+      "category": "CodeStyle"
     },
     {
       "patternId": "C0204",
