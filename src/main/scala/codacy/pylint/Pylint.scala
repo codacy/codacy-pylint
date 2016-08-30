@@ -29,7 +29,7 @@ object Pylint extends Tool {
 
     def getStdout(command: List[String]): Try[List[String]] = {
       Try {
-          CommandRunner.exec(command) match {
+          CommandRunner.exec(command,  Some(path.toFile)) match {
             case Right(resultFromTool) =>
               resultFromTool.stdout
             case Left(failure) => {
