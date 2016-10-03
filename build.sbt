@@ -40,6 +40,10 @@ val installAll =
      |python3 -m pip install django==1.9.2 flask==0.10.1  pylint-flask==0.1 flask-wtf==0.12 &&
      |python -m pip install git+https://github.com/landscapeio/pylint-django@93fd04120d0690189c35b7b2eaace23117f388c5 &&
      |python3 -m pip install git+https://github.com/landscapeio/pylint-django@93fd04120d0690189c35b7b2eaace23117f388c5 &&
+     |python -m pip install pylint-common==0.2.2 &&
+     |python3 -m pip install pylint-common==0.2.2 &&
+     |python -m pip install pylint-celery==0.3 &&
+     |python3 -m pip install pylint-celery==0.3 &&
      |python -m pip install pylint==1.5.4 --upgrade --ignore-installed --no-cache-dir &&
      |python3 -m pip install pylint==1.5.4 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
