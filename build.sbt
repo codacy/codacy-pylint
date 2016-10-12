@@ -44,8 +44,8 @@ val installAll =
      |python3 -m pip install pylint-common==0.2.2 &&
      |python -m pip install pylint-celery==0.3 &&
      |python3 -m pip install pylint-celery==0.3 &&
-     |python -m pip install pylint==1.5.4 --upgrade --ignore-installed --no-cache-dir &&
-     |python3 -m pip install pylint==1.5.4 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
+     |python -m pip install pylint==1.6.4 --upgrade --ignore-installed --no-cache-dir &&
+     |python3 -m pip install pylint==1.6.4 --upgrade --ignore-installed --no-cache-dir""".stripMargin.replaceAll(System.lineSeparator()," ")
 
 mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: File) =>
   val src = resourceDir / "docs"

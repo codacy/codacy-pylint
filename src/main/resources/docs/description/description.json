@@ -834,5 +834,11 @@
     "title": "Prohibit inheriting non classes",
     "description": "Do not inherit from something which is not a class.",
     "timeToFix": 5
+  },
+  {
+    "patternId": "W0125",
+    "title": "Prohibit a conditional statement with a constant value",
+    "description": "Prohibits when a conditional statement (If or ternary if) uses a constant value for its test.",
+    "timeToFix": 5
   }
 ]
