@@ -54,21 +54,25 @@ object Pylint extends Tool {
   private implicit lazy val writer = Json.reads[Issue]
 
   private def parseLine(line: String) = {
-    val LineRegex = """(.*?)###(.*?)###(.*?)###(.*?)""".r
+    val LineRegex = """(.*?)###(\d*?)###(.*?)###(.*?)""".r
+
+    def createIssue(filename: String, lineNumber: String, message: String, patternId: String) = {
+      // If the pylint returns no line put the issue in the first line
+      val issueLine = if (lineNumber.nonEmpty) lineNumber.toInt else 1
+      Issue(SourcePath(filename),
+        ResultMessage(message),
+        PatternId(patternId),
+        ResultLine(issueLine))
+    }
+
     line match {
       case LineRegex(filename, lineNumber, message, patternId) if message.contains("invalid syntax") =>
         val fileError = FileError(SourcePath(filename),
           Option(ErrorMessage(message)))
-        val issue = Issue(SourcePath(filename),
-          ResultMessage(message),
-          PatternId(patternId),
-          ResultLine(lineNumber.toInt))
+        val issue = createIssue(filename, lineNumber, message, patternId)
         Option(List(fileError, issue))
       case LineRegex(filename, lineNumber, message, patternId) =>
-        Option(List(Issue(SourcePath(filename),
-          ResultMessage(message),
-          PatternId(patternId),
-          ResultLine(lineNumber.toInt))))
+        Option(List(createIssue(filename, lineNumber, message, patternId)))
       case _ =>
         Option.empty
     }
