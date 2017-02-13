@@ -706,6 +706,11 @@
       "patternId": "W1501",
       "level": "Warning",
       "category": "ErrorProne"
+    },
+    {
+      "patternId": "W0125",
+      "level": "Warning",
+      "category": "ErrorProne"
     }
   ]
 }
