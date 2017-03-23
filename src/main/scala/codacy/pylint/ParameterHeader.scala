@@ -1,10 +1,10 @@
 package codacy.pylint
 
-import codacy.dockerApi.ParameterName
+import codacy.docker.api.Parameter
 
 private[pylint] object ParameterHeader {
 
-  def get(name: ParameterName): String = values.getOrElse(name.value, "MASTER")
+  def get(name: Parameter.Name): String = values.getOrElse(name.value, "MASTER")
 
   private[this] lazy val values = Map(
     "required-attributes" -> "BASIC",
