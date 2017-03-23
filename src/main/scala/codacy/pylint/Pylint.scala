@@ -13,7 +13,11 @@ import scala.util.{Properties, Success, Try}
 
 object Pylint extends Tool {
 
-  def apply(source: Source.Directory, configuration: Option[List[Pattern.Definition]], files: Option[Set[Source.File]])
+  private val pythonVersionKey = Configuration.Key("python_version")
+  private val python3 = "3"
+
+  def apply(source: Source.Directory, configuration: Option[List[Pattern.Definition]], files: Option[Set[Source.File]],
+            options: Map[Configuration.Key, Configuration.Value])
            (implicit specification: Tool.Specification): Try[List[Result]] = {
     val completeConf = ToolHelper.patternsToLint(configuration)
 
@@ -41,7 +45,15 @@ object Pylint extends Tool {
     }
 
     val collectedFiles = collectFiles(files, source)
-    val classified = classifyFiles(collectedFiles)
+    val classified = options.get(pythonVersionKey).fold {
+      classifyFiles(collectedFiles)
+    } { pythonVersion =>
+      val validPythonVersion = Option(pythonVersion : JsValue).collect {
+        case JsNumber(version) => version
+        case JsString(version) => Try(version.toInt)
+      }.map(_.toString).getOrElse(python3)
+      Try(Map(validPythonVersion -> collectedFiles.toArray))
+    }
     val commands = classified.map { item => buildFileCommands(item) }
     val lines_iterable = commands.map { item => item.map(getStdout) }
     val lines = lines_iterable.map {
@@ -137,7 +149,7 @@ object Pylint extends Tool {
     List("python3", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
-  private def classifyFiles(files: List[String]) = {
+  private def classifyFiles(files: List[String]): Try[Map[String, Array[String]]] = {
     Try {
       val output = generateClassification(files)
       val lines = output.split(System.lineSeparator())
