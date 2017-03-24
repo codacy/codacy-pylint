@@ -1,9 +1,11 @@
 package codacy.pylint
 
+import java.io.File
 import java.nio.file.{Files, Path}
 
-import codacy.dockerApi._
-import codacy.dockerApi.utils.{CommandRunner, FileHelper, ToolHelper}
+import codacy.docker.api._
+import codacy.docker.api.utils.ToolHelper
+import codacy.dockerApi.utils.{CommandRunner, FileHelper}
 import play.api.libs.json._
 
 import scala.sys.process._
@@ -11,47 +13,58 @@ import scala.util.{Properties, Success, Try}
 
 object Pylint extends Tool {
 
-  override def apply(path: Path, conf: Option[List[PatternDef]], files: Option[Set[Path]])(implicit spec: Spec): Try[List[Result]] = {
-    val completeConf = ToolHelper.getPatternsToLint(conf)
+  private val pythonVersionKey = Configuration.Key("python_version")
+  private val python3 = "3"
+
+  def apply(source: Source.Directory, configuration: Option[List[Pattern.Definition]], files: Option[Set[Source.File]],
+            options: Map[Configuration.Key, Configuration.Value])
+           (implicit specification: Tool.Specification): Try[List[Result]] = {
+    val completeConf = ToolHelper.patternsToLint(configuration)
 
     def isEnabled(issue: Result) = {
       issue match {
-        case Issue(_, _, patternId, _) => completeConf.map(item => item.exists(_.patternId == patternId)).getOrElse(true)
+        case Result.Issue(_, _, patternId, _) => completeConf.forall(item => item.exists(_.patternId == patternId))
         case _ => true
       }
     }
 
     def buildFileCommands(files: Map[String, Array[String]]) = {
-      files.map { case (key, values) => commandFor(key, path, completeConf, values) }
+      files.map { case (key, values) => commandFor(key, completeConf, values) }
         .flatMap(item => item.toOption).toList
     }
 
     def getStdout(command: List[String]): Try[List[String]] = {
       Try {
-        CommandRunner.exec(command, Some(path.toFile)) match {
+        CommandRunner.exec(command, Option(new File(source.path))) match {
           case Right(resultFromTool) =>
             resultFromTool.stdout
-          case Left(failure) => {
+          case Left(failure) =>
             throw failure
-          }
         }
       }
     }
 
-    val collectedFiles = collectFiles(files, path)
-    val classified = classifyFiles(collectedFiles)
-    val commands = classified.map { case item => buildFileCommands(item) }
+    val collectedFiles = collectFiles(files, source)
+    val classified = options.get(pythonVersionKey).fold {
+      classifyFiles(collectedFiles)
+    } { pythonVersion =>
+      val validPythonVersion = Option(pythonVersion : JsValue).collect {
+        case JsNumber(version) => version
+        case JsString(version) => Try(version.toInt)
+      }.map(_.toString).getOrElse(python3)
+      Try(Map(validPythonVersion -> collectedFiles.toArray))
+    }
+    val commands = classified.map { item => buildFileCommands(item) }
     val lines_iterable = commands.map { item => item.map(getStdout) }
     val lines = lines_iterable.map {
-      case iterable => iterable.flatMap {
-        case item => item.toOption
-      }.flatten
+      iterable =>
+        iterable.flatMap {
+          item => item.toOption
+        }.flatten
     }
-    lines.map { case line => line.flatMap(parseLine).flatten.filter(isEnabled) }
+    lines.map { line => line.flatMap(parseLine).flatten.filter(isEnabled) }
   }
 
-
-  private implicit lazy val writer = Json.reads[Issue]
 
   private def parseLine(line: String) = {
     val LineRegex = """(.*?)###(\d*?)###(.*?)###(.*?)""".r
@@ -59,15 +72,15 @@ object Pylint extends Tool {
     def createIssue(filename: String, lineNumber: String, message: String, patternId: String) = {
       // If the pylint returns no line put the issue in the first line
       val issueLine = if (lineNumber.nonEmpty) lineNumber.toInt else 1
-      Issue(SourcePath(filename),
-        ResultMessage(message),
-        PatternId(patternId),
-        ResultLine(issueLine))
+      Result.Issue(Source.File(filename),
+        Result.Message(message),
+        Pattern.Id(patternId),
+        Source.Line(issueLine))
     }
 
     line match {
       case LineRegex(filename, lineNumber, message, patternId) if message.contains("invalid syntax") =>
-        val fileError = FileError(SourcePath(filename),
+        val fileError = Result.FileError(Source.File(filename),
           Option(ErrorMessage(message)))
         val issue = createIssue(filename, lineNumber, message, patternId)
         Option(List(fileError, issue))
@@ -123,24 +136,24 @@ object Pylint extends Tool {
        |classify(items)
        """.stripMargin
 
-  private def collectFiles(files: Option[Set[Path]], path: Path) = {
-    files.collect { case files if files.nonEmpty => files.map(_.toString) }.getOrElse {
+  private def collectFiles(filesOpt: Option[Set[Source.File]], source: Source.Directory) = {
+    filesOpt.collect { case files if files.nonEmpty => files.map(_.path) }.getOrElse {
       //if files is empty, let the classification script to find them.
-      List(path.toString)
+      List(source.path)
     }.toList
   }
 
-  def generateClassification(files: List[String]) = {
+  def generateClassification(files: List[String]): String = {
     val scriptArgs = files.mkString("###")
     val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
     List("python3", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
-  private def classifyFiles(files: List[String]) = {
+  private def classifyFiles(files: List[String]): Try[Map[String, Array[String]]] = {
     Try {
       val output = generateClassification(files)
       val lines = output.split(System.lineSeparator())
-      val parsed = lines.map { case line =>
+      val parsed = lines.map { line =>
         val splitted = line.split("###")
         (splitted(0), splitted(1))
       }
@@ -149,16 +162,17 @@ object Pylint extends Tool {
     }
   }
 
-  private def commandFor(interpreter: String, path: Path, conf: Option[List[PatternDef]], files: Array[String])(implicit spec: Spec): Try[List[String]] = {
+  private def commandFor(interpreter: String, conf: Option[List[Pattern.Definition]], files: Array[String])
+                        (implicit specification: Tool.Specification): Try[List[String]] = {
 
     val rulesPart = conf.toList.flatMap { conf =>
       val rules = conf.map(_.patternId.toString()).mkString(",")
       List("--disable=all", "-e", rules)
     }
 
-    val configPart = conf.map { case configuration =>
+    val configPart = conf.map { configuration =>
       val confFile = writeConfigFile(configuration)
-      confFile.map { case confPath =>
+      confFile.map { confPath =>
         List(s"--rcfile=$confPath")
       }
     }.getOrElse(Success(List.empty[String]))
@@ -176,10 +190,10 @@ object Pylint extends Tool {
     }
   }
 
-  private def writeConfigFile(configuration: List[PatternDef]): Try[Path] = {
+  private def writeConfigFile(configuration: List[Pattern.Definition]): Try[Path] = {
 
-    val parameters = configuration.flatMap { case pattern =>
-      pattern.parameters.getOrElse(Set.empty).map { case param =>
+    val parameters = configuration.flatMap { pattern =>
+      pattern.parameters.getOrElse(Set.empty).map { param =>
         ParameterHeader.get(param.name) -> param
       }
     }.groupBy { case (header, _) => header }
@@ -199,8 +213,8 @@ object Pylint extends Tool {
     write(paramsToPrint)
   }
 
-  private def generateParameter(parameter: ParameterDef): String = {
-    val parameterValue = parameter.value match {
+  private def generateParameter(parameter: Parameter.Definition): String = {
+    val parameterValue = (parameter.value: JsValue) match {
       case JsString(value) => value
       case other => Json.stringify(other)
     }
@@ -212,7 +226,7 @@ object Pylint extends Tool {
   )
 
   private def write(content: String): Try[Path] = {
-    randomFile().map { case confFile =>
+    randomFile().map { confFile =>
       Files.write(confFile, content.getBytes)
     }
   }
