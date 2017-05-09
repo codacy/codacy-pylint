@@ -40,8 +40,8 @@ val installAll =
      |python3 -m pip install pylint-common==0.2.2 &&
      |python -m pip install pylint-celery==0.3 &&
      |python3 -m pip install pylint-celery==0.3 &&
-     |python -m pip install pylint==1.6.4 --upgrade --ignore-installed --no-cache-dir &&
-     |python3 -m pip install pylint==1.6.4 --upgrade --ignore-installed --no-cache-dir &&
+     |python -m pip install pylint==1.7.1 --upgrade --ignore-installed --no-cache-dir &&
+     |python3 -m pip install pylint==1.7.1 --upgrade --ignore-installed --no-cache-dir &&
      |python -m pip uninstall -y pip &&
      |python3 -m pip uninstall -y pip &&
      |apk del wget ca-certificates git &&
