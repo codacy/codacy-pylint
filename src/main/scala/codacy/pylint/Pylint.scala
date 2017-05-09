@@ -185,7 +185,7 @@ object Pylint extends Tool {
 
     configPart.map { configPart =>
       List("python" + interpreter, "-m", "pylint") ++
-        configPart ++ List(s"--msg-template=$msgTemplate") ++
+        configPart ++ List(s"--msg-template=$msgTemplate", "--output-format=parseable") ++
         rulesPart ++ additionalPlugins ++ files
     }
   }
