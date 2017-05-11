@@ -34,6 +34,7 @@ class SixthGood(object):
 class SeventhGood(object):
     __slots__ = {"a": "b", "c": "d"}
 
+##Err: E0238
 class Bad(object):
     __slots__ = list
 

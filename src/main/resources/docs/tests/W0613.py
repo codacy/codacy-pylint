@@ -3,5 +3,5 @@
 class Object(object):
 
     ##Info: W0613
-    def method(self, arg, unused_arg):
+    def method(self, arg, arg2):
         return arg * 2

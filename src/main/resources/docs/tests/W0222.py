@@ -2,7 +2,7 @@
 
 class Parent(object):
 
-    def method(self, arg, arg=1):
+    def method(self, arg, arg1 = 1):
         return arg
 
 
@@ -10,4 +10,4 @@ class Child(Parent):
 
     ##Err: W0222
     def method(self, arg, arg1):
-        return arg, arg1, arg2
+        return arg, arg1
