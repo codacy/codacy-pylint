@@ -1,7 +1,7 @@
-##Patterns: R0102
+##Patterns: R1703
 
 def test_simplifiable_1(arg):
-    ##Info: R0102
+    ##Info: R1703
     if arg:
         return True
     else:
@@ -10,7 +10,7 @@ def test_simplifiable_1(arg):
 
 def test_simplifiable_2(arg, arg2):
     # Can be reduced to bool(arg and not arg2)
-    ##Info: R0102
+    ##Info: R1703
     if arg and not arg2:
         return True
     else:
@@ -19,7 +19,7 @@ def test_simplifiable_2(arg, arg2):
 
 def test_simplifiable_3(arg, arg2):
     # Can be reduced to bool(arg and not arg2)
-    ##Info: R0102
+    ##Info: R1703
     if arg and not arg2:
         var = True
     else:
@@ -31,7 +31,7 @@ def test_simplifiable_4(arg):
     if arg:
         var = True
     else:
-        ##Info: R0102
+        ##Info: R1703
         if arg == "arg1":
             return True
         else:

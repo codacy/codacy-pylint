@@ -483,7 +483,7 @@
       "category": "ErrorProne"
     },
     {
-      "patternId": "R0102",
+      "patternId": "R1703",
       "level": "Info",
       "category": "CodeStyle"
     },
