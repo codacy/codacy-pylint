@@ -10,5 +10,5 @@ class Child(Parent):
 
     ##Err: W0221
     def method(self, arg, arg1):
-        return arg, arg1, arg2
+        return arg, arg1
 
