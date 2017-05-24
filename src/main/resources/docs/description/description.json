@@ -566,7 +566,7 @@
     "timeToFix": 20
   },
   {
-    "patternId": "R0102",
+    "patternId": "R1703",
     "title": "Simplify if statement",
     "description": "Suggest simplification of an if statement, which can be easier to understand after refactoring.",
     "timeToFix": 5
