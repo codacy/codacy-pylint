@@ -27,9 +27,10 @@ version in Docker := "1.0"
 organization := "com.codacy"
 
 val installAll =
-  s"""apk --no-cache add bash wget ca-certificates git &&
-     |apk add --update --no-cache python &&
-     |apk add --update --no-cache python3 &&
+  s"""echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &&
+     |apk --no-cache add bash wget ca-certificates git &&
+     |apk --no-cache add python &&
+     |apk --no-cache add 'python3>3.6.1' &&
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python &&
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3 &&
      |python -m pip install django==1.9.2 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
