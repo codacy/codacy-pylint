@@ -1,0 +1,1 @@
+Pylint is a Python source code analyzer which looks for programming errors, helps enforcing a coding standard and sniffs for some code smells (as defined in Martin Fowler's Refactoring book). [Learn more](https://github.com/PyCQA/pylint)
