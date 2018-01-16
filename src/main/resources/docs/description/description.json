@@ -54,6 +54,12 @@
     "timeToFix": 5
   },
   {
+    "patternId": "C0326",
+    "title": "Prohibit extraneous whitespace in expressions and statements",
+    "description": "Prohibits use of extraneous whitespace in expressions and statements.",
+    "timeToFix": 5
+  },
+  {
     "patternId": "C1001",
     "title": "Prohibit old-style class",
     "description": "Prohibits old-style class definition.",
