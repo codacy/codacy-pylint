@@ -48,6 +48,11 @@
       "category": "CodeStyle"
     },
     {
+      "patternId": "C0326",
+      "level": "Info",
+      "category": "CodeStyle"
+    },
+    {
       "patternId": "C1001",
       "level": "Info",
       "category": "CodeStyle"

@@ -48,7 +48,7 @@ object Pylint extends Tool {
     val classified = options.get(pythonVersionKey).fold {
       classifyFiles(collectedFiles)
     } { pythonVersion =>
-      val validPythonVersion = Option(pythonVersion : JsValue).collect {
+      val validPythonVersion = Option(pythonVersion: JsValue).collect {
         case JsNumber(version) => version
         case JsString(version) => Try(version.toInt)
       }.map(_.toString).getOrElse(python3)
@@ -56,15 +56,14 @@ object Pylint extends Tool {
     }
     val commands = classified.map { item => buildFileCommands(item) }
     val lines_iterable = commands.map { item => item.map(getStdout) }
-    val lines = lines_iterable.map {
+    val linesTry: Try[List[String]] = lines_iterable.map {
       iterable =>
         iterable.flatMap {
           item => item.toOption
         }.flatten
     }
-    lines.map { line => line.flatMap(parseLine).flatten.filter(isEnabled) }
+    linesTry.map { line => line.flatMap(parseLine).flatten.filter(isEnabled) }
   }
-
 
   private def parseLine(line: String) = {
     val LineRegex = """(.*?)###(\d*?)###(.*?)###(.*?)""".r
@@ -79,19 +78,19 @@ object Pylint extends Tool {
     }
 
     line match {
-      case LineRegex(filename, lineNumber, message, patternId) if message.contains("invalid syntax") =>
+      case LineRegex(filename, lineNumber, patternId, message) if message.contains("invalid syntax") =>
         val fileError = Result.FileError(Source.File(filename),
           Option(ErrorMessage(message)))
         val issue = createIssue(filename, lineNumber, message, patternId)
         Option(List(fileError, issue))
-      case LineRegex(filename, lineNumber, message, patternId) =>
+      case LineRegex(filename, lineNumber, patternId, message) =>
         Option(List(createIssue(filename, lineNumber, message, patternId)))
       case _ =>
         Option.empty
     }
   }
 
-  private val msgTemplate = "{path}###{line}###{msg}###{msg_id}"
+  private val msgTemplate = "{path}###{line}###{msg_id}###{msg}"
   private val classifyScript =
     s"""
        |import os
