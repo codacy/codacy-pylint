@@ -33,10 +33,8 @@ val installAll =
      |apk --no-cache add 'python3>3.6.1' &&
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python &&
      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3 &&
-     |python -m pip install django==1.9.2 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
-     |python3 -m pip install django==1.9.2 flask==0.10.1  pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
-     |python -m pip install git+https://github.com/landscapeio/pylint-django@93fd04120d0690189c35b7b2eaace23117f388c5 --upgrade --ignore-installed --no-cache-dir &&
-     |python3 -m pip install git+https://github.com/landscapeio/pylint-django@93fd04120d0690189c35b7b2eaace23117f388c5 --upgrade --ignore-installed --no-cache-dir &&
+     |python -m pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
+     |python3 -m pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1  pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
      |python -m pip install pylint-common==0.2.2 &&
      |python3 -m pip install pylint-common==0.2.2 &&
      |python -m pip install pylint-celery==0.3 &&
