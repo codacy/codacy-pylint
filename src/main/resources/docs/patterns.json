@@ -363,6 +363,10 @@
         {
           "name": "inlinevar-rgx",
           "default": "[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        {
+          "name": "class-attribute-rgx",
+          "default": "([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$"
         }
       ]
     },

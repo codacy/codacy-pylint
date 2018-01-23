@@ -424,6 +424,10 @@
       {
         "name": "inlinevar-rgx",
         "description": "Regular expression to match Variable type, used as part of list comprehensions and generators"
+      },
+      {
+        "name": "class-attribute-rgx",
+        "description": "Regular expression matching correct class attribute names"
       }
     ]
   },
