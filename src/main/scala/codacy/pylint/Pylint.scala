@@ -90,7 +90,7 @@ object Pylint extends Tool {
     }
   }
 
-  private val msgTemplate = "{path}###{line}###{msg_id}###{msg}"
+  private val msgTemplate = "{abspath}###{line}###{msg_id}###{msg}"
   private val classifyScript =
     s"""
        |import os
