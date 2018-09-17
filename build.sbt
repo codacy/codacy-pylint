@@ -4,17 +4,14 @@ name := """codacy-engine-pylint"""
 
 version := "1.0-SNAPSHOT"
 
-val languageVersion = "2.11.7"
+val languageVersion = "2.11.12"
 
 scalaVersion := languageVersion
 
-resolvers ++= Seq(
-  "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/",
-  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/releases"
-)
+resolvers := Seq("Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repositories/releases")) ++ resolvers.value
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.3.8",
+  "com.typesafe.play" %% "play-json" % "2.4.8",
   "com.codacy" %% "codacy-engine-scala-seed" % "2.7.8"
 )
 
@@ -47,7 +44,7 @@ val installAll =
      |python3 -m pip uninstall -y pip &&
      |apk del wget ca-certificates git &&
      |rm -rf /tmp/* &&
-     |rm -rf /var/cache/apk/*""".stripMargin.replaceAll(System.lineSeparator()," ")
+     |rm -rf /var/cache/apk/*""".stripMargin.replaceAll(System.lineSeparator(), " ")
 
 mappings in Universal <++= (resourceDirectory in Compile) map { (resourceDir: File) =>
   val src = resourceDir / "docs"
