@@ -5,11 +5,9 @@ TESTLIST = [1, 2, 3]
 
 def function1():
     ##Err: E1127
-    ##Err: E1127
     return TESTLIST[id:id:]
 
 def function2():
-    ##Err: E1127
     ##Err: E1127
     return TESTLIST['0':'1':]
 
