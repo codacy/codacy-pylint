@@ -145,7 +145,7 @@ object Pylint extends Tool {
   def generateClassification(files: List[String]): String = {
     val scriptArgs = files.mkString("###")
     val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
-    List("python3", tmp.toAbsolutePath.toString, scriptArgs).!!
+    List("python3.5", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
   private def classifyFiles(files: List[String]): Try[Map[String, Array[String]]] = {
@@ -183,9 +183,16 @@ object Pylint extends Tool {
     val additionalPlugins = django ++ flask
 
     configPart.map { configPart =>
-      List("python" + interpreter, "-m", "pylint") ++
+      List("python" + realInterpreterVersion(interpreter), "-m", "pylint") ++
         configPart ++ List(s"--msg-template=$msgTemplate", "--output-format=parseable") ++
         rulesPart ++ additionalPlugins ++ files
+    }
+  }
+
+  def realInterpreterVersion(interpreter: String): String = {
+    interpreter match {
+      case "2" => "2.7"
+      case "3" => "3.5"
     }
   }
 

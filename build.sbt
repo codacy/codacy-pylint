@@ -25,21 +25,21 @@ organization := "com.codacy"
 
 val installAll =
   s"""apt-get update &&
-      |apt-get -y install python python3 ca-certificates wget openjdk-8-jre-headless &&
-      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python &&
-      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3 && 
-      |python -m pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
-      |python3 -m pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
-      |python -m pip install pylint-common==0.2.2 &&
-      |python3 -m pip install pylint-common==0.2.2 &&
-      |python -m pip install pylint-celery==0.3 &&
-      |python3 -m pip install pylint-celery==0.3 &&
-      |python -m pip install SaltPyLint==2017.12.15 &&
-      |python3 -m pip install SaltPyLint==2017.12.15 &&
-      |python -m pip install pylint==1.8.2 --upgrade --ignore-installed --no-cache-dir &&
-      |python3 -m pip install pylint==1.8.2 --upgrade --ignore-installed --no-cache-dir &&
-      |python -m pip uninstall -y pip &&
-      |python3 -m pip uninstall -y pip &&
+      |apt-get -y install python2.7 python3.5 ca-certificates wget openjdk-8-jre-headless &&
+      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python2.7 &&
+      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3.5 && 
+      |python2.7 -m  pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
+      |python3.5 -m pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
+      |python2.7 -m  pip install pylint-common==0.2.2 &&
+      |python3.5 -m pip install pylint-common==0.2.2 &&
+      |python2.7 -m  pip install pylint-celery==0.3 &&
+      |python3.5 -m pip install pylint-celery==0.3 &&
+      |python2.7 -m  pip install SaltPyLint==2017.12.15 &&
+      |python3.5 -m pip install SaltPyLint==2017.12.15 &&
+      |python2.7 -m  pip install pylint==1.8.2 --upgrade --ignore-installed --no-cache-dir &&
+      |python3.5 -m pip install pylint==1.8.2 --upgrade --ignore-installed --no-cache-dir &&
+      |python2.7 -m  pip uninstall -y pip &&
+      |python3.5 -m pip uninstall -y pip &&
       |apt-get clean &&
       |rm -rf /var/lib/apt/lists/* &&
       |rm -rf /root/.cache/pip &&
