@@ -145,7 +145,7 @@ object Pylint extends Tool {
   def generateClassification(files: List[String]): String = {
     val scriptArgs = files.mkString("###")
     val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
-    List("python3.5", tmp.toAbsolutePath.toString, scriptArgs).!!
+    List("python3.6", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
   private def classifyFiles(files: List[String]): Try[Map[String, Array[String]]] = {
@@ -192,7 +192,7 @@ object Pylint extends Tool {
   def realInterpreterVersion(interpreter: String): String = {
     interpreter match {
       case "2" => "2.7"
-      case "3" => "3.5"
+      case "3" => "3.6"
     }
   }
 
