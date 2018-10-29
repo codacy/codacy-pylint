@@ -5,7 +5,7 @@
 
 This is the docker engine we use at Codacy to have [Pylint](http://www.pylint.org/) support.
 You can also create a docker to integrate the tool and language of your choice!
-Check the **Docs** section for more information.
+See the [codacy-engine-scala-seed](https://github.com/codacy/codacy-engine-scala-seed) repository for more information.
 
 ## Usage
 
@@ -20,12 +20,6 @@ The docker is ran with the following command:
 ```
 docker run -it -v $srcDir:/src  <DOCKER_NAME>:<DOCKER_VERSION>
 ```
-
-## Docs
-
-[Tool Developer Guide](https://support.codacy.com/hc/en-us/articles/207994725-Tool-Developer-Guide)
-
-[Tool Developer Guide - Using Scala](https://support.codacy.com/hc/en-us/articles/207280379-Tool-Developer-Guide-Using-Scala)
 
 ## Test
 
