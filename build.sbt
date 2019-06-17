@@ -11,7 +11,6 @@ scalaVersion := languageVersion
 resolvers := Seq("Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repositories/releases")) ++ resolvers.value
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.7.3",
   "com.codacy" %% "codacy-engine-scala-seed" % "3.0.9"
 )
 
