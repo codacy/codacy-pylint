@@ -1,6 +1,6 @@
 package codacy.pylint
 
-import codacy.docker.api.Parameter
+import com.codacy.plugins.api.results.Parameter
 
 private[pylint] object ParameterHeader {
 

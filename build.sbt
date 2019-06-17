@@ -4,15 +4,14 @@ name := """codacy-engine-pylint"""
 
 version := "1.0-SNAPSHOT"
 
-val languageVersion = "2.11.12"
+val languageVersion = "2.12.7"
 
 scalaVersion := languageVersion
 
 resolvers := Seq("Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repositories/releases")) ++ resolvers.value
 
 libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play-json" % "2.4.8",
-  "com.codacy" %% "codacy-engine-scala-seed" % "2.7.8"
+  "com.codacy" %% "codacy-engine-scala-seed" % "3.0.9"
 )
 
 enablePlugins(JavaAppPackaging)
@@ -30,7 +29,7 @@ val installAll =
       |apt-get -y update &&
       |apt-get install -y python2.7 python3.6 ca-certificates wget openjdk-8-jre-headless &&
       |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python2.7 &&
-      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3.6 && 
+      |wget "https://bootstrap.pypa.io/get-pip.py" -O /dev/stdout | python3.6 &&
       |python2.7 -m  pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
       |python3.6 -m pip install django==1.9.2 pylint-django==0.9.0 flask==0.10.1 pylint-flask==0.1 flask-wtf==0.12 --upgrade --ignore-installed --no-cache-dir &&
       |python2.7 -m  pip install pylint-common==0.2.2 &&
