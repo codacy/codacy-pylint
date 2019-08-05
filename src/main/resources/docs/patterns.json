@@ -1,5 +1,6 @@
 {
   "name": "PyLint",
+  "version": "2.3.1",
   "patterns": [
     {
       "patternId": "C0111",

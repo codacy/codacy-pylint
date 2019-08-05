@@ -3,9 +3,10 @@ package codacy.pylint
 import java.io.File
 import java.nio.file.{Files, Path}
 
-import codacy.docker.api._
-import codacy.docker.api.utils.ToolHelper
-import codacy.dockerApi.utils.{CommandRunner, FileHelper}
+import com.codacy.plugins.api.{ErrorMessage, Options, Source}
+import com.codacy.plugins.api.results.{Parameter, Pattern, Result, Tool}
+import com.codacy.tools.scala.seed.utils.ToolHelper._
+import com.codacy.tools.scala.seed.utils.{CommandRunner, FileHelper}
 import play.api.libs.json._
 
 import scala.sys.process._
@@ -13,13 +14,13 @@ import scala.util.{Properties, Success, Try}
 
 object Pylint extends Tool {
 
-  private val pythonVersionKey = Configuration.Key("python_version")
+  private val pythonVersionKey = Options.Key("python_version")
   private val python3 = "3"
 
   def apply(source: Source.Directory, configuration: Option[List[Pattern.Definition]], files: Option[Set[Source.File]],
-            options: Map[Configuration.Key, Configuration.Value])
+            options: Map[Options.Key, Options.Value])
            (implicit specification: Tool.Specification): Try[List[Result]] = {
-    val completeConf = ToolHelper.patternsToLint(configuration)
+    val completeConf = configuration.withDefaultParameters
 
     def isEnabled(issue: Result) = {
       issue match {
@@ -65,7 +66,7 @@ object Pylint extends Tool {
     linesTry.map { line => line.flatMap(parseLine).flatten.filter(isEnabled) }
   }
 
-  private def parseLine(line: String) = {
+  private def parseLine(line: String): Option[List[Result]] = {
     val LineRegex = """(.*?)###(\d*?)###(.*?)###(.*?)""".r
 
     def createIssue(filename: String, lineNumber: String, message: String, patternId: String) = {
@@ -92,7 +93,7 @@ object Pylint extends Tool {
 
   private val msgTemplate = "{abspath}###{line}###{msg_id}###{msg}"
   private val classifyScript =
-    s"""
+    """
        |import os
        |import sys
        |import ast
@@ -145,7 +146,7 @@ object Pylint extends Tool {
   def generateClassification(files: List[String]): String = {
     val scriptArgs = files.mkString("###")
     val tmp = FileHelper.createTmpFile(classifyScript, "pylint", "")
-    List("python3.6", tmp.toAbsolutePath.toString, scriptArgs).!!
+    List("python3.7", tmp.toAbsolutePath.toString, scriptArgs).!!
   }
 
   private def classifyFiles(files: List[String]): Try[Map[String, Array[String]]] = {
@@ -192,7 +193,7 @@ object Pylint extends Tool {
   def realInterpreterVersion(interpreter: String): String = {
     interpreter match {
       case "2" => "2.7"
-      case "3" => "3.6"
+      case "3" => "3.7"
     }
   }
 

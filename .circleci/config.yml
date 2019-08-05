@@ -1,29 +1,119 @@
 version: 2
+
+references:
+
+  docker_environment_defaults: &docker_environment_defaults
+    # Customize the JVM to read correct memory values
+    JAVA_OPTS: '-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1'
+
+  host_environment_defaults: &host_environment_defaults
+    # Customize the JVM maximum heap limit
+    JAVA_OPTS: -Xss256m -Xmx6144m
+
+  default_java_job: &default_java_job
+    docker:
+      - image: circleci/openjdk:8-jdk
+        environment:
+          <<: *docker_environment_defaults
+    working_directory: ~/workdir
+
+  restore_dependencies: &restore_dependencies
+    restore_cache:
+      keys:
+        - sbt-ivy2-dependencies-1.0.0-{{ checksum "/tmp/dependencies.cache.tmp" }}
+        - sbt-ivy2-dependencies-1.0.0
+
+  setup_dependencies_key: &setup_dependencies_key
+    run:
+      name: Generate cache key
+      command: |
+        shasum build.sbt \
+          project/plugins.sbt \
+          project/build.properties > /tmp/dependencies.cache.tmp
+
+
 jobs:
-  build:
-    machine: true
+
+  checkout_and_version:
+    docker:
+      - image: codacy/git-version:1.0.8
     working_directory: ~/workdir
     steps:
       - checkout
-      - run: 
+      - run:
+          name: Set version
+          command: /bin/git-version > .version
+      - run:
+          name: Set Sbt version
+          command: echo "version in ThisBuild := \"$(cat .version)\"" > version.sbt
+      - run:
+          name: Current version
+          command: cat .version
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - workdir
+
+  sbt_dependencies:
+    <<: *default_java_job
+    environment:
+      AWS_PROFILE: maven
+    steps:
+      - attach_workspace:
+          at: ~/
+      - *setup_dependencies_key
+      - *restore_dependencies
+      - run:
+          name: Resolve dependencies
+          command: sbt update
+      - save_cache:
+          paths:
+            - ~/.ivy2
+            - ~/.sbt
+          key: sbt-ivy2-dependencies-1.0.0-{{ checksum "/tmp/dependencies.cache.tmp" }}
+
+  compile:
+    <<: *default_java_job
+    steps:
+      - attach_workspace:
+          at: ~/
+      - *setup_dependencies_key
+      - *restore_dependencies
+      - run:
+          name: Compile
+          command: sbt -Dbuild.number=$(cat .version) compile test:compile
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - workdir
+
+  build:
+    machine: true
+    environment:
+      <<: *host_environment_defaults
+    working_directory: ~/workdir
+    steps:
+      - attach_workspace:
+          at: ~/
+      - *setup_dependencies_key
+      - *restore_dependencies
+      - run:
           name: Clone test project
           working_directory: ~/
           command: |
-            (git -C ~/codacy-plugins-test fetch --all && 
-              git -C ~/codacy-plugins-test reset --hard origin/master) || 
+            (git -C ~/codacy-plugins-test fetch --all &&
+              git -C ~/codacy-plugins-test reset --hard origin/master) ||
                 git clone git://github.com/codacy/codacy-plugins-test.git ~/codacy-plugins-test
-      - restore_cache:
-          key: dependencies-{{ checksum "build.sbt" }}
-      - run: 
+      - run:
           name: Compile test project
           working_directory: ~/codacy-plugins-test
           command: sbt compile
-      - run: 
+      - run:
           name: Publish tool docker locally
           working_directory: ~/workdir
           command: sbt 'set version in Docker := "latest"' "set name := \"$CIRCLE_PROJECT_REPONAME\"" docker:publishLocal
       - save_cache:
-          key: dependencies-{{ checksum "build.sbt" }}
+          key: sbt-ivy2-dependencies-1.0.0-{{ checksum "/tmp/dependencies.cache.tmp" }}
           paths:
             - "~/.ivy2"
             - "~/.m2"
@@ -34,7 +124,7 @@ jobs:
             - "~/workdir/target"
             - "~/workdir/project/target"
             - "~/workdir/project/project"
-      - run: 
+      - run:
           name: Test json
           working_directory: ~/codacy-plugins-test
           command: sbt -Dcodacy.tests.ignore.descriptions=true "runMain codacy.plugins.DockerTest json $CIRCLE_PROJECT_REPONAME:latest"
@@ -48,12 +138,23 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
               docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME
-              docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME:1.0.$CIRCLE_BUILD_NUM
+              docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME:$(cat .version)
               docker push codacy/$CIRCLE_PROJECT_REPONAME
+              docker push codacy/$CIRCLE_PROJECT_REPONAME:$(cat .version)
             fi
 
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build
+      - checkout_and_version
+      - sbt_dependencies:
+          requires:
+            - checkout_and_version
+      - compile:
+          requires:
+            - sbt_dependencies
+      - build:
+          context: CodacyDocker
+          requires:
+            - compile

@@ -1,8 +1,8 @@
 /RUNNING_PID
 /logs/
 /project/*-shim.sbt
-/project/project/
-/project/target/
-/target/
+target
 .idea
 .DS_Store
+.metals
+.bloop
