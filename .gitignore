@@ -1,6 +1,7 @@
 /RUNNING_PID
 /logs/
 /project/*-shim.sbt
+/project/project
 target
 .idea
 .DS_Store

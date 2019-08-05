@@ -162,8 +162,7 @@ object Pylint extends Tool {
     }
   }
 
-  private def commandFor(interpreter: String, conf: Option[List[Pattern.Definition]], files: Array[String])
-                        (implicit specification: Tool.Specification): Try[List[String]] = {
+  private def commandFor(interpreter: String, conf: Option[List[Pattern.Definition]], files: Array[String]): Try[List[String]] = {
 
     val rulesPart = conf.toList.flatMap { conf =>
       val rules = conf.map(_.patternId.toString()).mkString(",")
