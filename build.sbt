@@ -4,18 +4,13 @@ name := "codacy-pylint"
 
 scalaVersion := "2.12.8"
 
-resolvers := Seq("Sonatype OSS Snapshots".at(
-  "https://oss.sonatype.org/content/repositories/releases")) ++ resolvers.value
+resolvers := Seq("Sonatype OSS Snapshots".at("https://oss.sonatype.org/content/repositories/releases")) ++ resolvers.value
 
-libraryDependencies ++= Seq(
-  "com.codacy" %% "codacy-engine-scala-seed" % "3.0.296"
-)
+libraryDependencies ++= Seq("com.codacy" %% "codacy-engine-scala-seed" % "3.0.296")
 
 lazy val `doc-generator` = project
   .settings(
-    libraryDependencies ++= Seq(
-      "org.scala-lang.modules" %%  "scala-xml" % "1.2.0",
-      "com.lihaoyi" %% "ujson" % "0.7.5"),
+    libraryDependencies ++= Seq("org.scala-lang.modules" %% "scala-xml" % "1.2.0", "com.lihaoyi" %% "ujson" % "0.7.5"),
     scalaVersion := "2.13.0",
     Compile / fork := true,
     scalacOptions := scalacOptions.value.filterNot(o => o.startsWith("-Ywarn"))
