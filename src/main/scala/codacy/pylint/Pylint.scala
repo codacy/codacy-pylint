@@ -17,9 +17,12 @@ object Pylint extends Tool {
   private val pythonVersionKey = Options.Key("python_version")
   private val python3 = "3"
 
-  def apply(source: Source.Directory, configuration: Option[List[Pattern.Definition]], files: Option[Set[Source.File]],
-            options: Map[Options.Key, Options.Value])
-           (implicit specification: Tool.Specification): Try[List[Result]] = {
+  def apply(
+      source: Source.Directory,
+      configuration: Option[List[Pattern.Definition]],
+      files: Option[Set[Source.File]],
+      options: Map[Options.Key, Options.Value]
+  )(implicit specification: Tool.Specification): Try[List[Result]] = {
     val completeConf = configuration.withDefaultParameters
 
     def isEnabled(issue: Result) = {
@@ -30,8 +33,10 @@ object Pylint extends Tool {
     }
 
     def buildFileCommands(files: Map[String, Array[String]]) = {
-      files.map { case (key, values) => commandFor(key, completeConf, values) }
-        .flatMap(item => item.toOption).toList
+      files
+        .map { case (key, values) => commandFor(key, completeConf, values) }
+        .flatMap(item => item.toOption)
+        .toList
     }
 
     def getStdout(command: List[String]): Try[List[String]] = {
@@ -46,24 +51,34 @@ object Pylint extends Tool {
     }
 
     val collectedFiles = collectFiles(files, source)
-    val classified = options.get(pythonVersionKey).fold {
-      classifyFiles(collectedFiles)
-    } { pythonVersion =>
-      val validPythonVersion = Option(pythonVersion: JsValue).collect {
-        case JsNumber(version) => version
-        case JsString(version) => Try(version.toInt)
-      }.map(_.toString).getOrElse(python3)
-      Try(Map(validPythonVersion -> collectedFiles.toArray))
+    val classified = options
+      .get(pythonVersionKey)
+      .fold {
+        classifyFiles(collectedFiles)
+      } { pythonVersion =>
+        val validPythonVersion = Option(pythonVersion: JsValue)
+          .collect {
+            case JsNumber(version) => version
+            case JsString(version) => Try(version.toInt)
+          }
+          .map(_.toString)
+          .getOrElse(python3)
+        Try(Map(validPythonVersion -> collectedFiles.toArray))
+      }
+    val commands = classified.map { item =>
+      buildFileCommands(item)
     }
-    val commands = classified.map { item => buildFileCommands(item) }
-    val lines_iterable = commands.map { item => item.map(getStdout) }
-    val linesTry: Try[List[String]] = lines_iterable.map {
-      iterable =>
-        iterable.flatMap {
-          item => item.toOption
-        }.flatten
+    val lines_iterable = commands.map { item =>
+      item.map(getStdout)
     }
-    linesTry.map { line => line.flatMap(parseLine).flatten.filter(isEnabled) }
+    val linesTry: Try[List[String]] = lines_iterable.map { iterable =>
+      iterable.flatMap { item =>
+        item.toOption
+      }.flatten
+    }
+    linesTry.map { line =>
+      line.flatMap(parseLine).flatten.filter(isEnabled)
+    }
   }
 
   private def parseLine(line: String): Option[List[Result]] = {
@@ -72,16 +87,12 @@ object Pylint extends Tool {
     def createIssue(filename: String, lineNumber: String, message: String, patternId: String) = {
       // If the pylint returns no line put the issue in the first line
       val issueLine = if (lineNumber.nonEmpty) lineNumber.toInt else 1
-      Result.Issue(Source.File(filename),
-        Result.Message(message),
-        Pattern.Id(patternId),
-        Source.Line(issueLine))
+      Result.Issue(Source.File(filename), Result.Message(message), Pattern.Id(patternId), Source.Line(issueLine))
     }
 
     line match {
       case LineRegex(filename, lineNumber, patternId, message) if message.contains("invalid syntax") =>
-        val fileError = Result.FileError(Source.File(filename),
-          Option(ErrorMessage(message)))
+        val fileError = Result.FileError(Source.File(filename), Option(ErrorMessage(message)))
         val issue = createIssue(filename, lineNumber, message, patternId)
         Option(List(fileError, issue))
       case LineRegex(filename, lineNumber, patternId, message) =>
@@ -137,10 +148,13 @@ object Pylint extends Tool {
        """.stripMargin
 
   private def collectFiles(filesOpt: Option[Set[Source.File]], source: Source.Directory) = {
-    filesOpt.collect { case files if files.nonEmpty => files.map(_.path) }.getOrElse {
-      //if files is empty, let the classification script to find them.
-      List(source.path)
-    }.toList
+    filesOpt
+      .collect { case files if files.nonEmpty => files.map(_.path) }
+      .getOrElse {
+        //if files is empty, let the classification script to find them.
+        List(source.path)
+      }
+      .toList
   }
 
   def generateClassification(files: List[String]): String = {
@@ -157,28 +171,34 @@ object Pylint extends Tool {
         val splitted = line.split("###")
         (splitted(0), splitted(1))
       }
-      parsed.groupBy { case (path, version) => version }
+      parsed
+        .groupBy { case (path, version) => version }
         .map { case (key, pairs) => (key, pairs map { case (file, version) => file }) }
     }
   }
 
-  private def commandFor(interpreter: String, conf: Option[List[Pattern.Definition]], files: Array[String]): Try[List[String]] = {
+  private def commandFor(
+      interpreter: String,
+      conf: Option[List[Pattern.Definition]],
+      files: Array[String]
+  ): Try[List[String]] = {
 
     val rulesPart = conf.toList.flatMap { conf =>
       val rules = conf.map(_.patternId.toString()).mkString(",")
       List("--disable=all", "-e", rules)
     }
 
-    val configPart = conf.map { configuration =>
-      val confFile = writeConfigFile(configuration)
-      confFile.map { confPath =>
-        List(s"--rcfile=$confPath")
+    val configPart = conf
+      .map { configuration =>
+        val confFile = writeConfigFile(configuration)
+        confFile.map { confPath =>
+          List(s"--rcfile=$confPath")
+        }
       }
-    }.getOrElse(Success(List.empty[String]))
+      .getOrElse(Success(List.empty[String]))
 
     //Additional plugins
-    val django = Seq("--load-plugins=pylint_django",
-      "--disable=django-installed-checker,django-model-checker")
+    val django = Seq("--load-plugins=pylint_django", "--disable=django-installed-checker,django-model-checker")
     val flask = Seq("--load-plugins=pylint_flask")
     val additionalPlugins = django ++ flask
 
@@ -198,24 +218,31 @@ object Pylint extends Tool {
 
   private def writeConfigFile(configuration: List[Pattern.Definition]): Try[Path] = {
 
-    val parameters = configuration.flatMap { pattern =>
-      pattern.parameters.getOrElse(Set.empty).map { param =>
-        ParameterHeader.get(param.name) -> param
+    val parameters = configuration
+      .flatMap { pattern =>
+        pattern.parameters.getOrElse(Set.empty).map { param =>
+          ParameterHeader.get(param.name) -> param
+        }
       }
-    }.groupBy { case (header, _) => header }
+      .groupBy { case (header, _) => header }
 
-    val paramsToPrint = parameters.map { case (header, params) =>
+    val paramsToPrint = parameters
+      .map {
+        case (header, params) =>
+          lazy val paramString: String = params
+            .map {
+              case (_, pvalue) =>
+                generateParameter(pvalue)
+            }
+            .mkString(Properties.lineSeparator)
 
-      lazy val paramString: String = params.map { case (_, pvalue) =>
-        generateParameter(pvalue)
-      }.mkString(Properties.lineSeparator)
-
-      s"""
+          s"""
          |[$header]
          |$paramString
        """.stripMargin
 
-    }.mkString(Properties.lineSeparator)
+      }
+      .mkString(Properties.lineSeparator)
     write(paramsToPrint)
   }
 
@@ -227,9 +254,7 @@ object Pylint extends Tool {
     s"${parameter.name}=$parameterValue"
   }
 
-  private def randomFile(extension: String = "conf") = Try(
-    Files.createTempFile("codacy-", s".$extension")
-  )
+  private def randomFile(extension: String = "conf") = Try(Files.createTempFile("codacy-", s".$extension"))
 
   private def write(content: String): Try[Path] = {
     randomFile().map { confFile =>
