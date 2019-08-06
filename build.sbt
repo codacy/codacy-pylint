@@ -90,7 +90,7 @@ dockerBaseImage := "ubuntu:18.04"
 dockerEntrypoint := Seq(s"/opt/docker/bin/${name.value}")
 
 dockerCommands := dockerCommands.value.flatMap {
-  //case cmd @ Cmd("WORKDIR", _) => Seq(cmd, Cmd("RUN", installAll))
+  case cmd @ Cmd("WORKDIR", _) => Seq(cmd, Cmd("RUN", installAll))
   case cmd @ Cmd("ADD", _) =>
     Seq(
       Cmd("RUN", "adduser -u 2004 docker"),

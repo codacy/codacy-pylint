@@ -74,8 +74,8 @@ object Main {
       (ruleName, rule.stripSuffix(":"), body)
   }
 
-  val rulesNamesTitlesBodiesMarkdown = rulesNamesTitlesBodies.map{ t => t.copy(_3 = toMarkdown(t._3.toString)) }
-  val rulesNamesTitlesBodiesPlainText = rulesNamesTitlesBodies.map{ t => t.copy(_3 = t._3.text) }
+  val rulesNamesTitlesBodiesMarkdown = rulesNamesTitlesBodies.map{ case (name, title, body) => (name, title, toMarkdown(body.toString)) }
+  val rulesNamesTitlesBodiesPlainText = rulesNamesTitlesBodies.map{ case (name, title, body) => (name, title, toMarkdown(body.toString)) }
 
   val docsPath = "../src/main/resources/docs"
 
@@ -93,14 +93,14 @@ object Main {
           Obj(
             "patternId" -> ruleName,
             "level" -> {
-              ruleName.head match {
+              ruleName.headOption.map {
                 case 'C' => "Convention"
                 case 'R' => "Refactor"
                 case 'W' | 'I' => "Warning"
                 case 'E' => "Error"
                 case 'F' => "Fatal"
                 case _ => throw new Exception(s"Unknown error type for $ruleName")
-              }
+              }.getOrElse(throw new Exception(s"Empty rule name"))
             },
             "category" -> "CodeStyle"
           )
