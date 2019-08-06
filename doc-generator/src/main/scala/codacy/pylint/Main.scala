@@ -75,7 +75,7 @@ object Main {
   }
 
   val rulesNamesTitlesBodiesMarkdown = rulesNamesTitlesBodies.map{ case (name, title, body) => (name, title, toMarkdown(body.toString)) }
-  val rulesNamesTitlesBodiesPlainText = rulesNamesTitlesBodies.map{ case (name, title, body) => (name, title, toMarkdown(body.toString)) }
+  val rulesNamesTitlesBodiesPlainText = rulesNamesTitlesBodies.map{ case (name, title, body) => (name, title, body.text) }
 
   val docsPath = "../src/main/resources/docs"
 

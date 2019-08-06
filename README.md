@@ -1,4 +1,4 @@
-    [![Codacy Badge](https://api.codacy.com/project/badge/grade/8bd24fe19ffb4c3ea0e947225e962d28)](https://www.codacy.com/app/Codacy/codacy-pylint)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/8bd24fe19ffb4c3ea0e947225e962d28)](https://www.codacy.com/app/Codacy/codacy-pylint)
 [![Build Status](https://circleci.com/gh/codacy/codacy-pylint.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/codacy/codacy-pylint)
 
 # Codacy Pylint
@@ -11,15 +11,15 @@ See the [codacy-engine-scala-seed](https://github.com/codacy/codacy-engine-scala
 
 You can create the docker by doing:
 
-```
-sbt docker:publishLocal
-```
+  ```bash
+  sbt docker:publishLocal
+  ```
 
 The docker is ran with the following command:
 
-```
-docker run -it -v $srcDir:/src  <DOCKER_NAME>:<DOCKER_VERSION>
-```
+  ```bash
+  docker run -it -v $srcDir:/src  <DOCKER_NAME>:<DOCKER_VERSION>
+  ```
 
 ## Generate Docs
 
@@ -27,8 +27,9 @@ docker run -it -v $srcDir:/src  <DOCKER_NAME>:<DOCKER_VERSION>
 
 2. Run the DocGenerator
 
-```bash
-sbt "doc-generator/run"
+  ```bash
+  sbt "doc-generator/run"
+  ```
 
 ## Test
 
