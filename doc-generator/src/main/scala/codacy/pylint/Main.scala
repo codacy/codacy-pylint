@@ -96,22 +96,18 @@ object Main {
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>
-          Obj(
-            "patternId" -> ruleName,
-            "level" -> {
-              ruleName.headOption
-                .map {
-                  case 'C' => "Info" // "Convention" non valid
-                  case 'R' => "Info" // "Refactor" non valid
-                  case 'W' | 'I' => "Warning"
-                  case 'E' => "Error"
-                  case 'F' => "Error" // "Fatal" non valid
-                  case _ => throw new Exception(s"Unknown error type for $ruleName")
-                }
-                .getOrElse(throw new Exception(s"Empty rule name"))
-            },
-            "category" -> "CodeStyle"
-          )
+          Obj("patternId" -> ruleName, "level" -> {
+            ruleName.headOption
+              .map {
+                case 'C' => "Info" // "Convention" non valid
+                case 'R' => "Info" // "Refactor" non valid
+                case 'W' | 'I' => "Warning"
+                case 'E' => "Error"
+                case 'F' => "Error" // "Fatal" non valid
+                case _ => throw new Exception(s"Unknown error type for $ruleName")
+              }
+              .getOrElse(throw new Exception(s"Empty rule name"))
+          }, "category" -> "CodeStyle")
       })
     ),
     indent = 2
