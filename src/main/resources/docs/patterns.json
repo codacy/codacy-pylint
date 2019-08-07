@@ -1,5 +1,5 @@
 {
-  "name": "PyLint",
+  "name": "PyLint (Python 3)",
   "version": "2.3.1",
   "patterns": [
     {
@@ -194,47 +194,47 @@
     },
     {
       "patternId": "R0123",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0124",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0103",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0102",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0122",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0121",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0112",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0111",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0123",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
@@ -354,97 +354,97 @@
     },
     {
       "patternId": "R0205",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0202",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0203",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0201",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0205",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0202",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0204",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0203",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "F0202",
-      "level": "Fatal",
+      "level": "Error",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0903",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0901",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0913",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0916",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0912",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0902",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0914",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0904",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0911",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0915",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
@@ -534,57 +534,57 @@
     },
     {
       "patternId": "C0326",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0304",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0301",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0327",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0321",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0302",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0305",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0303",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0328",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0325",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0330",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
@@ -629,32 +629,32 @@
     },
     {
       "patternId": "R0401",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0411",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0413",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0414",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0412",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0410",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
@@ -1074,142 +1074,142 @@
     },
     {
       "patternId": "R1709",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1714",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1701",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1717",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1718",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1715",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1713",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1706",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1712",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1707",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1708",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1710",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1704",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1716",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1719",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1703",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1702",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1720",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1705",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R1711",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0113",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0201",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0200",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C1801",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "R0801",
-      "level": "Refactor",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0403",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0401",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {
       "patternId": "C0402",
-      "level": "Convention",
+      "level": "Info",
       "category": "CodeStyle"
     },
     {

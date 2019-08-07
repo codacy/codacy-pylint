@@ -92,7 +92,7 @@ object Main {
 
   val patterns = ujson.write(
     Obj(
-      "name" -> "PyLint",
+      "name" -> "PyLint (Python 3)",
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>
@@ -101,11 +101,11 @@ object Main {
             "level" -> {
               ruleName.headOption
                 .map {
-                  case 'C' => "Convention"
-                  case 'R' => "Refactor"
+                  case 'C' => "Info" // "Convention" non valid
+                  case 'R' => "Info" // "Refactor" non valid
                   case 'W' | 'I' => "Warning"
                   case 'E' => "Error"
-                  case 'F' => "Fatal"
+                  case 'F' => "Error" // "Fatal" non valid
                   case _ => throw new Exception(s"Unknown error type for $ruleName")
                 }
                 .getOrElse(throw new Exception(s"Empty rule name"))
@@ -130,7 +130,7 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     writeToFile(s"$docsPath/patterns.json", patterns)
-    writeToFile(s"$docsPath/description.json", description)
+    writeToFile(s"$docsPath/description/description.json", description)
     files.foreach {
       case (filename, content) =>
         val pw = new PrintWriter(new File(filename))
