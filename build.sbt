@@ -85,13 +85,14 @@ dockerBaseImage := "ubuntu:18.04"
 dockerEntrypoint := Seq(s"/opt/docker/bin/${name.value}")
 
 dockerCommands := dockerCommands.value.flatMap {
-  case cmd @ Cmd("WORKDIR", _) => Seq(cmd, Cmd("RUN", installAll))
+  case Cmd("WORKDIR", _) => Seq(Cmd("WORKDIR", "/src"))
   case cmd @ Cmd("ADD", _) =>
     Seq(
+      Cmd("RUN", installAll),
       Cmd("RUN", "adduser -u 2004 docker"),
       cmd,
       Cmd("RUN", "mv /opt/docker/docs /docs"),
-      Cmd("RUN", Seq("chown", "-R", s"$dockerUser:$dockerGroup", "/docs"): _*)
+      Cmd("RUN", s"chown -R $dockerUser:$dockerGroup /docs")
     )
   case other => Seq(other)
 }
