@@ -38,8 +38,10 @@ object Main {
     }
   }
 
+  val docsPath = "../docs"
+
   val version: String = {
-    val source = Source.fromFile("../docs/patterns.json")
+    val source = Source.fromFile(s"$docsPath/patterns.json")
     val patterns = source.mkString
     val json = ujson.read(patterns)
     val res = json("version").str
@@ -48,7 +50,9 @@ object Main {
   }
 
   val htmlString = {
-    val source = Source.fromURL(s"https://pylint.readthedocs.io/en/pylint-$version/technical_reference/features.html")
+    val source = Source.fromURL(
+      s"http://pylint.pycqa.org/en/${version.split('.').init.mkString(".")}/technical_reference/features.html"
+    )
     val res = source.mkString
     source.close()
     res
@@ -83,8 +87,6 @@ object Main {
     case (name, title, body) => (name, title, body.text)
   }
 
-  val docsPath = "../docs"
-
   val files = rulesNamesTitlesBodiesMarkdown.map {
     case (r, t, b) =>
       (s"$docsPath/description/$r.md", s"# $t${System.lineSeparator}$b")
@@ -92,7 +94,7 @@ object Main {
 
   val patterns = ujson.write(
     Obj(
-      "name" -> "PyLint (Python 3)",
+      "name" -> "PyLint (Python 2)",
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>
@@ -127,11 +129,8 @@ object Main {
   def main(args: Array[String]): Unit = {
     writeToFile(s"$docsPath/patterns.json", patterns)
     writeToFile(s"$docsPath/description/description.json", description)
-    files.foreach {
-      case (filename, content) =>
-        val pw = new PrintWriter(new File(filename))
-        pw.println(content.trim())
-        pw.close()
-    }
+    files
+      .map { case (n, c) => (n, c.trim) }
+      .foreach((writeToFile _).tupled)
   }
 }

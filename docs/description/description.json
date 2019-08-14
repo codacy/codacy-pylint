@@ -2,12 +2,12 @@
   {
     "patternId": "E1701",
     "title": "not-async-context-manager (E1701)",
-    "description": "Async context manager '%s' doesn't implement __aenter__ and __aexit__.\nUsed when an async context manager is used with an object that does not\nimplement the async context management protocol. This message can't be emitted\nwhen using Python < 3.5."
+    "description": "Async context manager ‘%s’ doesn’t implement __aenter__ and __aexit__.\nUsed when an async context manager is used with an object that does not\nimplement the async context management protocol. This message can’t be emitted\nwhen using Python < 3.5."
   },
   {
     "patternId": "E1700",
     "title": "yield-inside-async-function (E1700)",
-    "description": "Yield inside async function\nUsed when an yield or yield from statement is found inside an async\nfunction. This message can't be emitted when using Python < 3.5."
+    "description": "Yield inside async function\nUsed when an yield or yield from statement is found inside an async\nfunction. This message can’t be emitted when using Python < 3.5."
   },
   {
     "patternId": "E0103",
@@ -22,7 +22,7 @@
   {
     "patternId": "E0116",
     "title": "continue-in-finally (E0116)",
-    "description": "'continue' not supported inside 'finally' clause\nEmitted when the continue keyword is found inside a finally clause, which is\na SyntaxError."
+    "description": "‘continue’ not supported inside ‘finally’ clause\nEmitted when the continue keyword is found inside a finally clause, which is\na SyntaxError."
   },
   {
     "patternId": "E0110",
@@ -32,7 +32,7 @@
   {
     "patternId": "E0114",
     "title": "star-needs-assignment-target (E0114)",
-    "description": "Can use starred expression only in assignment target\nEmitted when a star expression is not used in an assignment target."
+    "description": "Can use starred expression only in assignment target\nEmitted when a star expression is not used in an assignment target. This\nmessage can’t be emitted when using Python < 3.0."
   },
   {
     "patternId": "E0108",
@@ -47,47 +47,47 @@
   {
     "patternId": "E0112",
     "title": "too-many-star-expressions (E0112)",
-    "description": "More than one starred expression in assignment\nEmitted when there are more than one starred expressions (*x) in an\nassignment. This is a SyntaxError."
+    "description": "More than one starred expression in assignment\nEmitted when there are more than one starred expressions (*x) in an\nassignment. This is a SyntaxError. This message can’t be emitted when using\nPython < 3.0."
   },
   {
     "patternId": "E0115",
     "title": "nonlocal-and-global (E0115)",
-    "description": "Name %r is nonlocal and global\nEmitted when a name is both nonlocal and global."
+    "description": "Name %r is nonlocal and global\nEmitted when a name is both nonlocal and global. This message can’t be emitted\nwhen using Python < 3.0."
   },
   {
     "patternId": "E0118",
     "title": "used-prior-global-declaration (E0118)",
-    "description": "Name %r is used prior to global declaration\nEmitted when a name is used prior a global declaration, which results in an\nerror since Python 3.6. This message can't be emitted when using Python < 3.6."
+    "description": "Name %r is used prior to global declaration\nEmitted when a name is used prior a global declaration, which results in an\nerror since Python 3.6. This message can’t be emitted when using Python < 3.6."
   },
   {
     "patternId": "E0104",
     "title": "return-outside-function (E0104)",
-    "description": "Return outside function\nUsed when a \"return\" statement is found outside a function or method."
+    "description": "Return outside function\nUsed when a “return” statement is found outside a function or method."
   },
   {
     "patternId": "E0106",
     "title": "return-arg-in-generator (E0106)",
-    "description": "Return with argument inside generator\nUsed when a \"return\" statement with an argument is found outside in a\ngenerator function or method (e.g. with some \"yield\" statements). This message\ncan't be emitted when using Python >= 3.3."
+    "description": "Return with argument inside generator\nUsed when a “return” statement with an argument is found outside in a\ngenerator function or method (e.g. with some “yield” statements). This message\ncan’t be emitted when using Python >= 3.3."
   },
   {
     "patternId": "E0113",
     "title": "invalid-star-assignment-target (E0113)",
-    "description": "Starred assignment target must be in a list or tuple\nEmitted when a star expression is used as a starred assignment target."
+    "description": "Starred assignment target must be in a list or tuple\nEmitted when a star expression is used as a starred assignment target. This\nmessage can’t be emitted when using Python < 3.0."
   },
   {
     "patternId": "E0111",
     "title": "bad-reversed-sequence (E0111)",
-    "description": "The first reversed() argument is not a sequence\nUsed when the first argument to reversed() builtin isn't a sequence (does not\nimplement __reversed__, nor __getitem__ and __len__"
+    "description": "The first reversed() argument is not a sequence\nUsed when the first argument to reversed() builtin isn’t a sequence (does not\nimplement __reversed__, nor __getitem__ and __len__"
   },
   {
     "patternId": "E0107",
     "title": "nonexistent-operator (E0107)",
-    "description": "Use of the non-existent %s operator\nUsed when you attempt to use the C-style pre-increment or pre-decrement\noperator -- and ++, which doesn't exist in Python."
+    "description": "Use of the non-existent %s operator\nUsed when you attempt to use the C-style pre-increment orpre-decrement\noperator – and ++, which doesn’t exist in Python."
   },
   {
     "patternId": "E0105",
     "title": "yield-outside-function (E0105)",
-    "description": "Yield outside function\nUsed when a \"yield\" statement is found outside a function or method."
+    "description": "Yield outside function\nUsed when a “yield” statement is found outside a function or method."
   },
   {
     "patternId": "E0100",
@@ -95,29 +95,19 @@
     "description": "__init__ method is a generator\nUsed when the special class method __init__ is turned into a generator by a\nyield in its body."
   },
   {
-    "patternId": "E0119",
-    "title": "misplaced-format-function (E0119)",
-    "description": "format function is not called on str\nEmitted when format function is not called on str object. e.g doing\nprint(\"value: {}\").format(123) instead of print(\"value: {}\".format(123)). This\nmight not be what the user intended to do."
-  },
-  {
     "patternId": "E0117",
     "title": "nonlocal-without-binding (E0117)",
-    "description": "nonlocal name %s found without binding\nEmitted when a nonlocal variable does not have an attached name somewhere in\nthe parent scopes"
+    "description": "nonlocal name %s found without binding\nEmitted when a nonlocal variable does not have an attached name somewhere in\nthe parent scopes This message can’t be emitted when using Python < 3.0."
   },
   {
     "patternId": "W0150",
     "title": "lost-exception (W0150)",
-    "description": "%s statement in finally block may swallow exception\nUsed when a break or a return statement is found inside the finally clause of\na try...finally block: the exceptions raised in the try clause will be\nsilently swallowed instead of being re-raised."
+    "description": "%s statement in finally block may swallow exception\nUsed when a break or a return statement is found inside the finally clause of\na try…finally block: the exceptions raised in the try clause will be\nsilently swallowed instead of being re-raised."
   },
   {
     "patternId": "W0199",
     "title": "assert-on-tuple (W0199)",
-    "description": "Assert called on a 2-uple. Did you mean 'assert x,y'?\nA call of assert on a tuple will always evaluate to true if the tuple is not\nempty, and will always evaluate to false if it is."
-  },
-  {
-    "patternId": "W0143",
-    "title": "comparison-with-callable (W0143)",
-    "description": "Comparing against a callable, did you omit the parenthesis?\nThis message is emitted when pylint detects that a comparison with a callable\nwas made, which might suggest that some parenthesis were omitted, resulting in\npotential unwanted behaviour."
+    "description": "Assert called on a 2-uple. Did you mean ‘assert x,y’?\nA call of assert on a tuple will always evaluate to true if the tuple is not\nempty, and will always evaluate to false if it is."
   },
   {
     "patternId": "W0102",
@@ -137,12 +127,12 @@
   {
     "patternId": "W0106",
     "title": "expression-not-assigned (W0106)",
-    "description": "Expression \"%s\" is assigned to nothing\nUsed when an expression that is not a function call is assigned to nothing.\nProbably something else was intended."
+    "description": "Expression “%s” is assigned to nothing\nUsed when an expression that is not a function call is assigned to nothing.\nProbably something else was intended."
   },
   {
     "patternId": "W0124",
     "title": "confusing-with-statement (W0124)",
-    "description": "Following \"as\" with another context manager looks like a tuple.\nEmitted when a with statement component returns multiple values and uses\nname binding with as only for a part of those values, as in with ctx() as a,\nb. This can be misleading, since it's not clear if the context manager returns\na tuple or if the node without a name binding is another context manager."
+    "description": "Following “as” with another context manager looks like a tuple.\nEmitted when a with statement component returns multiple values and uses\nname binding with as only for a part of those values, as in with ctx() as a,\nb. This can be misleading, since it’s not clear if the context manager returns\na tuple or if the node without a name binding is another context manager."
   },
   {
     "patternId": "W0108",
@@ -152,37 +142,37 @@
   {
     "patternId": "W0111",
     "title": "assign-to-new-keyword (W0111)",
-    "description": "Name %s will become a keyword in Python %s\nUsed when assignment will become invalid in future Python release due to\nintroducing new keyword."
+    "description": "Name %s will become a keyword in Python %s\nUsed when assignment will become invalid in future Python release due to\nintroducing new keyword"
   },
   {
     "patternId": "W0104",
     "title": "pointless-statement (W0104)",
-    "description": "Statement seems to have no effect\nUsed when a statement doesn't have (or at least seems to) any effect."
+    "description": "Statement seems to have no effect\nUsed when a statement doesn’t have (or at least seems to) any effect."
   },
   {
     "patternId": "W0105",
     "title": "pointless-string-statement (W0105)",
-    "description": "String statement has no effect\nUsed when a string is used as a statement (which of course has no effect).\nThis is a particular case of W0104 with its own message so you can easily\ndisable it if you're using those strings as documentation, instead of\ncomments."
+    "description": "String statement has no effect\nUsed when a string is used as a statement (which of course has no effect).\nThis is a particular case of W0104 with its own message so you can easily\ndisable it if you’re using those strings as documentation, instead of\ncomments."
   },
   {
     "patternId": "W0107",
     "title": "unnecessary-pass (W0107)",
-    "description": "Unnecessary pass statement\nUsed when a \"pass\" statement that can be avoided is encountered."
+    "description": "Unnecessary pass statement\nUsed when a “pass” statement that can be avoided is encountered."
   },
   {
     "patternId": "W0101",
     "title": "unreachable (W0101)",
-    "description": "Unreachable code\nUsed when there is some code behind a \"return\" or \"raise\" statement, which\nwill never be accessed."
+    "description": "Unreachable code\nUsed when there is some code behind a “return” or “raise” statement, which\nwill never be accessed."
   },
   {
     "patternId": "W0123",
     "title": "eval-used (W0123)",
-    "description": "Use of eval\nUsed when you use the \"eval\" function, to discourage its usage. Consider using\nast.literal_eval for safely evaluating strings containing Python expressions\nfrom untrusted sources."
+    "description": "Use of eval\nUsed when you use the “eval” function, to discourage its usage. Consider using\nast.literal_eval for safely evaluating strings containing Python expressions\nfrom untrusted sources."
   },
   {
     "patternId": "W0122",
     "title": "exec-used (W0122)",
-    "description": "Use of exec\nUsed when you use the \"exec\" statement (function for Python 3), to discourage\nits usage. That doesn't mean you cannot use it !"
+    "description": "Use of exec\nUsed when you use the “exec” statement (function for Python 3), to discourage\nits usage. That doesn’t mean you cannot use it !"
   },
   {
     "patternId": "W0125",
@@ -190,24 +180,24 @@
     "description": "Using a conditional statement with a constant value\nEmitted when a conditional statement (If or ternary if) uses a constant value\nfor its test. This might not be what the user intended to do."
   },
   {
+    "patternId": "W0110",
+    "title": "deprecated-lambda (W0110)",
+    "description": "map/filter on lambda could be replaced by comprehension\nUsed when a lambda is the first argument to “map” or “filter”. It could be\nclearer as a list comprehension or generator expression. This message can’t be\nemitted when using Python >= 3.0."
+  },
+  {
     "patternId": "R0123",
     "title": "literal-comparison (R0123)",
     "description": "Comparison to literal\nUsed when comparing an object to a literal, which is usually what you do not\nwant to do, since you can compare to a different literal than what was\nexpected altogether."
   },
   {
-    "patternId": "R0124",
-    "title": "comparison-with-itself (R0124)",
-    "description": "Redundant comparison - %s\nUsed when something is compared against itself."
-  },
-  {
     "patternId": "C0103",
     "title": "invalid-name (C0103)",
-    "description": "%s name \"%s\" doesn't conform to %s\nUsed when the name doesn't conform to naming rules associated to its type\n(constant, variable, class...)."
+    "description": "%s name “%s” doesn’t conform to %s\nUsed when the name doesn’t conform to naming rules associated to its type\n(constant, variable, class…)."
   },
   {
     "patternId": "C0102",
     "title": "blacklisted-name (C0102)",
-    "description": "Black listed name \"%s\"\nUsed when the name is listed in the black list (unauthorized names)."
+    "description": "Black listed name “%s”\nUsed when the name is listed in the black list (unauthorized names)."
   },
   {
     "patternId": "C0122",
@@ -220,6 +210,11 @@
     "description": "Comparison to %s should be %s\nUsed when an expression is compared to singleton values like True, False or\nNone."
   },
   {
+    "patternId": "C0113",
+    "title": "unneeded-not (C0113)",
+    "description": "Consider changing “%s” to “%s”\nUsed when a boolean expression contains an unneeded negation."
+  },
+  {
     "patternId": "C0112",
     "title": "empty-docstring (C0112)",
     "description": "Empty %s docstring\nUsed when a module, function, class or method has an empty docstring (it would\nbe too easy ;)."
@@ -227,7 +222,7 @@
   {
     "patternId": "C0111",
     "title": "missing-docstring (C0111)",
-    "description": "Missing %s docstring\nUsed when a module, function, class or method has no docstring.Some special\nmethods like __init__ doesn't necessary require a docstring."
+    "description": "Missing %s docstring\nUsed when a module, function, class or method has no docstring.Some special\nmethods like __init__ doesn’t necessary require a docstring."
   },
   {
     "patternId": "C0123",
@@ -237,7 +232,7 @@
   {
     "patternId": "E0203",
     "title": "access-member-before-definition (E0203)",
-    "description": "Access to member %r before its definition line %s\nUsed when an instance member is accessed before it's actually assigned."
+    "description": "Access to member %r before its definition line %s\nUsed when an instance member is accessed before it’s actually assigned."
   },
   {
     "patternId": "E0202",
@@ -282,7 +277,7 @@
   {
     "patternId": "E0213",
     "title": "no-self-argument (E0213)",
-    "description": "Method should have \"self\" as first argument\nUsed when a method has an attribute different the \"self\" as first argument.\nThis is considered as an error since this is a so common convention that you\nshouldn't break it!"
+    "description": "Method should have “self” as first argument\nUsed when a method has an attribute different the “self” as first argument.\nThis is considered as an error since this is a so common convention that you\nshouldn’t break it!"
   },
   {
     "patternId": "E0302",
@@ -297,12 +292,12 @@
   {
     "patternId": "E0303",
     "title": "invalid-length-returned (E0303)",
-    "description": "__len__ does not return non-negative integer\nUsed when a __len__ method returns something which is not a non-negative\ninteger"
+    "description": "__len__ does not return non-negative integer\nUsed when an __len__ method returns something which is not a non-negative\ninteger"
   },
   {
     "patternId": "W0212",
     "title": "protected-access (W0212)",
-    "description": "Access to a protected member %s of a client class\nUsed when a protected member (i.e. class member with a name beginning with an\nunderscore) is access outside the class or a descendant of the class where\nit's defined."
+    "description": "Access to a protected member %s of a client class\nUsed when a protected member (i.e. class member with a name beginning with an\nunderscore) is access outside the class or a descendant of the class where\nit’s defined."
   },
   {
     "patternId": "W0201",
@@ -332,7 +327,7 @@
   {
     "patternId": "W0211",
     "title": "bad-staticmethod-argument (W0211)",
-    "description": "Static method with %r as first argument\nUsed when a static method has \"self\" or a value specified in valid-\nclassmethod-first-arg option or valid-metaclass-classmethod-first-arg option\nas first argument."
+    "description": "Static method with %r as first argument\nUsed when a static method has “self” or a value specified in valid-\nclassmethod-first-arg option or valid-metaclass-classmethod-first-arg option\nas first argument."
   },
   {
     "patternId": "W0235",
@@ -350,11 +345,6 @@
     "description": "__init__ method from base class %r is not called\nUsed when an ancestor class method has an __init__ method which is not called\nby a derived class."
   },
   {
-    "patternId": "R0205",
-    "title": "useless-object-inheritance (R0205)",
-    "description": "Class %r inherits from object, can be safely removed from bases in python3\nUsed when a class inherit from object, which under python3 is implicit, hence\ncan be safely removed from bases."
-  },
-  {
     "patternId": "R0202",
     "title": "no-classmethod-decorator (R0202)",
     "description": "Consider using a decorator instead of calling classmethod\nUsed when a class method is defined without using the decorator syntax."
@@ -367,7 +357,7 @@
   {
     "patternId": "R0201",
     "title": "no-self-use (R0201)",
-    "description": "Method could be a function\nUsed when a method doesn't use its bound instance, and so could be written as\na function."
+    "description": "Method could be a function\nUsed when a method doesn’t use its bound instance, and so could be written as\na function."
   },
   {
     "patternId": "C0205",
@@ -377,27 +367,27 @@
   {
     "patternId": "C0202",
     "title": "bad-classmethod-argument (C0202)",
-    "description": "Class method %s should have %s as first argument\nUsed when a class method has a first argument named differently than the value\nspecified in valid-classmethod-first-arg option (default to \"cls\"),\nrecommended to easily differentiate them from regular instance methods."
+    "description": "Class method %s should have %s as first argument\nUsed when a class method has a first argument named differently than the value\nspecified in valid-classmethod-first-arg option (default to “cls”),\nrecommended to easily differentiate them from regular instance methods."
   },
   {
     "patternId": "C0204",
     "title": "bad-mcs-classmethod-argument (C0204)",
-    "description": "Metaclass class method %s should have %s as first argument\nUsed when a metaclass class method has a first argument named differently than\nthe value specified in valid-metaclass-classmethod-first-arg option (default\nto \"mcs\"), recommended to easily differentiate them from regular instance\nmethods."
+    "description": "Metaclass class method %s should have %s as first argument\nUsed when a metaclass class method has a first argument named differently than\nthe value specified in valid-metaclass-classmethod-first-arg option (default\nto “mcs”), recommended to easily differentiate them from regular instance\nmethods."
   },
   {
     "patternId": "C0203",
     "title": "bad-mcs-method-argument (C0203)",
-    "description": "Metaclass method %s should have %s as first argument\nUsed when a metaclass method has a first argument named differently than the\nvalue specified in valid-classmethod-first-arg option (default to \"cls\"),\nrecommended to easily differentiate them from regular instance methods."
+    "description": "Metaclass method %s should have %s as first argument\nUsed when a metaclass method has a first argument named differently than the\nvalue specified in valid-classmethod-first-arg option (default to “cls”),\nrecommended to easily differentiate them from regular instance methods."
   },
   {
     "patternId": "F0202",
     "title": "method-check-failed (F0202)",
-    "description": "Unable to check methods signature (%s / %s)\nUsed when Pylint has been unable to check methods signature compatibility for\nan unexpected reason. Please report this kind if you don't make sense of it."
+    "description": "Unable to check methods signature (%s / %s)\nUsed when Pylint has been unable to check methods signature compatibility for\nan unexpected reason. Please report this kind if you don’t make sense of it."
   },
   {
     "patternId": "R0903",
     "title": "too-few-public-methods (R0903)",
-    "description": "Too few public methods (%s/%s)\nUsed when class has too few public methods, so be sure it's really worth it."
+    "description": "Too few public methods (%s/%s)\nUsed when class has too few public methods, so be sure it’s really worth it."
   },
   {
     "patternId": "R0901",
@@ -412,7 +402,7 @@
   {
     "patternId": "R0916",
     "title": "too-many-boolean-expressions (R0916)",
-    "description": "Too many boolean expressions in if statement (%s/%s)\nUsed when an if statement contains too many boolean expressions."
+    "description": "Too many boolean expressions in if statement (%s/%s)\nUsed when a if statement contains too many boolean expressions"
   },
   {
     "patternId": "R0912",
@@ -447,17 +437,17 @@
   {
     "patternId": "E0701",
     "title": "bad-except-order (E0701)",
-    "description": "Bad except clauses order (%s)\nUsed when except clauses are not in the correct order (from the more specific\nto the more generic). If you don't fix the order, some exceptions may not be\ncaught by the most specific handler."
+    "description": "Bad except clauses order (%s)\nUsed when except clauses are not in the correct order (from the more specific\nto the more generic). If you don’t fix the order, some exceptions may not be\ncaught by the most specific handler."
   },
   {
     "patternId": "E0712",
     "title": "catching-non-exception (E0712)",
-    "description": "Catching an exception which doesn't inherit from Exception: %s\nUsed when a class which doesn't inherit from Exception is used as an exception\nin an except clause."
+    "description": "Catching an exception which doesn’t inherit from Exception: %s\nUsed when a class which doesn’t inherit from Exception is used as an exception\nin an except clause."
   },
   {
     "patternId": "E0703",
     "title": "bad-exception-context (E0703)",
-    "description": "Exception context set to something which is not an exception, nor None\nUsed when using the syntax \"raise ... from ...\", where the exception context\nis not an exception, nor None."
+    "description": "Exception context set to something which is not an exception, nor None\nUsed when using the syntax “raise … from …”, where the exception context\nis not an exception, nor None. This message can’t be emitted when using Python\n< 3.0."
   },
   {
     "patternId": "E0711",
@@ -472,7 +462,7 @@
   {
     "patternId": "E0710",
     "title": "raising-non-exception (E0710)",
-    "description": "Raising a new style class which doesn't inherit from BaseException\nUsed when a new style class which doesn't inherit from BaseException is\nraised."
+    "description": "Raising a new style class which doesn’t inherit from BaseException\nUsed when a new style class which doesn’t inherit from BaseException is\nraised."
   },
   {
     "patternId": "E0704",
@@ -495,29 +485,24 @@
     "description": "Exception arguments suggest string formatting might be intended\nUsed when passing multiple arguments to an exception constructor, the first of\nthem a string literal containing what appears to be placeholders intended for\nformatting"
   },
   {
-    "patternId": "W0711",
-    "title": "binary-op-exception (W0711)",
-    "description": "Exception to catch is the result of a binary \"%s\" operation\nUsed when the exception to catch is of the form \"except A or B:\". If intending\nto catch multiple, rewrite as \"except (A, B):\""
+    "patternId": "W0710",
+    "title": "nonstandard-exception (W0710)",
+    "description": "Exception doesn’t inherit from standard “Exception” class\nUsed when a custom exception class is raised but doesn’t inherit from the\nbuiltin “Exception” class. This message can’t be emitted when using Python >=\n3.0."
   },
   {
-    "patternId": "W0716",
-    "title": "wrong-exception-operation (W0716)",
-    "description": "Invalid exception operation. %s\nUsed when an operation is done against an exception, but the operation is not\nvalid for the exception in question. Usually emitted when having binary\noperations between exceptions in except handlers."
+    "patternId": "W0711",
+    "title": "binary-op-exception (W0711)",
+    "description": "Exception to catch is the result of a binary “%s” operation\nUsed when the exception to catch is of the form “except A or B:”. If intending\nto catch multiple, rewrite as “except (A, B):”"
   },
   {
     "patternId": "W0702",
     "title": "bare-except (W0702)",
-    "description": "No exception type(s) specified\nUsed when an except clause doesn't specify exceptions type to catch."
-  },
-  {
-    "patternId": "W0706",
-    "title": "try-except-raise (W0706)",
-    "description": "The except handler raises immediately\nUsed when an except handler uses raise as its first or only operator. This is\nuseless because it raises back the exception immediately. Remove the raise\noperator or the entire try-except-raise block!"
+    "description": "No exception type(s) specified\nUsed when an except clause doesn’t specify exceptions type to catch."
   },
   {
     "patternId": "W0311",
     "title": "bad-indentation (W0311)",
-    "description": "Bad indentation. Found %s %s, expected %s\nUsed when an unexpected number of indentation's tabulations or spaces has been\nfound."
+    "description": "Bad indentation. Found %s %s, expected %s\nUsed when an unexpected number of indentation’s tabulations or spaces has been\nfound."
   },
   {
     "patternId": "W0312",
@@ -527,7 +512,12 @@
   {
     "patternId": "W0301",
     "title": "unnecessary-semicolon (W0301)",
-    "description": "Unnecessary semicolon\nUsed when a statement is ended by a semi-colon (\";\"), which isn't necessary\n(that's python, not C ;)."
+    "description": "Unnecessary semicolon\nUsed when a statement is ended by a semi-colon (“;”), which isn’t necessary\n(that’s python, not C ;)."
+  },
+  {
+    "patternId": "W0332",
+    "title": "lowercase-l-suffix (W0332)",
+    "description": "Use of “l” as long integer identifier\nUsed when a lower case “l” is used to mark a long integer. You should use a\nupper case “L” since the letter “l” looks too much like the digit “1” This\nmessage can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "C0326",
@@ -557,7 +547,7 @@
   {
     "patternId": "C0302",
     "title": "too-many-lines (C0302)",
-    "description": "Too many lines in module (%s/%s)\nUsed when a module has too many lines, reducing its readability."
+    "description": "Too many lines in module (%s/%s)\nUsed when a module has too much lines, reducing its readability."
   },
   {
     "patternId": "C0305",
@@ -572,7 +562,7 @@
   {
     "patternId": "C0328",
     "title": "unexpected-line-ending-format (C0328)",
-    "description": "Unexpected line ending format. There is '%s' while it should be '%s'.\nUsed when there is different newline than expected."
+    "description": "Unexpected line ending format. There is ‘%s’ while it should be ‘%s’.\nUsed when there is different newline than expected."
   },
   {
     "patternId": "C0325",
@@ -607,7 +597,7 @@
   {
     "patternId": "W0403",
     "title": "relative-import (W0403)",
-    "description": "Relative import %r, should be %r\nUsed when an import relative to the package directory is detected. This\nmessage can't be emitted when using Python >= 3.0."
+    "description": "Relative import %r, should be %r\nUsed when an import relative to the package directory is detected. This\nmessage can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "W0402",
@@ -637,12 +627,7 @@
   {
     "patternId": "C0413",
     "title": "wrong-import-position (C0413)",
-    "description": "Import \"%s\" should be placed at the top of the module\nUsed when code and imports are mixed"
-  },
-  {
-    "patternId": "C0414",
-    "title": "useless-import-alias (C0414)",
-    "description": "Import alias does not rename original package\nUsed when an import alias is same as original package.e.g using import numpy\nas numpy instead of import numpy as np"
+    "description": "Import “%s” should be placed at the top of the module\nUsed when code and imports are mixed"
   },
   {
     "patternId": "C0412",
@@ -653,6 +638,21 @@
     "patternId": "C0410",
     "title": "multiple-imports (C0410)",
     "description": "Multiple imports on one line (%s)\nUsed when import statement importing multiple modules is detected."
+  },
+  {
+    "patternId": "E1133",
+    "title": "not-an-iterable (E1133)",
+    "description": "Non-iterable value %s is used in an iterating context\nUsed when a non-iterable value is used in place where iterable is expected"
+  },
+  {
+    "patternId": "E1134",
+    "title": "not-a-mapping (E1134)",
+    "description": "Non-mapping value %s is used in a mapping context\nUsed when a non-mapping value is used in place where mapping is expected"
+  },
+  {
+    "patternId": "C1801",
+    "title": "len-as-condition (C1801)",
+    "description": "Do not use `len(SEQUENCE)` to determine if a sequence is empty\nUsed when Pylint detects that len(sequence) is being used inside a condition\nto determine if a sequence is empty. Instead of comparing the length to 0,\nrely on the fact that empty sequences are false."
   },
   {
     "patternId": "E1201",
@@ -677,17 +677,12 @@
   {
     "patternId": "W1201",
     "title": "logging-not-lazy (W1201)",
-    "description": "Specify string format arguments as logging function parameters\nUsed when a logging statement has a call form of \"logging.<logging\nmethod>(format_string % (format_args...))\". Such calls should leave string\ninterpolation to the logging method itself and be written \"logging.<logging\nmethod>(format_string, format_args...)\" so that the program may avoid\nincurring the cost of the interpolation in those cases in which no message\nwill be logged. For more, see http://www.python.org/dev/peps/pep-0282/."
+    "description": "Specify string format arguments as logging function parameters\nUsed when a logging statement has a call form of “logging.<logging\nmethod>(format_string % (format_args…))”. Such calls should leave string\ninterpolation to the logging method itself and be written “logging.<logging\nmethod>(format_string, format_args…)” so that the program may avoid\nincurring the cost of the interpolation in those cases in which no message\nwill be logged. For more, see http://www.python.org/dev/peps/pep-0282/."
   },
   {
     "patternId": "W1202",
     "title": "logging-format-interpolation (W1202)",
-    "description": "Use % formatting in logging functions and pass the % parameters as arguments\nUsed when a logging statement has a call form of \"logging.<logging\nmethod>(format_string.format(format_args...))\". Such calls should use %\nformatting instead, but leave interpolation to the logging function by passing\nthe parameters as arguments."
-  },
-  {
-    "patternId": "W1203",
-    "title": "logging-fstring-interpolation (W1203)",
-    "description": "Use % formatting in logging functions and pass the % parameters as arguments\nUsed when a logging statement has a call form of \"logging.method(f\"...\"))\".\nSuch calls should use % formatting instead, but leave interpolation to the\nlogging function by passing the parameters as arguments."
+    "description": "Use % formatting in logging functions and pass the % parameters as arguments\nUsed when a logging statement has a call form of “logging.<logging\nmethod>(format_string.format(format_args…))”. Such calls should use %\nformatting instead, but leave interpolation to the logging function by passing\nthe parameters as arguments."
   },
   {
     "patternId": "W0511",
@@ -697,12 +692,7 @@
   {
     "patternId": "W0512",
     "title": "invalid-encoded-data (W0512)",
-    "description": "Cannot decode using encoding \"%s\", unexpected byte at position %d\nUsed when a source line cannot be decoded using the specified source file\nencoding. This message can't be emitted when using Python >= 3.0."
-  },
-  {
-    "patternId": "I0023",
-    "title": "use-symbolic-message-instead (I0023)",
-    "description": "Used when a message is enabled or disabled by id."
+    "description": "Cannot decode using encoding “%s”, unexpected byte at position %d\nUsed when a source line cannot be decoded using the specified source file\nencoding. This message can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "E1003",
@@ -712,7 +702,27 @@
   {
     "patternId": "E1004",
     "title": "missing-super-argument (E1004)",
-    "description": "Missing argument to super()\nUsed when the super builtin didn't receive an argument. This message can't be\nemitted when using Python >= 3.0."
+    "description": "Missing argument to super()\nUsed when the super builtin didn’t receive an argument. This message can’t be\nemitted when using Python >= 3.0."
+  },
+  {
+    "patternId": "E1001",
+    "title": "slots-on-old-class (E1001)",
+    "description": "Use of __slots__ on an old style class\nUsed when an old style class uses the __slots__ attribute. This message can’t\nbe emitted when using Python >= 3.0."
+  },
+  {
+    "patternId": "E1002",
+    "title": "super-on-old-class (E1002)",
+    "description": "Use of super on an old style class\nUsed when an old style class uses the super builtin. This message can’t be\nemitted when using Python >= 3.0."
+  },
+  {
+    "patternId": "W1001",
+    "title": "property-on-old-class (W1001)",
+    "description": "Use of “property” on an old style class\nUsed when Pylint detect the use of the builtin “property” on an old style\nclass while this is relying on new style classes features. This message can’t\nbe emitted when using Python >= 3.0."
+  },
+  {
+    "patternId": "C1001",
+    "title": "old-style-class (C1001)",
+    "description": "Old-style class defined.\nUsed when a class is defined that does not inherit from another class and does\nnot inherit explicitly from “object”. This message can’t be emitted when using\nPython >= 3.0."
   },
   {
     "patternId": "E1603",
@@ -722,47 +732,52 @@
   {
     "patternId": "E1609",
     "title": "import-star-module-level (E1609)",
-    "description": "Import * only allowed at module level\nUsed when the import star syntax is used somewhere else than the module level.\nThis message can't be emitted when using Python >= 3.0."
+    "description": "Import * only allowed at module level\nUsed when the import star syntax is used somewhere else than the module level.\nThis message can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "E1610",
     "title": "non-ascii-bytes-literal (E1610)",
-    "description": "Non-ascii bytes literals not supported in 3.x\nUsed when non-ascii bytes literals are found in a program. They are no longer\nsupported in Python 3. This message can't be emitted when using Python >= 3.0."
+    "description": "Non-ascii bytes literals not supported in 3.x\nUsed when non-ascii bytes literals are found in a program. They are no longer\nsupported in Python 3. This message can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "E1602",
     "title": "parameter-unpacking (E1602)",
-    "description": "Parameter unpacking specified\nUsed when parameter unpacking is specified for a function(Python 3 doesn't\nallow it)"
+    "description": "Parameter unpacking specified\nUsed when parameter unpacking is specified for a function(Python 3 doesn’t\nallow it)"
   },
   {
     "patternId": "E1606",
     "title": "long-suffix (E1606)",
-    "description": "Use of long suffix\nUsed when \"l\" or \"L\" is used to mark a long integer. This will not work in\nPython 3, since int and long types have merged. This message can't be\nemitted when using Python >= 3.0."
+    "description": "Use of long suffix\nUsed when “l” or “L” is used to mark a long integer. This will not work in\nPython 3, since int and long types have merged. This message can’t be\nemitted when using Python >= 3.0."
   },
   {
     "patternId": "E1608",
     "title": "old-octal-literal (E1608)",
-    "description": "Use of old octal literal\nUsed when encountering the old octal syntax, removed in Python 3. To use the\nnew syntax, prepend 0o on the number. This message can't be emitted when using\nPython >= 3.0."
+    "description": "Use of old octal literal\nUsed when encountering the old octal syntax, removed in Python 3. To use the\nnew syntax, prepend 0o on the number. This message can’t be emitted when using\nPython >= 3.0."
   },
   {
     "patternId": "E1607",
     "title": "old-ne-operator (E1607)",
-    "description": "Use of the <> operator\nUsed when the deprecated \"<>\" operator is used instead of \"!=\". This is\nremoved in Python 3. This message can't be emitted when using Python >= 3.0."
+    "description": "Use of the <> operator\nUsed when the deprecated “<>” operator is used instead of “!=”. This is\nremoved in Python 3. This message can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "E1605",
     "title": "backtick (E1605)",
-    "description": "Use of the `` operator\nUsed when the deprecated \"``\" (backtick) operator is used instead of the str()\nfunction."
+    "description": "Use of the `` operator\nUsed when the deprecated “``” (backtick) operator is used instead of the str()\nfunction."
   },
   {
     "patternId": "E1604",
     "title": "old-raise-syntax (E1604)",
-    "description": "Use raise ErrorClass(args) instead of raise ErrorClass, args.\nUsed when the alternate raise syntax 'raise foo, bar' is used instead of\n'raise foo(bar)'."
+    "description": "Use raise ErrorClass(args) instead of raise ErrorClass, args.\nUsed when the alternate raise syntax ‘raise foo, bar’ is used instead of\n‘raise foo(bar)’."
   },
   {
     "patternId": "E1601",
     "title": "print-statement (E1601)",
     "description": "print statement used\nUsed when a print statement is used (print is a function in Python 3)"
+  },
+  {
+    "patternId": "E1611",
+    "title": "invalid-unicode-literal (E1611)",
+    "description": "unicode raw string literals not supported in 3.x\nUsed when raw unicode literals are found in a program. They are no longer\nsupported in Python 3. This message can’t be emitted when using Python >= 3.0."
   },
   {
     "patternId": "W1652",
@@ -802,12 +817,12 @@
   {
     "patternId": "W1623",
     "title": "metaclass-assignment (W1623)",
-    "description": "Assigning to a class's __metaclass__ attribute\nUsed when a metaclass is specified by assigning to __metaclass__ (Python 3\nspecifies the metaclass as a class statement argument)"
+    "description": "Assigning to a class’s __metaclass__ attribute\nUsed when a metaclass is specified by assigning to __metaclass__ (Python 3\nspecifies the metaclass as a class statement argument)"
   },
   {
     "patternId": "W1622",
     "title": "next-method-called (W1622)",
-    "description": "Called a next() method on an object\nUsed when an object's next() method is called (Python 3 uses the next() built-\nin function)"
+    "description": "Called a next() method on an object\nUsed when an object’s next() method is called (Python 3 uses the next() built-\nin function)"
   },
   {
     "patternId": "W1620",
@@ -1075,34 +1090,9 @@
     "description": "Boolean expression may be simplified to %s\nEmitted when redundant pre-python 2.5 ternary syntax is used."
   },
   {
-    "patternId": "R1714",
-    "title": "consider-using-in (R1714)",
-    "description": "Consider merging these comparisons with \"in\" to %r\nTo check if a variable is equal to one of many values,combine the values into\na tuple and check if the variable is contained \"in\" it instead of checking for\nequality against each of the values.This is faster and less verbose."
-  },
-  {
     "patternId": "R1701",
     "title": "consider-merging-isinstance (R1701)",
     "description": "Consider merging these isinstance calls to isinstance(%s, (%s))\nUsed when multiple consecutive isinstance calls can be merged into one."
-  },
-  {
-    "patternId": "R1717",
-    "title": "consider-using-dict-comprehension (R1717)",
-    "description": "Consider using a dictionary comprehension\nAlthough there is nothing syntactically wrong with this code, it is hard to\nread and can be simplified to a dict comprehension.Also it is faster since you\ndon't need to create another transient list"
-  },
-  {
-    "patternId": "R1718",
-    "title": "consider-using-set-comprehension (R1718)",
-    "description": "Consider using a set comprehension\nAlthough there is nothing syntactically wrong with this code, it is hard to\nread and can be simplified to a set comprehension.Also it is faster since you\ndon't need to create another transient list"
-  },
-  {
-    "patternId": "R1715",
-    "title": "consider-using-get (R1715)",
-    "description": "Consider using dict.get for getting values from a dict if a key is present or a default if not\nUsing the builtin dict.get for getting a value from a dictionary if a key is\npresent or a default if not, is simpler and considered more idiomatic,\nalthough sometimes a bit slower"
-  },
-  {
-    "patternId": "R1713",
-    "title": "consider-using-join (R1713)",
-    "description": "Consider using str.join(sequence) for concatenating strings from an iterable\nUsing str.join(sequence) is faster, uses less memory and increases readability\ncompared to for-loop iteration."
   },
   {
     "patternId": "R1706",
@@ -1110,19 +1100,14 @@
     "description": "Consider using ternary (%s)\nUsed when one of known pre-python 2.5 ternary syntax is used."
   },
   {
-    "patternId": "R1712",
-    "title": "consider-swap-variables (R1712)",
-    "description": "Consider using tuple unpacking for swapping variables\nYou do not have to use a temporary variable in order to swap variables. Using\n\"tuple unpacking\" to directly swap variables makes the intention more clear."
-  },
-  {
     "patternId": "R1707",
     "title": "trailing-comma-tuple (R1707)",
-    "description": "Disallow trailing comma tuple\nIn Python, a tuple is actually created by the comma symbol, not by the\nparentheses. Unfortunately, one can actually create a tuple by misplacing a\ntrailing comma, which can lead to potential weird bugs in your code. You\nshould always use parentheses explicitly for creating a tuple."
+    "description": "Disallow trailing comma tuple\nIn Python, a tuple is actually created by the comma symbol, not by the\nparentheses. Unfortunately, one can actually create a tuple by misplacing a\ntrailing comma, which can lead to potential weird bugs in your code. You\nshould always use parentheses explicitly for creating a tuple. This message\ncan’t be emitted when using Python < 3.0."
   },
   {
     "patternId": "R1708",
     "title": "stop-iteration-return (R1708)",
-    "description": "Do not raise StopIteration in generator, use return statement instead\nAccording to PEP479, the raise of StopIteration to end the loop of a generator\nmay lead to hard to find bugs. This PEP specify that raise StopIteration has\nto be replaced by a simple return statement"
+    "description": "Do not raise StopIteration in generator, use return statement instead\nAccording to PEP479, the raise of StopIteration to end the loop of a generator\nmay lead to hard to find bugs. This PEP specify that raise StopIteration has\nto be replaced by a simple return statement This message can’t be emitted when\nusing Python < 3.0."
   },
   {
     "patternId": "R1710",
@@ -1135,19 +1120,9 @@
     "description": "Redefining argument with the local name %r\nUsed when a local name is redefining an argument, which might suggest a\npotential error. This is taken in account only for a handful of name binding\noperations, such as for iteration, with statement assignment and exception\nhandler assignment."
   },
   {
-    "patternId": "R1716",
-    "title": "chained-comparison (R1716)",
-    "description": "Simplify chained comparison between the operands\nThis message is emitted when pylint encounters boolean operation like\"a < b\nand b < c\", suggesting instead to refactor it to \"a < b < c\""
-  },
-  {
-    "patternId": "R1719",
-    "title": "simplifiable-if-expression (R1719)",
-    "description": "The if expression can be replaced with %s\nUsed when an if expression can be replaced with 'bool(test)'."
-  },
-  {
     "patternId": "R1703",
     "title": "simplifiable-if-statement (R1703)",
-    "description": "The if statement can be replaced with %s\nUsed when an if statement can be replaced with 'bool(test)'."
+    "description": "The if statement can be replaced with %s\nUsed when an if statement can be replaced with ‘bool(test)’."
   },
   {
     "patternId": "R1702",
@@ -1155,39 +1130,19 @@
     "description": "Too many nested blocks (%s/%s)\nUsed when a function or a method has too many nested blocks. This makes the\ncode less understandable and maintainable."
   },
   {
-    "patternId": "R1720",
-    "title": "no-else-raise (R1720)",
-    "description": "Unnecessary \"%s\" after \"raise\"\nUsed in order to highlight an unnecessary block of code following an if\ncontaining a raise statement. As such, it will warn when it encounters an else\nfollowing a chain of ifs, all of them containing a raise statement."
-  },
-  {
     "patternId": "R1705",
     "title": "no-else-return (R1705)",
-    "description": "Unnecessary \"%s\" after \"return\"\nUsed in order to highlight an unnecessary block of code following an if\ncontaining a return statement. As such, it will warn when it encounters an\nelse following a chain of ifs, all of them containing a return statement."
-  },
-  {
-    "patternId": "R1711",
-    "title": "useless-return (R1711)",
-    "description": "Useless return at end of function or method\nEmitted when a single \"return\" or \"return None\" statement is found at the end\nof function or method definition. This statement can safely be removed because\nPython will implicitly return None"
-  },
-  {
-    "patternId": "C0113",
-    "title": "unneeded-not (C0113)",
-    "description": "Consider changing \"%s\" to \"%s\"\nUsed when a boolean expression contains an unneeded negation."
+    "description": "Unnecessary “else” after “return”\nUsed in order to highlight an unnecessary block of code following an if\ncontaining a return statement. As such, it will warn when it encounters an\nelse following a chain of ifs, all of them containing a return statement."
   },
   {
     "patternId": "C0201",
     "title": "consider-iterating-dictionary (C0201)",
-    "description": "Consider iterating the dictionary directly instead of calling .keys()\nEmitted when the keys of a dictionary are iterated through the .keys() method.\nIt is enough to just iterate through the dictionary itself, as in \"for key in\ndictionary\"."
+    "description": "Consider iterating the dictionary directly instead of calling .keys()\nEmitted when the keys of a dictionary are iterated through the .keys() method.\nIt is enough to just iterate through the dictionary itself, as in “for key in\ndictionary”."
   },
   {
     "patternId": "C0200",
     "title": "consider-using-enumerate (C0200)",
     "description": "Consider using enumerate instead of iterating with range and len\nEmitted when code that iterates with range and len is encountered. Such code\ncan be simplified by using the enumerate builtin."
-  },
-  {
-    "patternId": "C1801",
-    "title": "len-as-condition (C1801)",
-    "description": "Do not use `len(SEQUENCE)` to determine if a sequence is empty\nUsed when Pylint detects that len(sequence) is being used inside a condition\nto determine if a sequence is empty. Instead of comparing the length to 0,\nrely on the fact that empty sequences are false."
   },
   {
     "patternId": "R0801",
@@ -1202,27 +1157,17 @@
   {
     "patternId": "C0401",
     "title": "wrong-spelling-in-comment (C0401)",
-    "description": "Wrong spelling of a word '%s' in a comment:\nUsed when a word in comment is not spelled correctly."
+    "description": "Wrong spelling of a word ‘%s’ in a comment:\nUsed when a word in comment is not spelled correctly."
   },
   {
     "patternId": "C0402",
     "title": "wrong-spelling-in-docstring (C0402)",
-    "description": "Wrong spelling of a word '%s' in a docstring:\nUsed when a word in docstring is not spelled correctly."
-  },
-  {
-    "patternId": "E1507",
-    "title": "invalid-envvar-value (E1507)",
-    "description": "%s does not support %s type argument\nEnv manipulation functions support only string type arguments. See\nhttps://docs.python.org/3/library/os.html#os.getenv."
+    "description": "Wrong spelling of a word ‘%s’ in a docstring:\nUsed when a word in docstring is not spelled correctly."
   },
   {
     "patternId": "W1501",
     "title": "bad-open-mode (W1501)",
-    "description": "\"%s\" is not a valid mode for open.\nPython supports: r, w, a[, x] modes with b, +, and U (only with r) options.\nSee http://docs.python.org/2/library/functions.html#open"
-  },
-  {
-    "patternId": "W1508",
-    "title": "invalid-envvar-default (W1508)",
-    "description": "%s default type is %s. Expected str or None.\nEnv manipulation functions return None or str values. Supplying anything\ndifferent as a default may cause bugs. See\nhttps://docs.python.org/3/library/os.html#os.getenv."
+    "description": "“%s” is not a valid mode for open.\nPython supports: r, w, a[, x] modes with b, +, and U (only with r) options.\nSee http://docs.python.org/2/library/functions.html#open"
   },
   {
     "patternId": "W1503",
@@ -1232,12 +1177,12 @@
   {
     "patternId": "W1507",
     "title": "shallow-copy-environ (W1507)",
-    "description": "Using copy.copy(os.environ). Use os.environ.copy() instead.\nos.environ is not a dict object but proxy object, so shallow copy has still\neffects on original object. See https://bugs.python.org/issue15373 for\nreference."
+    "description": "*Using copy.copy(os.environ). Use os.environ.copy() instead. *\nos.environ is not a dict object but proxy object, so shallow copy has still\neffects on original object. See https://bugs.python.org/issue15373 for\nreference."
   },
   {
     "patternId": "W1502",
     "title": "boolean-datetime (W1502)",
-    "description": "Using datetime.time in a boolean context.\nUsing datetime.time in a boolean context can hide subtle bugs when the time\nthey represent matches midnight UTC. This behaviour was fixed in Python 3.5.\nSee http://bugs.python.org/issue13936 for reference. This message can't be\nemitted when using Python >= 3.5."
+    "description": "Using datetime.time in a boolean context.\nUsing datetime.time in a boolean context can hide subtle bugs when the time\nthey represent matches midnight UTC. This behaviour was fixed in Python 3.5.\nSee http://bugs.python.org/issue13936 for reference. This message can’t be\nemitted when using Python >= 3.5."
   },
   {
     "patternId": "W1505",
@@ -1245,19 +1190,9 @@
     "description": "Using deprecated method %s()\nThe method is marked as deprecated and will be removed in a future version of\nPython. Consider looking for an alternative in the documentation."
   },
   {
-    "patternId": "W1509",
-    "title": "subprocess-popen-preexec-fn (W1509)",
-    "description": "Using preexec_fn keyword which may be unsafe in the presence of threads\nThe preexec_fn parameter is not safe to use in the presence of threads in your\napplication. The child process could deadlock before exec is called. If you\nmust use it, keep it trivial! Minimize the number of libraries you call\ninto.https://docs.python.org/3/library/subprocess.html#popen-constructor"
-  },
-  {
     "patternId": "W1506",
     "title": "bad-thread-instantiation (W1506)",
     "description": "threading.Thread needs the target function\nThe warning is emitted when a threading.Thread class is instantiated without\nthe target function being passed. By default, the first parameter is the group\nparam, not the target param."
-  },
-  {
-    "patternId": "E1307",
-    "title": "bad-string-format-type (E1307)",
-    "description": "Argument %r does not match format type %r\nUsed when a type required by format string is not suitable for actual argument\ntype"
   },
   {
     "patternId": "E1303",
@@ -1272,12 +1207,12 @@
   {
     "patternId": "E1304",
     "title": "missing-format-string-key (E1304)",
-    "description": "Missing key %r in format string dictionary\nUsed when a format string that uses named conversion specifiers is used with a\ndictionary that doesn't contain all the keys required by the format string."
+    "description": "Missing key %r in format string dictionary\nUsed when a format string that uses named conversion specifiers is used with a\ndictionary that doesn’t contain all the keys required by the format string."
   },
   {
     "patternId": "E1302",
     "title": "mixed-format-string (E1302)",
-    "description": "Mixing named and unnamed conversion specifiers in format string\nUsed when a format string contains both named (e.g. '%(foo)d') and unnamed\n(e.g. '%d') conversion specifiers. This is also used when a named conversion\nspecifier contains * for the minimum field width and/or precision."
+    "description": "Mixing named and unnamed conversion specifiers in format string\nUsed when a format string contains both named (e.g. ‘%(foo)d’) and unnamed\n(e.g. ‘%d’) conversion specifiers. This is also used when a named conversion\nspecifier contains * for the minimum field width and/or precision."
   },
   {
     "patternId": "E1306",
@@ -1297,27 +1232,12 @@
   {
     "patternId": "E1300",
     "title": "bad-format-character (E1300)",
-    "description": "Unsupported format character %r (%#02x) at index %d\nUsed when an unsupported format character is used in a format string."
-  },
-  {
-    "patternId": "W1402",
-    "title": "anomalous-unicode-escape-in-string (W1402)",
-    "description": "Anomalous Unicode escape in byte string: '%s'. String constant might be missing an r or u prefix.\nUsed when an escape like u is encountered in a byte string where it has no\neffect."
-  },
-  {
-    "patternId": "W1401",
-    "title": "anomalous-backslash-in-string (W1401)",
-    "description": "Anomalous backslash in string: '%s'. String constant might be missing an r prefix.\nUsed when a backslash is in a literal string but not as an escape."
-  },
-  {
-    "patternId": "W1308",
-    "title": "duplicate-string-formatting-argument (W1308)",
-    "description": "Duplicate string formatting argument %r, consider passing as named argument\nUsed when we detect that a string formatting is repeating an argument instead\nof using named string arguments"
+    "description": "Unsupported format character %r (%#02x) at index %d\nUsed when a unsupported format character is used in a format string."
   },
   {
     "patternId": "W1305",
     "title": "format-combined-specification (W1305)",
-    "description": "Format string contains both automatic field numbering and manual field specification\nUsed when a PEP 3101 format string contains both automatic field numbering\n(e.g. '{}') and manual field specification (e.g. '{0}')."
+    "description": "Format string contains both automatic field numbering and manual field specification\nUsed when a PEP 3101 format string contains both automatic field numbering\n(e.g. ‘{}’) and manual field specification (e.g. ‘{0}’). This message can’t be\nemitted when using Python < 2.7."
   },
   {
     "patternId": "W1300",
@@ -1325,29 +1245,24 @@
     "description": "Format string dictionary key should be a string, not %s\nUsed when a format string that uses named conversion specifiers is used with a\ndictionary whose keys are not all strings."
   },
   {
-    "patternId": "W1403",
-    "title": "implicit-str-concat-in-sequence (W1403)",
-    "description": "Implicit string concatenation found in %s\nString literals are implicitly concatenated in a literal iterable definition :\nmaybe a comma is missing ?"
-  },
-  {
     "patternId": "W1302",
     "title": "bad-format-string (W1302)",
-    "description": "Invalid format string\nUsed when a PEP 3101 format string is invalid."
+    "description": "Invalid format string\nUsed when a PEP 3101 format string is invalid. This message can’t be emitted\nwhen using Python < 2.7."
   },
   {
     "patternId": "W1306",
     "title": "missing-format-attribute (W1306)",
-    "description": "Missing format attribute %r in format specifier %r\nUsed when a PEP 3101 format string uses an attribute specifier ({0.length}),\nbut the argument passed for formatting doesn't have that attribute."
+    "description": "Missing format attribute %r in format specifier %r\nUsed when a PEP 3101 format string uses an attribute specifier ({0.length}),\nbut the argument passed for formatting doesn’t have that attribute. This\nmessage can’t be emitted when using Python < 2.7."
   },
   {
     "patternId": "W1303",
     "title": "missing-format-argument-key (W1303)",
-    "description": "Missing keyword argument %r for format string\nUsed when a PEP 3101 format string that uses named fields doesn't receive one\nor more required keywords."
+    "description": "Missing keyword argument %r for format string\nUsed when a PEP 3101 format string that uses named fields doesn’t receive one\nor more required keywords. This message can’t be emitted when using Python <\n2.7."
   },
   {
     "patternId": "W1304",
     "title": "unused-format-string-argument (W1304)",
-    "description": "Unused format argument %r\nUsed when a PEP 3101 format string that uses named fields is used with an\nargument that is not required by the format string."
+    "description": "Unused format argument %r\nUsed when a PEP 3101 format string that uses named fields is used with an\nargument that is not required by the format string. This message can’t be\nemitted when using Python < 2.7."
   },
   {
     "patternId": "W1301",
@@ -1357,22 +1272,32 @@
   {
     "patternId": "W1307",
     "title": "invalid-format-index (W1307)",
-    "description": "Using invalid lookup key %r in format specifier %r\nUsed when a PEP 3101 format string uses a lookup specifier ({a[1]}), but the\nargument passed for formatting doesn't contain or doesn't have that key as an\nattribute."
+    "description": "Using invalid lookup key %r in format specifier %r\nUsed when a PEP 3101 format string uses a lookup specifier ({a[1]}), but the\nargument passed for formatting doesn’t contain or doesn’t have that key as an\nattribute. This message can’t be emitted when using Python < 2.7."
+  },
+  {
+    "patternId": "W1402",
+    "title": "anomalous-unicode-escape-in-string (W1402)",
+    "description": "Anomalous Unicode escape in byte string: ‘%s’. String constant might be missing an r or u prefix.\nUsed when an escape like u is encountered in a byte string where it has no\neffect."
+  },
+  {
+    "patternId": "W1401",
+    "title": "anomalous-backslash-in-string (W1401)",
+    "description": "Anomalous backslash in string: ‘%s’. String constant might be missing an r prefix.\nUsed when a backslash is in a literal string but not as an escape."
   },
   {
     "patternId": "E1137",
     "title": "unsupported-assignment-operation (E1137)",
-    "description": "%r does not support item assignment\nEmitted when an object does not support item assignment (i.e. doesn't define\n__setitem__ method)."
+    "description": "%r does not support item assignment\nEmitted when an object does not support item assignment (i.e. doesn’t define\n__setitem__ method)"
   },
   {
     "patternId": "E1138",
     "title": "unsupported-delete-operation (E1138)",
-    "description": "%r does not support item deletion\nEmitted when an object does not support item deletion (i.e. doesn't define\n__delitem__ method)."
+    "description": "%r does not support item deletion\nEmitted when an object does not support item deletion (i.e. doesn’t define\n__delitem__ method)"
   },
   {
     "patternId": "E1130",
     "title": "invalid-unary-operand-type (E1130)",
-    "description": "Emitted when a unary operand is used on an object which does not support this\ntype of operation."
+    "description": "Emitted when a unary operand is used on an object which does not support this\ntype of operation"
   },
   {
     "patternId": "E1131",
@@ -1387,7 +1312,7 @@
   {
     "patternId": "E1102",
     "title": "not-callable (E1102)",
-    "description": "%s is not callable\nUsed when an object being called has been inferred to a non callable object."
+    "description": "%s is not callable\nUsed when an object being called has been inferred to a non callable object"
   },
   {
     "patternId": "E1124",
@@ -1397,22 +1322,17 @@
   {
     "patternId": "E1111",
     "title": "assignment-from-no-return (E1111)",
-    "description": "Assigning result of a function call, where the function has no return\nUsed when an assignment is done on a function call but the inferred function\ndoesn't return anything."
+    "description": "Assigning to function call which doesn’t return\nUsed when an assignment is done on a function call but the inferred function\ndoesn’t return anything."
   },
   {
     "patternId": "E1128",
     "title": "assignment-from-none (E1128)",
-    "description": "Assigning result of a function call, where the function returns None\nUsed when an assignment is done on a function call but the inferred function\nreturns nothing but None."
+    "description": "Assigning to function call which only returns None\nUsed when an assignment is done on a function call but the inferred function\nreturns nothing but None."
   },
   {
     "patternId": "E1129",
     "title": "not-context-manager (E1129)",
-    "description": "Context manager '%s' doesn't implement __enter__ and __exit__.\nUsed when an instance in a with statement doesn't implement the context\nmanager protocol(__enter__/__exit__)."
-  },
-  {
-    "patternId": "E1140",
-    "title": "unhashable-dict-key (E1140)",
-    "description": "Dict key is unhashable\nEmitted when a dict key is not hashable (i.e. doesn't define __hash__ method)."
+    "description": "Context manager ‘%s’ doesn’t implement __enter__ and __exit__.\nUsed when an instance in a with statement doesn’t implement the context\nmanager protocol(__enter__/__exit__)."
   },
   {
     "patternId": "E1132",
@@ -1427,22 +1347,12 @@
   {
     "patternId": "E1125",
     "title": "missing-kwoa (E1125)",
-    "description": "Missing mandatory keyword argument %r in %s call\nUsed when a function call does not pass a mandatory keyword-only argument."
+    "description": "Missing mandatory keyword argument %r in %s call\nUsed when a function call does not pass a mandatory keyword-only argument.\nThis message can’t be emitted when using Python < 3.0."
   },
   {
     "patternId": "E1120",
     "title": "no-value-for-parameter (E1120)",
     "description": "No value for argument %s in %s call\nUsed when a function call passes too few arguments."
-  },
-  {
-    "patternId": "E1133",
-    "title": "not-an-iterable (E1133)",
-    "description": "Non-iterable value %s is used in an iterating context\nUsed when a non-iterable value is used in place where iterable is expected"
-  },
-  {
-    "patternId": "E1134",
-    "title": "not-a-mapping (E1134)",
-    "description": "Non-mapping value %s is used in a mapping context\nUsed when a non-mapping value is used in place where mapping is expected"
   },
   {
     "patternId": "E1126",
@@ -1462,17 +1372,17 @@
   {
     "patternId": "E1123",
     "title": "unexpected-keyword-arg (E1123)",
-    "description": "Unexpected keyword argument %r in %s call\nUsed when a function call passes a keyword argument that doesn't correspond to\none of the function's parameter names."
+    "description": "Unexpected keyword argument %r in %s call\nUsed when a function call passes a keyword argument that doesn’t correspond to\none of the function’s parameter names."
   },
   {
     "patternId": "E1135",
     "title": "unsupported-membership-test (E1135)",
-    "description": "Value '%s' doesn't support membership test\nEmitted when an instance in membership test expression doesn't implement\nmembership protocol (__contains__/__iter__/__getitem__)."
+    "description": "Value ‘%s’ doesn’t support membership test\nEmitted when an instance in membership test expression doesn’t implement\nmembership protocol (__contains__/__iter__/__getitem__)"
   },
   {
     "patternId": "E1136",
     "title": "unsubscriptable-object (E1136)",
-    "description": "Value '%s' is unsubscriptable\nEmitted when a subscripted value doesn't support subscription (i.e. doesn't\ndefine __getitem__ method or __class_getitem__ for a class)."
+    "description": "Value ‘%s’ is unsubscriptable\nEmitted when a subscripted value doesn’t support subscription(i.e. doesn’t\ndefine __getitem__ method)"
   },
   {
     "patternId": "W1113",
@@ -1482,7 +1392,7 @@
   {
     "patternId": "I1101",
     "title": "c-extension-no-member (I1101)",
-    "description": "%s %r has no %r member%s, but source is unavailable. Consider adding this module to extension-pkg-whitelist if you want to perform analysis based on run-time introspection of living objects.\nUsed when a variable is accessed for non-existent member of C extension. Due\nto unavailability of source static analysis is impossible, but it may be\nperformed by introspecting living objects in run-time."
+    "description": "%s %r has not %r member%s, but source is unavailable. Consider adding this module to extension-pkg-whitelist if you want to perform analysis based on run-time introspection of living objects.\nUsed when a variable is accessed for non-existent member of C extension. Due\nto unavailability of source static analysis is impossible, but it may be\nperformed by introspecting living objects in run-time."
   },
   {
     "patternId": "E0633",
@@ -1500,6 +1410,11 @@
     "description": "No name %r in module %r\nUsed when a name cannot be found in a module."
   },
   {
+    "patternId": "E0632",
+    "title": "unbalanced-tuple-unpacking (E0632)",
+    "description": "Possible unbalanced tuple unpacking with sequence%s: left side has %d label(s), right side has %d value(s)\nUsed when there is an unbalanced tuple unpacking in assignment"
+  },
+  {
     "patternId": "E0602",
     "title": "undefined-variable (E0602)",
     "description": "Undefined variable %r\nUsed when an undefined variable is accessed."
@@ -1512,7 +1427,7 @@
   {
     "patternId": "E0601",
     "title": "used-before-assignment (E0601)",
-    "description": "Using variable %r before assignment\nUsed when a local variable is accessed before its assignment."
+    "description": "Using variable %r before assignment\nUsed when a local variable is accessed before it’s assignment."
   },
   {
     "patternId": "W0640",
@@ -1522,22 +1437,7 @@
   {
     "patternId": "W0601",
     "title": "global-variable-undefined (W0601)",
-    "description": "Global variable %r undefined at the module level\nUsed when a variable is defined through the \"global\" statement but the\nvariable is not defined in the module scope."
-  },
-  {
-    "patternId": "W0642",
-    "title": "self-cls-assignment (W0642)",
-    "description": "Invalid assignment to %s in method\nInvalid assignment to self or cls in instance or class method respectively."
-  },
-  {
-    "patternId": "W0632",
-    "title": "unbalanced-tuple-unpacking (W0632)",
-    "description": "Possible unbalanced tuple unpacking with sequence%s: left side has %d label(s), right side has %d value(s)\nUsed when there is an unbalanced tuple unpacking in assignment"
-  },
-  {
-    "patternId": "W0641",
-    "title": "possibly-unused-variable (W0641)",
-    "description": "Possibly unused variable %r\nUsed when a variable is defined but might not be used. The possibility comes\nfrom the fact that locals() might be used, which could consume or not the said\nvariable"
+    "description": "Global variable %r undefined at the module level\nUsed when a variable is defined through the “global” statement but the\nvariable is not defined in the module scope."
   },
   {
     "patternId": "W0622",
@@ -1552,7 +1452,7 @@
   {
     "patternId": "W0621",
     "title": "redefined-outer-name (W0621)",
-    "description": "Redefining name %r from outer scope (line %s)\nUsed when a variable's name hides a name defined in the outer scope."
+    "description": "Redefining name %r from outer scope (line %s)\nUsed when a variable’s name hides a name defined in the outer scope."
   },
   {
     "patternId": "W0611",
@@ -1567,7 +1467,7 @@
   {
     "patternId": "W0614",
     "title": "unused-wildcard-import (W0614)",
-    "description": "Unused import %s from wildcard import\nUsed when an imported module or variable is not used from a 'from X import\n*' style import."
+    "description": "Unused import %s from wildcard import\nUsed when an imported module or variable is not used from a ‘from X import\n*’ style import."
   },
   {
     "patternId": "W0612",
@@ -1577,21 +1477,21 @@
   {
     "patternId": "W0602",
     "title": "global-variable-not-assigned (W0602)",
-    "description": "Using global for %r but no assignment is done\nUsed when a variable is defined through the \"global\" statement but no\nassignment to this variable is done."
+    "description": "Using global for %r but no assignment is done\nUsed when a variable is defined through the “global” statement but no\nassignment to this variable is done."
   },
   {
     "patternId": "W0631",
     "title": "undefined-loop-variable (W0631)",
-    "description": "Using possibly undefined loop variable %r\nUsed when a loop variable (i.e. defined by a for loop or a list comprehension\nor a generator expression) is used outside the loop."
+    "description": "Using possibly undefined loop variable %r\nUsed when an loop variable (i.e. defined by a for loop or a list comprehension\nor a generator expression) is used outside the loop."
   },
   {
     "patternId": "W0603",
     "title": "global-statement (W0603)",
-    "description": "Using the global statement\nUsed when you use the \"global\" statement to update a global variable. Pylint\njust try to discourage this usage. That doesn't mean you cannot use it !"
+    "description": "Using the global statement\nUsed when you use the “global” statement to update a global variable. Pylint\njust try to discourage this usage. That doesn’t mean you cannot use it !"
   },
   {
     "patternId": "W0604",
     "title": "global-at-module-level (W0604)",
-    "description": "Using the global statement at the module level\nUsed when you use the \"global\" statement at the module level since it has no\neffect"
+    "description": "Using the global statement at the module level\nUsed when you use the “global” statement at the module level since it has no\neffect"
   }
 ]

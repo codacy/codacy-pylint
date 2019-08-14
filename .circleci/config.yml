@@ -3,40 +3,12 @@ version: 2.1
 orbs:
   codacy: codacy/base@0.3.1
 
-jobs:
-  build:
-    working_directory: ~/workdir
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - attach_workspace:
-          at: ~/ 
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
-      - restore_cache:
-      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
-          key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
-      - run:
-          command: |
-            sudo pip install pipenv
-            pipenv install
-      - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
-          key: deps9-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.7/site-packages"
-      - run: pipenv run python3 src/codacy_pylint_test.py
-
 workflows:
   version: 2
   compile_test_deploy:
     jobs:
       - codacy/checkout_and_version:
           write_sbt_version: true
-      - build:
-          requires:
-              - codacy/checkout_and_version
       - codacy/sbt:
           name: populate_cache
           cmd: |
@@ -49,6 +21,7 @@ workflows:
           # codacy-plugins-test can be saved before and restored from cache
           cmd: |
             docker build -t $CIRCLE_PROJECT_REPONAME:latest .
+            docker run $CIRCLE_PROJECT_REPONAME:latest codacy_pylint_test.py
             git clone --depth 1 git://github.com/codacy/codacy-plugins-test.git codacy-plugins-test
             (cd codacy-plugins-test &&
               sbt -Dcodacy.tests.ignore.descriptions=true "runMain codacy.plugins.DockerTest json $CIRCLE_PROJECT_REPONAME:latest"
