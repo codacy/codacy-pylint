@@ -162,7 +162,14 @@ function(1)
 ##Err: E0711
 raise NotImplemented
 raise NotImplementedError''')]
-        
+        result = withConfigAndSources(config, sources)
+        expectedResult = [
+            Result('E0711.py','''Module name "E0711" doesn't conform to snake_case naming style''','C0103',1),
+            Result('E0711.py','Missing module docstring','C0111',1),
+            Result('E0711.py','Unreachable code','W0101',4),
+            Result('E0711.py','NotImplemented raised - should raise NotImplementedError','E0711',3),
+            Result('E0711.py','Raising NotImplementedType while only classes or instances are allowed','E0702',3)]
+        self.assertEqual(result, expectedResult)
 
 if __name__ == '__main__':
     unittest.main()
