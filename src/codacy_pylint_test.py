@@ -155,5 +155,14 @@ function(1)
         for i in range(1, len(result)):
             self.assertEqual(result[i], expectedResult[i])
 
+    def test_conf_with_other_tools(self):
+        config = '{"tools":[{"name":"PyLint (Python 2)","patterns":[{"patternId":"E0711"}]}],"files":["E0711.py"]}'
+        sources = [('E0711.py',
+'''##Patterns: E0711
+##Err: E0711
+raise NotImplemented
+raise NotImplementedError''')]
+        
+
 if __name__ == '__main__':
     unittest.main()

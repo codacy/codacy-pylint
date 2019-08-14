@@ -94,7 +94,7 @@ object Main {
 
   val patterns = ujson.write(
     Obj(
-      "name" -> "PyLint (Python 2)",
+      "name" -> "PyLint",
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>

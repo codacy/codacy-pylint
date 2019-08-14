@@ -98,8 +98,6 @@ def walkDirectory(directory):
         for filename in glob.iglob(directory + '**/*.py', recursive=True):
             res = filename[len(os.path.abspath(directory)) + 1:1]
             yield res
-
-
     return list(generate())
 
 def readConfiguration(configFile, srcDir):
@@ -144,5 +142,8 @@ def resultsToJson(results):
     return os.linesep.join([toJson(res) for res in results])
 
 if __name__ == '__main__':
-    results = runTool('/.codacyrc', '/src')
-    print(resultsToJson(results))
+    try:
+        results = runTool('/.codacyrc', '/src')
+        print(resultsToJson(results))
+    except:
+        sys.exit(1)
