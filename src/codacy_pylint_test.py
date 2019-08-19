@@ -171,5 +171,16 @@ raise NotImplementedError''')]
             Result('E0711.py','Raising NotImplementedType while only classes or instances are allowed','E0702',3)]
         self.assertEqual(result, expectedResult)
 
+    def test_timeout(self):
+        self.assertEqual(getTimeout(" 60    second"), 60)
+        self.assertEqual(getTimeout(" 60    seconds"), 60)
+        self.assertEqual(getTimeout("1 minute"), 60)
+        self.assertEqual(getTimeout(" 2 minutes"), 120)
+        self.assertEqual(getTimeout("blabla"), defaultTimeout)
+        self.assertEqual(getTimeout("blabla blabla"), defaultTimeout)
+        self.assertEqual(getTimeout("10 blabla"), defaultTimeout)
+        self.assertEqual(getTimeout("1 hour"), 60 * 60)
+        self.assertEqual(getTimeout("1 hours"), 60 * 60)
+
 if __name__ == '__main__':
     unittest.main()

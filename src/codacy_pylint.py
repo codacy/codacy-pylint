@@ -8,6 +8,31 @@ from itertools import takewhile, dropwhile
 import glob
 import re
 import multiprocessing
+import signal
+from contextlib import contextmanager
+
+@contextmanager
+def timeout(time):
+    # Register a function to raise a TimeoutError on the signal.
+    signal.signal(signal.SIGALRM, lambda: sys.exit(2))
+    # Schedule the signal to be sent after ``time``.
+    signal.alarm(time)
+    yield
+
+defaultTimeout = 16 * 60
+def getTimeout(timeoutString):
+    l = timeoutString.split()
+    if len(l) != 2 or not l[0].isdigit():
+        return defaultTimeout
+    elif l[1] == "second" or l[1] == "seconds":
+        return int(l[0])
+    elif l[1] == "minute" or l[1] == "minutes":
+        return int(l[0]) * 60
+    elif l[1] == "hour" or l[1] == "hours":
+        return int(l[0]) * 60 * 60
+    else:
+        return defaultTimeout
+        
 
 class Result:
     def __init__(self, filename, message, patternId, line):
@@ -146,8 +171,9 @@ def resultsToJson(results):
     return os.linesep.join([toJson(res) for res in results])
 
 if __name__ == '__main__':
-    try:
-        results = runTool('/.codacyrc', '/src')
-        print(resultsToJson(results))
-    except:
-        sys.exit(1)
+    with timeout(getTimeout(os.environ['TIMEOUT'])):
+        try:
+            results = runTool('/.codacyrc', '/src')
+            print(resultsToJson(results))
+        except:
+            sys.exit(1)
