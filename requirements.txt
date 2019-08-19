@@ -1,0 +1,7 @@
+pylint==1.9.5
+pylint-django==0.11.1
+pylint-flask==0.6
+pylint-common==0.2.5
+pylint-celery==0.3
+SaltPyLint==2019.6.7
+jsonpickle==1.2

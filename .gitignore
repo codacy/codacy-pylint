@@ -1,8 +1,12 @@
 /RUNNING_PID
 /logs/
 /project/*-shim.sbt
-/project/project/
-/project/target/
-/target/
+/project/project
+target
 .idea
 .DS_Store
+.metals
+.bloop
+.vscode
+__pycache__
+*.pyc

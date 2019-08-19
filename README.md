@@ -11,15 +11,25 @@ See the [codacy-engine-scala-seed](https://github.com/codacy/codacy-engine-scala
 
 You can create the docker by doing:
 
-```
-sbt docker:publishLocal
-```
+  ```bash
+  docker build -t codacy-pylint-python3:latest .
+  ```
 
 The docker is ran with the following command:
 
-```
-docker run -it -v $srcDir:/src  <DOCKER_NAME>:<DOCKER_VERSION>
-```
+  ```bash
+  docker run -it -v $srcDir:/src codacy-pylint-python3:latest
+  ```
+
+## Generate Docs
+
+ 1. Update the version in `docs/patterns.json`
+
+ 2. Run the DocGenerator:
+
+    ```bash
+    sbt "doc-generator/run"
+    ```
 
 ## Test
 
