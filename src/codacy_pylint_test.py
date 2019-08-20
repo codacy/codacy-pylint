@@ -73,9 +73,9 @@ class PyLintTest(unittest.TestCase):
             expectedRules = ['--disable=all', '--enable=C0111']
             expectedFiles = ['C0111.py']
             
-            (rules, files) = readConfiguration(codacyrcPath, "docs/test")
-            self.assertEqual(expectedRules, rules)
-            self.assertEqual(expectedFiles, files)
+            config = readConfiguration(codacyrcPath, "docs/test")
+            self.assertEqual(expectedRules, config.rules)
+            self.assertEqual(expectedFiles, config.files)
 
     def test_parse_message(self):
         input = '''[C0103(invalid-name), ] Module name "W0124" doesn't conform to snake_case naming style'''
