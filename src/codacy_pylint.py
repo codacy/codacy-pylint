@@ -10,6 +10,7 @@ import re
 import multiprocessing
 import signal
 from contextlib import contextmanager
+from functools import partial
 
 @contextmanager
 def timeout(time):
@@ -46,7 +47,13 @@ class Result:
         return self.__str__()
     def __eq__(self, o):
         return self.filename == o.filename and self.message == o.message and self.patternId == o.patternId and self.line == o.line
-        
+
+class Configuration:
+    def __init__(self, rules, files, python_version = None):
+        self.rules = rules
+        self.files = files
+        self.python_version = python_version if python_version in ['2', '3'] else None
+
 def toJson(obj): return jsonpickle.encode(obj, unpicklable=False)
 
 def readJsonFile(path):
@@ -54,7 +61,7 @@ def readJsonFile(path):
         res = json.loads(file.read())
     return res
 
-def runPylint(options, files):
+def runPylint(options, files, python_version = None):
     def partition(pred, iterable):
         trues = []
         falses = []
@@ -65,7 +72,7 @@ def runPylint(options, files):
                 falses.append(item)
         return trues, falses
 
-    (python3Files, python2Files) = partition(isPython3, files)
+    (python3Files, python2Files) = partition(partial(isPython3, python_version), files)
     python3Stdout = Popen(
         ["python3.6", "-m", "pylint"] + # Pylint 1.9.5 doesn't support Python 3.7
         options +
@@ -87,8 +94,16 @@ def runPylint(options, files):
     else:
         res = os.linesep.join([python3Stdout, python2Stdout])
     return res
+
+def isPython3(python_version, f):
+    if python_version == None:
+        return parsesAsPython3(f)
+    elif python_version == '2':
+        return False
+    else:
+        return True
     
-def isPython3(f):
+def parsesAsPython3(f):
     try:
         with open(f, 'r') as stream:
             try:
@@ -131,6 +146,7 @@ def readConfiguration(configFile, srcDir):
         configuration = readJsonFile(configFile)
         files = [f for f in configuration['files']] if 'files' in configuration else allFiles()
         tools = [t for t in configuration['tools'] if t['name'] == 'PyLint']
+        python_version = configuration.get('python_version')
         if len(tools) > 0:
             pylint = tools[0]
             rules = ['--disable=all','--enable=' + ','.join([p['patternId'] for p in pylint['patterns']])] if 'patterns' in pylint else []
@@ -139,12 +155,13 @@ def readConfiguration(configFile, srcDir):
     except:
         rules = []
         files = allFiles()
-    return rules, files
+        python_version = None
+    return Configuration(rules, files, python_version)
 
 def chunks(lst,n):
     return [lst[i:i + n] for i in range(0, len(lst), n)]
 
-def runPylintWith(rules, files):
+def runPylintWith(rules, files, python_version = None):
     res = runPylint([
         '--output-format=parseable',
         '--load-plugins=pylint_django',
@@ -153,15 +170,16 @@ def runPylintWith(rules, files):
         '-j',
         str(multiprocessing.cpu_count())] +
         rules,
-        files)
+        files,
+        python_version)
     return parseResult(res)
 
 def runTool(configFile, srcDir):
-    (rules, files) = readConfiguration(configFile, srcDir)
+    configuration = readConfiguration(configFile, srcDir)
     res = []
-    filesWithPath = [f'{srcDir}/{f}' for f in files]
+    filesWithPath = [f'{srcDir}/{f}' for f in configuration.files]
     for chunk in chunks(filesWithPath, 10):
-        res.extend(runPylintWith(rules, chunk))
+        res.extend(runPylintWith(configuration.rules, chunk, configuration.python_version))
     for result in res:
         if result.filename.startswith(srcDir + '/'):
             result.filename = result.filename[len(srcDir) + 1:]
