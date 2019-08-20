@@ -61,7 +61,7 @@ def readJsonFile(path):
         res = json.loads(file.read())
     return res
 
-def runPylint(options, files, python_version):
+def runPylint(options, files, python_version = None):
     def partition(pred, iterable):
         trues = []
         falses = []
@@ -161,7 +161,7 @@ def readConfiguration(configFile, srcDir):
 def chunks(lst,n):
     return [lst[i:i + n] for i in range(0, len(lst), n)]
 
-def runPylintWith(rules, files):
+def runPylintWith(rules, files, python_version = None):
     res = runPylint([
         '--output-format=parseable',
         '--load-plugins=pylint_django',
@@ -170,7 +170,8 @@ def runPylintWith(rules, files):
         '-j',
         str(multiprocessing.cpu_count())] +
         rules,
-        files)
+        files,
+        python_version)
     return parseResult(res)
 
 def runTool(configFile, srcDir):
@@ -178,7 +179,7 @@ def runTool(configFile, srcDir):
     res = []
     filesWithPath = [f'{srcDir}/{f}' for f in configuration.files]
     for chunk in chunks(filesWithPath, 10):
-        res.extend(runPylintWith(configuration.rules, chunk))
+        res.extend(runPylintWith(configuration.rules, chunk, configuration.python_version))
     for result in res:
         if result.filename.startswith(srcDir + '/'):
             result.filename = result.filename[len(srcDir) + 1:]
