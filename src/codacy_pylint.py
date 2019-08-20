@@ -49,7 +49,7 @@ class Result:
         return self.filename == o.filename and self.message == o.message and self.patternId == o.patternId and self.line == o.line
 
 class Configuration:
-    def __init__(self, rules, files, python_version):
+    def __init__(self, rules, files, python_version = None):
         self.rules = rules
         self.files = files
         self.python_version = python_version if python_version in ['2', '3'] else None
@@ -146,7 +146,7 @@ def readConfiguration(configFile, srcDir):
         configuration = readJsonFile(configFile)
         files = [f for f in configuration['files']] if 'files' in configuration else allFiles()
         tools = [t for t in configuration['tools'] if t['name'] == 'PyLint']
-        python_version = configuration.get('python_version').strip()
+        python_version = configuration.get('python_version')
         if len(tools) > 0:
             pylint = tools[0]
             rules = ['--disable=all','--enable=' + ','.join([p['patternId'] for p in pylint['patterns']])] if 'patterns' in pylint else []
