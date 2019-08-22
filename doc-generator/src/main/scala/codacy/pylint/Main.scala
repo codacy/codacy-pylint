@@ -92,24 +92,56 @@ object Main {
       (s"$docsPath/description/$r.md", s"# $t${System.lineSeparator}$b")
   }
 
+  // retro compatibility parameters
+  def addCustomParameters(obj: Obj, ruleName: String): Unit = {
+    def addParams(params: Obj*): Unit = obj("parameters") = params
+    ruleName match {
+      case "R0914" =>
+        addParams(Obj("name" -> "max-locals", "default" -> 15))
+      case "C0301" =>
+        addParams(Obj("name" -> "max-line-length", "default" -> 120))
+      case "C0102" =>
+        addParams(Obj("name" -> "bad-names", "default" -> "foo,bar,baz,toto,tutu,tata"))
+      case "C0103" =>
+        addParams(
+          Obj("name" -> "argument-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
+          Obj("name" -> "attr-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
+          Obj("name" -> "class-rgx", "default" -> "[A-Z_][a-zA-Z0-9]+$"),
+          Obj("name" -> "const-rgx", "default" -> "(([A-Z_][A-Z0-9_]*)|(__.*__))$"),
+          Obj("name" -> "function-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
+          Obj("name" -> "method-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
+          Obj("name" -> "module-rgx", "default" -> "(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$"),
+          Obj("name" -> "variable-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
+          Obj("name" -> "inlinevar-rgx", "default" -> "[A-Za-z_][A-Za-z0-9_]*$"),
+          Obj("name" -> "class-attribute-rgx", "default" -> "([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$")
+        )
+    }
+  }
+
   val patterns = ujson.write(
     Obj(
       "name" -> "PyLint",
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>
-          Obj("patternId" -> ruleName, "level" -> {
-            ruleName.headOption
-              .map {
-                case 'C' => "Info" // "Convention" non valid
-                case 'R' => "Info" // "Refactor" non valid
-                case 'W' | 'I' => "Warning"
-                case 'E' => "Error"
-                case 'F' => "Error" // "Fatal" non valid
-                case _ => throw new Exception(s"Unknown error type for $ruleName")
-              }
-              .getOrElse(throw new Exception(s"Empty rule name"))
-          }, "category" -> "CodeStyle")
+          val result = Obj(
+            "patternId" -> ruleName,
+            "level" -> {
+              ruleName.headOption
+                .map {
+                  case 'C' => "Info" // "Convention" non valid
+                  case 'R' => "Info" // "Refactor" non valid
+                  case 'W' | 'I' => "Warning"
+                  case 'E' => "Error"
+                  case 'F' => "Error" // "Fatal" non valid
+                  case _ => throw new Exception(s"Unknown error type for $ruleName")
+                }
+                .getOrElse(throw new Exception(s"Empty rule name"))
+            },
+            "category" -> "CodeStyle"
+          )
+          addCustomParameters(result, ruleName)
+          result
       })
     ),
     indent = 2
