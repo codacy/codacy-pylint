@@ -1,5 +1,5 @@
 ##Patterns: R0914: { "max-locals": "3" }
-##Warn: R0914
+##Info: R0914
 def doEverything(thing):
     a = 3
     b = 3
