@@ -140,7 +140,7 @@ def parseResult(res):
 
 def walkDirectory(directory):
     def generate():
-        for filename in glob.iglob(directory + '**/*.py', recursive=True):
+        for filename in glob.iglob(os.path.join(directory, '**/*.py'), recursive=True):
             res = os.path.relpath(filename, directory)
             yield res
     return list(generate())
