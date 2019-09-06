@@ -12,13 +12,13 @@ See the [codacy-engine-scala-seed](https://github.com/codacy/codacy-engine-scala
 You can create the docker by doing:
 
   ```bash
-  docker build -t codacy-pylint-python3:latest .
+  docker build -t codacy-pylint:latest .
   ```
 
 The docker is ran with the following command:
 
   ```bash
-  docker run -it -v $srcDir:/src codacy-pylint-python3:latest
+  docker run -it -v $srcDir:/src codacy-pylint:latest
   ```
 
 ## Generate Docs
