@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="4.3">
+    <file name="python2.py">
+        <error source="E0602" line="2" message="Undefined variable 'execfile'" severity="error" />
+    </file>
+</checkstyle>

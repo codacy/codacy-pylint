@@ -1,0 +1,6 @@
+{
+	"tools": "PyLint",
+	"options": {
+		"python_version": 2
+	}
+}

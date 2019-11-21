@@ -1,0 +1,8 @@
+<module name="root">
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="\.pylintrc"/>
+    </module>
+    <module name="R0914">
+        <property name="max-locals" value="2" />
+    </module>
+</module>
