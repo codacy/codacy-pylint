@@ -1,0 +1,7 @@
+<module name="root">
+    <property name="python_version" value="2"/>
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="\.pylintrc"/>
+    </module>
+    <module name="E0602" />
+</module>

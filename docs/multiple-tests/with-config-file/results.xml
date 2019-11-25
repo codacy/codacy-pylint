@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="4.3">
+    <file name="C0301.py">
+        <error source="C0301" line="4" message="Line too long (126/85)" severity="info" />
+        <error source="C0301" line="7" message="Line too long (112/85)" severity="info" />
+    </file>
+</checkstyle>

@@ -63,12 +63,6 @@ class ResultTest(unittest.TestCase):
         self.assertEqual(res, expected)
 
 class PyLintTest(unittest.TestCase):
-    def test_version(self):
-        res = runPylint([],['--version']).split(os.linesep)
-        
-        self.assertEqual(res[0][len('__main__.py '):-len(', ')], "1.9.5")
-        self.assertEqual(res[2][len('Python '):12], "3.6.8")
-
     def test_chunks(self):
         l = ["file1", "file2"]
         expected = [["file1", "file2"]]
