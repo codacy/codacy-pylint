@@ -167,28 +167,33 @@ object Main {
       )
   )
 
-  def addPatternsParameters(obj: Obj, ruleName: String): Unit =
+  def addPatternsParameters(obj: Obj, ruleName: String): Unit = {
     addParameters(
       obj,
       ruleName,
       param => Obj("name" -> param.name, "default" -> param.default)
     )
+  }
 
-  def addDescriptionParameters(obj: Obj, ruleName: String): Unit =
+  def addDescriptionParameters(obj: Obj, ruleName: String): Unit = {
     addParameters(
       obj,
       ruleName,
       param => Obj("name" -> param.name, "description" -> param.description)
     )
+  }
 
   def addParameters(
       obj: Obj,
       ruleName: String,
       f: Parameter => Obj
-  ): Unit =
+  ): Unit = {
     for {
       params <- parameters.get(ruleName)
-    } obj("parameters") = params.map(f)
+    } {
+      obj("parameters") = params.map(f)
+    }
+  }
 
   val patterns = ujson.write(
     Obj(
