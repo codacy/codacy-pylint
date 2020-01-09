@@ -64,15 +64,20 @@ object Main {
     case (name, title, body) => (name, title, toMarkdown(body.toString))
   }
 
+  def makePlainText(title: String, body: String): (String, String) = {
+    val newLines = body.linesIterator.toList match {
+      case title :: secondLine :: rest =>
+        title.stripSuffix(".") + "." :: secondLine.capitalize :: rest
+      case lines => lines
+    }
+    val descriptionText = newLines.mkString(" ")
+    (title, descriptionText)
+  }
+
   val rulesNamesTitlesBodiesPlainText = rulesNamesTitlesBodies.map {
     case (name, title, body) =>
-      val newLines = body.text.linesIterator.toList match {
-        case title :: secondLine :: rest =>
-          title.stripSuffix(".") + "." :: secondLine.capitalize :: rest
-        case lines => lines
-      }
-      val descriptionText = newLines.mkString(" ")
-      (name, title, descriptionText)
+      val (newTitle, newBody) = makePlainText(title, body.text)
+      (name, newTitle, newBody)
   }
 
   val files = rulesNamesTitlesBodiesMarkdown.map {
