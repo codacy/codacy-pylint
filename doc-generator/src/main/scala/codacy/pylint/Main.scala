@@ -7,8 +7,6 @@ import scala.io.Source
 import ujson._
 
 import sys.process._
-import scala.annotation.meta.param
-import java.io.ByteArrayInputStream
 import scala.util.Using
 
 object Main {
