@@ -9,15 +9,22 @@ import scala.io.Source
 import ujson._
 
 import sys.process._
+import scala.annotation.meta.param
 
 object Main {
   private val deleteRecursivelyVisitor = new SimpleFileVisitor[Path] {
-    override def visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult = {
+    override def visitFile(
+        file: Path,
+        attrs: BasicFileAttributes
+    ): FileVisitResult = {
       Files.delete(file)
       FileVisitResult.CONTINUE
     }
 
-    override def postVisitDirectory(dir: Path, exc: IOException): FileVisitResult = {
+    override def postVisitDirectory(
+        dir: Path,
+        exc: IOException
+    ): FileVisitResult = {
       Files.delete(dir)
       FileVisitResult.CONTINUE
     }
@@ -84,7 +91,14 @@ object Main {
   }
 
   val rulesNamesTitlesBodiesPlainText = rulesNamesTitlesBodies.map {
-    case (name, title, body) => (name, title, body.text)
+    case (name, title, body) =>
+      val newLines = body.text.linesIterator.toList match {
+        case title :: secondLine :: rest =>
+          title.stripSuffix(".") + "." :: secondLine.capitalize :: rest
+        case lines => lines
+      }
+      val descriptionText = newLines.mkString(" ")
+      (name, title, descriptionText)
   }
 
   val files = rulesNamesTitlesBodiesMarkdown.map {
@@ -92,31 +106,102 @@ object Main {
       (s"$docsPath/description/$r.md", s"# $t${System.lineSeparator}$b")
   }
 
-  // retro compatibility parameters
-  def addCustomParameters(obj: Obj, ruleName: String): Unit = {
-    def addParams(params: Obj*): Unit = obj("parameters") = params
-    ruleName match {
-      case "R0914" =>
-        addParams(Obj("name" -> "max-locals", "default" -> 15))
-      case "C0301" =>
-        addParams(Obj("name" -> "max-line-length", "default" -> 120))
-      case "C0102" =>
-        addParams(Obj("name" -> "bad-names", "default" -> "foo,bar,baz,toto,tutu,tata"))
-      case "C0103" =>
-        addParams(
-          Obj("name" -> "argument-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
-          Obj("name" -> "attr-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
-          Obj("name" -> "class-rgx", "default" -> "[A-Z_][a-zA-Z0-9]+$"),
-          Obj("name" -> "const-rgx", "default" -> "(([A-Z_][A-Z0-9_]*)|(__.*__))$"),
-          Obj("name" -> "function-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
-          Obj("name" -> "method-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
-          Obj("name" -> "module-rgx", "default" -> "(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$"),
-          Obj("name" -> "variable-rgx", "default" -> "[a-z_][a-z0-9_]{2,30}$"),
-          Obj("name" -> "inlinevar-rgx", "default" -> "[A-Za-z_][A-Za-z0-9_]*$"),
-          Obj("name" -> "class-attribute-rgx", "default" -> "([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$")
+  final case class Parameter(name: String, description: String, default: Value)
+
+  val parameters = Map[String, Seq[Parameter]](
+    "R0914" -> Seq(
+      Parameter(
+        "max-locals",
+        "Maximum number of locals for function / method body.",
+        15
+      )
+    ),
+    "C0301" -> Seq(
+      Parameter(
+        "max-line-length",
+        "Maximum number of characters on a single line.",
+        120
+      )
+    ),
+    "C0102" -> Seq(
+      Parameter(
+        "bad-names",
+        "Bad variable names which should always be refused, separated by a comma.",
+        "foo,bar,baz,toto,tutu,tata"
+      )
+    ),
+    "C0103" ->
+      Seq(
+        Parameter(
+          "argument-rgx",
+          "Regular expression matching correct argument names. Overrides argument- naming-style.",
+          "[a-z_][a-z0-9_]{2,30}$"
+        ),
+        Parameter(
+          "attr-rgx",
+          "Regular expression matching correct attribute names.",
+          "[a-z_][a-z0-9_]{2,30}$"
+        ),
+        Parameter(
+          "class-rgx",
+          "Regular expression matching correct class names.",
+          "[A-Z_][a-zA-Z0-9]+$"
+        ),
+        Parameter(
+          "const-rgx",
+          "Regular expression matching correct constant names.",
+          "(([A-Z_][A-Z0-9_]*)|(__.*__))$"
+        ),
+        Parameter(
+          "function-rgx",
+          "Regular expression matching correct function names.",
+          "[a-z_][a-z0-9_]{2,30}$"
+        ),
+        Parameter(
+          "method-rgx",
+          "Regular expression matching correct method names.",
+          "[a-z_][a-z0-9_]{2,30}$"
+        ),
+        Parameter(
+          "module-rgx",
+          "Regular expression matching correct module names.",
+          "(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+))$"
+        ),
+        Parameter(
+          "variable-rgx",
+          "Regular expression matching correct variable names.",
+          "[a-z_][a-z0-9_]{2,30}$"
+        ),
+        Parameter(
+          "inlinevar-rgx",
+          "Regular expression matching correct inline iteration names.",
+          "[A-Za-z_][A-Za-z0-9_]*$"
+        ),
+        Parameter(
+          "class-attribute-rgx",
+          "Regular expression matching correct class attribute names.",
+          "([A-Za-z_][A-Za-z0-9_]{2,30}|(__.*__))$"
         )
+      )
+  )
+
+  def addPatternsParameters(obj: Obj, ruleName: String): Unit =
+    for {
+      params <- parameters.get(ruleName)
+    } {
+      obj("parameters") = params.map(
+        param => Obj("name" -> param.name, "default" -> param.default)
+      )
     }
-  }
+
+  def addDescriptionParameters(obj: Obj, ruleName: String): Unit =
+    for {
+      params <- parameters.get(ruleName)
+    } {
+      obj("parameters") = params.map(
+        param => Obj("name" -> param.name, "description" -> param.description)
+      )
+    }
 
   val patterns = ujson.write(
     Obj(
@@ -129,28 +214,35 @@ object Main {
             "level" -> {
               ruleName.headOption
                 .map {
-                  case 'C' => "Info" // "Convention" non valid
-                  case 'R' => "Info" // "Refactor" non valid
+                  case 'C'       => "Info" // "Convention" non valid
+                  case 'R'       => "Info" // "Refactor" non valid
                   case 'W' | 'I' => "Warning"
-                  case 'E' => "Error"
-                  case 'F' => "Error" // "Fatal" non valid
-                  case _ => throw new Exception(s"Unknown error type for $ruleName")
+                  case 'E'       => "Error"
+                  case 'F'       => "Error" // "Fatal" non valid
+                  case _ =>
+                    throw new Exception(s"Unknown error type for $ruleName")
                 }
                 .getOrElse(throw new Exception(s"Empty rule name"))
             },
             "category" -> "CodeStyle"
           )
-          addCustomParameters(result, ruleName)
+          addPatternsParameters(result, ruleName)
           result
       })
     ),
     indent = 2
   )
 
-  val description = ujson.write(Arr.from(rulesNamesTitlesBodiesPlainText.map {
-    case (ruleName, title, body) =>
-      Obj("patternId" -> ruleName, "title" -> title, "description" -> body)
-  }), indent = 2)
+  val description = ujson.write(
+    Arr.from(rulesNamesTitlesBodiesPlainText.map {
+      case (ruleName, title, body) =>
+        val result =
+          Obj("patternId" -> ruleName, "title" -> title, "description" -> body)
+        addDescriptionParameters(result, ruleName)
+        result
+    }),
+    indent = 2
+  )
 
   def writeToFile(file: String, content: String): Unit = {
     val patternsPW = new PrintWriter(new File(file))
