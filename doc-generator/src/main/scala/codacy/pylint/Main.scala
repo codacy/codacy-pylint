@@ -1,8 +1,6 @@
 package codacy.pylint
 
-import java.io.{File, IOException, PrintWriter}
-import java.nio.file.attribute.BasicFileAttributes
-import java.nio.file.{FileVisitResult, Files, Path, SimpleFileVisitor}
+import better.files.File
 
 import scala.xml._
 import scala.io.Source
@@ -10,60 +8,38 @@ import ujson._
 
 import sys.process._
 import scala.annotation.meta.param
+import java.io.ByteArrayInputStream
+import scala.util.Using
 
 object Main {
-  private val deleteRecursivelyVisitor = new SimpleFileVisitor[Path] {
-    override def visitFile(
-        file: Path,
-        attrs: BasicFileAttributes
-    ): FileVisitResult = {
-      Files.delete(file)
-      FileVisitResult.CONTINUE
-    }
-
-    override def postVisitDirectory(
-        dir: Path,
-        exc: IOException
-    ): FileVisitResult = {
-      Files.delete(dir)
-      FileVisitResult.CONTINUE
-    }
-  }
-
   implicit class NodeOps(val node: Node) extends AnyVal {
     def hasClass(cls: String): Boolean = node \@ "class" == cls
   }
 
   def toMarkdown(html: String): String = {
-    val directory = Files.createTempDirectory("pylintDoc")
-    try {
-      val file = Files.createTempFile(directory, "pylint-doc", ".html")
-      Files.write(file, html.getBytes())
-      Seq("pandoc", "-f", "html", "-t", "markdown", file.toString).!!
-    } finally {
-      Files.walkFileTree(directory, deleteRecursivelyVisitor)
-    }
+    val result =
+      for {
+        file <- File.temporaryFile()
+        _ = file.write(html)
+        res = Seq("pandoc", "-f", "html", "-t", "markdown", file.pathAsString).!!
+      } yield res
+    result.get()
   }
 
   val docsPath = "../docs"
 
   val version: String = {
-    val source = Source.fromFile(s"$docsPath/patterns.json")
-    val patterns = source.mkString
+    val file = File(docsPath) / "patterns.json"
+    val patterns = file.contentAsString
     val json = ujson.read(patterns)
-    val res = json("version").str
-    source.close()
-    res
+    json("version").str
   }
 
-  val htmlString = {
-    val source = Source.fromURL(
+  val htmlString = Using.resource(
+    Source.fromURL(
       s"http://pylint.pycqa.org/en/${version.split('.').init.mkString(".")}/technical_reference/features.html"
     )
-    val res = source.mkString
-    source.close()
-    res
-  }
+  )(_.mkString)
 
   val html = XML.loadString(htmlString)
 
@@ -103,7 +79,10 @@ object Main {
 
   val files = rulesNamesTitlesBodiesMarkdown.map {
     case (r, t, b) =>
-      (s"$docsPath/description/$r.md", s"# $t${System.lineSeparator}$b")
+      (
+        File(docsPath) / "description" / s"$r.md",
+        s"# $t${System.lineSeparator}$b"
+      )
   }
 
   final case class Parameter(name: String, description: String, default: Value)
@@ -244,17 +223,18 @@ object Main {
     indent = 2
   )
 
-  def writeToFile(file: String, content: String): Unit = {
-    val patternsPW = new PrintWriter(new File(file))
-    patternsPW.println(content)
-    patternsPW.close()
+  def writeToFile(file: File, string: String): Unit = {
+    file.write(s"${string}${System.lineSeparator}")
   }
 
   def main(args: Array[String]): Unit = {
-    writeToFile(s"$docsPath/patterns.json", patterns)
-    writeToFile(s"$docsPath/description/description.json", description)
+    writeToFile(File(docsPath) / "patterns.json", patterns)
+    writeToFile(
+      File(docsPath) / "description" / "description.json",
+      description
+    )
     files
       .map { case (n, c) => (n, c.trim) }
-      .foreach((writeToFile _).tupled)
+      .foreach { case (file, content) => writeToFile(file, content) }
   }
 }
