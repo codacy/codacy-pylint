@@ -201,6 +201,8 @@ object Main {
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>
+          val (category, subcategory) = getCategory(ruleName)
+
           val result = Obj(
             "patternId" -> ruleName,
             "level" -> {
@@ -216,14 +218,24 @@ object Main {
                 }
                 .getOrElse(throw new Exception(s"Empty rule name"))
             },
-            "category" -> "CodeStyle"
+            "category" -> category
           )
+          subcategory.foreach(x => result("subcategory") = x)
           addPatternsParameters(result, ruleName)
           result
       })
     ),
     indent = 2
   )
+
+  private def getCategory(patternId: String) = {
+    val commandInjection = ("Security", Some("CommandInjection"))
+    patternId match {
+      case "W0123" => commandInjection
+      case "W0122" => commandInjection
+      case _       => ("CodeStyle", None)
+    }
+  }
 
   val description = ujson.write(
     Arr.from(rulesNamesTitlesBodiesPlainText.map {

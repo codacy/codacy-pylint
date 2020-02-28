@@ -170,12 +170,14 @@
     {
       "patternId": "W0123",
       "level": "Warning",
-      "category": "CodeStyle"
+      "category": "Security",
+      "subcategory": "CommandInjection"
     },
     {
       "patternId": "W0122",
       "level": "Warning",
-      "category": "CodeStyle"
+      "category": "Security",
+      "subcategory": "CommandInjection"
     },
     {
       "patternId": "W0125",
