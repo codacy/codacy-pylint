@@ -1,4 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/8bd24fe19ffb4c3ea0e947225e962d28)](https://www.codacy.com/app/Codacy/codacy-pylint)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bd24fe19ffb4c3ea0e947225e962d28)](https://www.codacy.com/gh/codacy/codacy-pylint?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=codacy/codacy-pylint&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://circleci.com/gh/codacy/codacy-pylint.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/codacy/codacy-pylint)
 
 # Codacy Pylint
