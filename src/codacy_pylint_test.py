@@ -52,7 +52,7 @@ def dup_function():
     return 2
 '''
     sources = [('E0102.py', source)]
-    config = '{"tools":[{"name":"PyLint","patterns":[{"patternId":"E0102"}]}],"files":["E0102.py"]}'
+    config = '{"tools":[{"name":"pylint","patterns":[{"patternId":"E0102"}]}],"files":["E0102.py"]}'
     return config, sources
 
 class ResultTest(unittest.TestCase):
@@ -77,7 +77,7 @@ class PyLintTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             codacyrcPath = os.path.join(directory, ".codacyrc")
             with open(codacyrcPath, "w") as codacyrc:
-                print('{"tools":[{"name":"PyLint","patterns":[{"patternId":"C0111"}]}],"files":["C0111.py"]}', file=codacyrc)
+                print('{"tools":[{"name":"pylint","patterns":[{"patternId":"C0111"}]}],"files":["C0111.py"]}', file=codacyrc)
             
             expectedRules = ['--disable=all', '--enable=C0111']
             expectedFiles = ['C0111.py']
@@ -93,13 +93,13 @@ class PyLintTest(unittest.TestCase):
         self.assertEqual(message, '''Module name "W0124" doesn't conform to snake_case naming style''')
 
     def test_python2_file(self):
-        config = '{"tools":[{"name":"PyLint","patterns":[{"patternId":"C0111"}]}],"files":["file.py"]}'
+        config = '{"tools":[{"name":"pylint","patterns":[{"patternId":"C0111"}]}],"files":["file.py"]}'
         sources = [('file.py', "print 'Hello world!'")]
         expected_result = [Result(filename = 'file.py', message = 'Missing module docstring', patternId = 'C0111', line = 1)]
         self.assertEqual(withConfigAndSources(config, sources), expected_result)
 
     def test_E0711(self):
-        config = '{"tools":[{"name":"PyLint","patterns":[{"patternId":"E0711"}]}],"files":["E0711.py"]}'
+        config = '{"tools":[{"name":"pylint","patterns":[{"patternId":"E0711"}]}],"files":["E0711.py"]}'
         sources = [('E0711.py',
 '''##Patterns: E0711
 ##Err: E0711
@@ -114,7 +114,7 @@ raise NotImplementedError''')]
         self.assertEqual(withConfigAndSources(config, sources), expected_result)
 
     def test_E1125(self):
-        config = '{"tools":[{"name":"PyLint","patterns":[{"patternId":"E1125"}]}],"files":["E1125.py"]}'
+        config = '{"tools":[{"name":"pylint","patterns":[{"patternId":"E1125"}]}],"files":["E1125.py"]}'
         sources = [('E1125.py',
 '''##Patterns: E1125
 
@@ -195,7 +195,7 @@ raise NotImplementedError''')]
 
     def test_parametersFromJson(self):
         json = {
-            "name": "PyLint",
+            "name": "pylint",
             "patterns": [
                 {},
                 {
@@ -245,7 +245,7 @@ attr-rgx=[a-z_][a-z0-9_]{2,30}$
 
     def test_withParameters(self):
         sources = [('file.py', 'print("Hello world!")')]
-        config = '{"tools":[{"name":"PyLint","patterns":[{"patternId":"C0301","parameters":[{"name":"max-line-length","value":10}]}]}],"files":["file.py"]}'
+        config = '{"tools":[{"name":"pylint","patterns":[{"patternId":"C0301","parameters":[{"name":"max-line-length","value":10}]}]}],"files":["file.py"]}'
         result = withConfigAndSources(config, sources)
         expected_result = [Result('file.py','Line too long (21/10)','C0301',1)]
         self.assertEqual(result, expected_result)
@@ -269,7 +269,7 @@ max-line-length=10
 print "hello world! hello world! hello world! hello world! hello world! hello world! hello world! hello world! hello world!  "
 
 print "hello world! hello world! hello world! hello world! hello world! hello                                  "''')]
-        config = '{"tools":[{"name":"PyLint"}],"files":["C0301.py"]}'
+        config = '{"tools":[{"name":"pylint"}],"files":["C0301.py"]}'
         result = withConfigAndSources(config, sources)
         expected_result = [
             Result('C0301.py', 'Line too long (126/100)', 'C0301', 4),
