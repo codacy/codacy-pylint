@@ -10,6 +10,8 @@ import sys.process._
 import scala.util.Using
 
 object Main {
+  val blacklist = Set("E0401")
+
   implicit class NodeOps(val node: Node) extends AnyVal {
     def hasClass(cls: String): Boolean = node \@ "class" == cls
   }
@@ -33,11 +35,14 @@ object Main {
     json("version").str
   }
 
-  val htmlString = Using.resource(
-    Source.fromURL(
-      s"http://pylint.pycqa.org/en/${version.split('.').init.mkString(".")}/technical_reference/features.html"
+  val htmlString = Using.resource {
+    val url = new java.net.URL(
+      s"https://pylint.pycqa.org/en/${version.split('.').init.mkString(".")}/technical_reference/features.html"
     )
-  )(_.mkString)
+    val connection = url.openConnection.asInstanceOf[java.net.HttpURLConnection]
+    connection.setRequestProperty("User-agent", "Mozilla/5.0")
+    Source.fromInputStream(connection.getInputStream)
+  }(_.mkString)
 
   val html = XML.loadString(htmlString)
 
@@ -56,7 +61,7 @@ object Main {
   val pattern = """.*\((.+)\).*""".r
 
   val rulesNamesTitlesBodies = rules.zip(bodies).collect {
-    case (rule @ pattern(ruleName), body) =>
+    case (rule @ pattern(ruleName), body) if !blacklist.contains(ruleName) =>
       (ruleName, rule.stripSuffix(":"), body)
   }
 

@@ -640,11 +640,6 @@
     "description": "Attempted relative import beyond top-level package. Used when a relative import tries to access too many levels in the current package."
   },
   {
-    "patternId": "E0401",
-    "title": "import-error (E0401)",
-    "description": "Unable to import %s. Used when pylint has been unable to import a module."
-  },
-  {
     "patternId": "W0406",
     "title": "import-self (W0406)",
     "description": "Module import itself. Used when a module is importing itself."

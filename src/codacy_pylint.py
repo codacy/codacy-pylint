@@ -121,13 +121,16 @@ def parseMessage(message):
     res = re.search(r'\[(.+)\(.+\] (.+)', message)
     return res.groups() if res else None
 
+blacklist = ["E0401"]
+
 def parseResult(res):
     lines = res.split(os.linesep)
     splits = [arr for arr in [[split.strip() for split in l.split(':')] for l in lines] if len(arr) == 3 and parseMessage(arr[2])]
     def createResults():
         for res in splits:
             (patternId, message) = parseMessage(res[2])
-            yield Result(filename=res[0], message=message, patternId=patternId, line=int(res[1], 10))
+            if patternId not in blacklist:
+                yield Result(filename=res[0], message=message, patternId=patternId, line=int(res[1], 10))
     return list(createResults())
 
 def walkDirectory(directory):
