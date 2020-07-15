@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  codacy: codacy/base@2.0.1
-  codacy_plugins_test: codacy/plugins-test@0.7.1
+  codacy: codacy/base@4.2.6
+  codacy_plugins_test: codacy/plugins-test@0.13.0
 
 jobs:
   test_patterns:
@@ -33,16 +33,8 @@ workflows:
           run_multiple_tests: true
           requires:
             - test_patterns
-      - codacy/shell:
-          name: publish_dockerhub
+      - codacy/publish_docker:
           context: CodacyDocker
-          cmd: |
-            docker load --input docker-image.tar
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME:$(cat .version)
-            docker tag $CIRCLE_PROJECT_REPONAME codacy/$CIRCLE_PROJECT_REPONAME:latest
-            docker push codacy/$CIRCLE_PROJECT_REPONAME:$(cat .version)
-            docker push codacy/$CIRCLE_PROJECT_REPONAME:latest
           requires:
             - plugins_test
           filters:
@@ -53,4 +45,4 @@ workflows:
           name: tag_version
           context: CodacyAWS
           requires:
-            - publish_dockerhub
+            - codacy/publish_docker

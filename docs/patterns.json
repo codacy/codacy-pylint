@@ -645,11 +645,6 @@
       "category": "CodeStyle"
     },
     {
-      "patternId": "E0401",
-      "level": "Error",
-      "category": "CodeStyle"
-    },
-    {
       "patternId": "W0406",
       "level": "Warning",
       "category": "CodeStyle"

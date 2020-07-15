@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<checkstyle version="4.3">
+    <file name="test.py">
+        <error source="C0111" line="1" message="Missing module docstring" severity="info" />
+        <error source="W0611" line="1" message="Unused import requests" severity="warning" />
+    </file>
+</checkstyle>
