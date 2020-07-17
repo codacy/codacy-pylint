@@ -202,7 +202,7 @@ object Main {
 
   val patterns = ujson.write(
     Obj(
-      "name" -> "PyLint",
+      "name" -> "pylint",
       "version" -> version,
       "patterns" -> Arr.from(rulesNamesTitlesBodies.map {
         case (ruleName, _, _) =>

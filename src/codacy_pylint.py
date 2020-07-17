@@ -237,7 +237,7 @@ def readConfiguration(configFile, srcDir):
     try:
         configuration = readJsonFile(configFile)
         files = configuration.get('files') or allFiles()
-        tools = [t for t in configuration.get('tools') if t['name'] == 'PyLint']
+        tools = [t for t in configuration.get('tools') if t['name'] == 'pylint']
         options = configuration.get('options')
         python_version = options.get('python_version') if options else None
         if tools and 'patterns' in tools[0]:
