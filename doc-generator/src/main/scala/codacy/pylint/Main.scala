@@ -8,6 +8,7 @@ import ujson._
 
 import sys.process._
 import scala.util.Using
+import scala.util.chaining._
 
 object Main {
   val blacklist = Set("E0401")
@@ -21,7 +22,7 @@ object Main {
       for {
         file <- File.temporaryFile()
         _ = file.write(html)
-        res = Seq("pandoc", "-f", "html", "-t", "markdown", file.pathAsString).!!
+        res = Seq("pandoc", "-f", "html", "-t", "commonmark", file.pathAsString).!!
       } yield res
     result.get()
   }
@@ -29,10 +30,10 @@ object Main {
   val docsPath = "../docs"
 
   val version: String = {
-    val file = File(docsPath) / "patterns.json"
-    val patterns = file.contentAsString
-    val json = ujson.read(patterns)
-    json("version").str
+    val file = File("../requirements.txt")
+    file.lines.collectFirst {
+      case s"pylint==$version" => version
+    }.get
   }
 
   val htmlString = Using.resource {
@@ -89,7 +90,9 @@ object Main {
     case (r, t, b) =>
       (
         File(docsPath) / "description" / s"$r.md",
-        s"# $t${System.lineSeparator}$b"
+        s"""# $t
+           |
+           |$b""".stripMargin
       )
   }
 
@@ -172,6 +175,110 @@ object Main {
       )
   )
 
+  val defaultPatterns = Set(
+    "C0123",
+    "C0200",
+    "C0303",
+    "C1001",
+    "E0100",
+    "E0101",
+    "E0102",
+    "E0103",
+    "E0104",
+    "E0105",
+    "E0106",
+    "E0107",
+    "E0108",
+    "E0110",
+    "E0112",
+    "E0113",
+    "E0114",
+    "E0115",
+    "E0116",
+    "E0117",
+    "E0202",
+    "E0203",
+    "E0211",
+    "E0236",
+    "E0238",
+    "E0239",
+    "E0240",
+    "E0241",
+    "E0301",
+    "E0302",
+    "E0601",
+    "E0603",
+    "E0604",
+    "E0701",
+    "E0702",
+    "E0703",
+    "E0704",
+    "E0710",
+    "E0711",
+    "E0712",
+    "E1003",
+    "E1102",
+    "E1111",
+    "E1120",
+    "E1121",
+    "E1123",
+    "E1124",
+    "E1125",
+    "E1126",
+    "E1127",
+    "E1132",
+    "E1200",
+    "E1201",
+    "E1205",
+    "E1206",
+    "E1300",
+    "E1301",
+    "E1302",
+    "E1303",
+    "E1304",
+    "E1305",
+    "E1306",
+    "R0201",
+    "R0202",
+    "R0203",
+    "W0101",
+    "W0102",
+    "W0104",
+    "W0105",
+    "W0106",
+    "W0107",
+    "W0108",
+    "W0109",
+    "W0110",
+    "W0120",
+    "W0122",
+    "W0124",
+    "W0150",
+    "W0199",
+    "W0221",
+    "W0222",
+    "W0233",
+    "W0404",
+    "W0410",
+    "W0601",
+    "W0602",
+    "W0604",
+    "W0611",
+    "W0612",
+    "W0622",
+    "W0623",
+    "W0702",
+    "W0705",
+    "W0711",
+    "W1300",
+    "W1301",
+    "W1302",
+    "W1303",
+    "W1305",
+    "W1306",
+    "W1307"
+  )
+
   def addPatternsParameters(obj: Obj, ruleName: String): Unit = {
     addParameters(
       obj,
@@ -208,7 +315,7 @@ object Main {
         case (ruleName, _, _) =>
           val (category, subcategory) = getCategory(ruleName)
 
-          val result = Obj(
+          Obj(
             "patternId" -> ruleName,
             "level" -> {
               ruleName.headOption
@@ -223,11 +330,12 @@ object Main {
                 }
                 .getOrElse(throw new Exception(s"Empty rule name"))
             },
-            "category" -> category
-          )
-          subcategory.foreach(x => result("subcategory") = x)
-          addPatternsParameters(result, ruleName)
-          result
+            "category" -> category,
+            "enabled" -> defaultPatterns.contains(ruleName)
+          ).tap { result =>
+            subcategory.foreach(x => result("subcategory") = x)
+            addPatternsParameters(result, ruleName)
+          }
       })
     ),
     indent = 2
