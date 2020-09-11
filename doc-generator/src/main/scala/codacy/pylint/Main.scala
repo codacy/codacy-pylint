@@ -30,10 +30,10 @@ object Main {
   val docsPath = "../docs"
 
   val version: String = {
-    val file = File(docsPath) / "patterns.json"
-    val patterns = file.contentAsString
-    val json = ujson.read(patterns)
-    json("version").str
+    val file = File("../requirements.txt")
+    file.lines.collectFirst {
+      case s"pylint==$version" => version
+    }.get
   }
 
   val htmlString = Using.resource {
