@@ -8,7 +8,7 @@ RUN apk add --no-cache python3 python2 curl build-base python2-dev && \
     pip2 install --no-cache-dir -r requirements.txt && \
     apk del curl build-base python2-dev
 
-COPY requirements.txt src/codacy_pylint.py src/codacy_pylint_test.py ./
+COPY src/codacy_pylint.py src/codacy_pylint_test.py ./
 COPY docs /docs
 RUN adduser -u 2004 -D docker && \
     chown -R docker:docker /docs /home/docker
