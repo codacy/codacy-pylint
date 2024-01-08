@@ -1,4 +1,4 @@
-FROM python:3.6-alpine3.15
+FROM python:3.7-alpine3.15
 COPY requirements.txt ./
 RUN apk add --no-cache python3 python2 curl build-base python2-dev && \
     curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
