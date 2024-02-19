@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   codacy: codacy/base@11.1.1
-  codacy_plugins_test: codacy/plugins-test@1.1.1
+  codacy_plugins_test: codacy/plugins-test@2.0.9
 
 jobs:
   test_patterns:
